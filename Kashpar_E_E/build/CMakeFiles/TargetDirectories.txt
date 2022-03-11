@@ -1,0 +1,7 @@
+C:/Users/home/Desktop/OOP_PROJECT/Kashpar_E_E/build/CMakeFiles/doctest.dir
+C:/Users/home/Desktop/OOP_PROJECT/Kashpar_E_E/build/CMakeFiles/edit_cache.dir
+C:/Users/home/Desktop/OOP_PROJECT/Kashpar_E_E/build/CMakeFiles/rebuild_cache.dir
+C:/Users/home/Desktop/OOP_PROJECT/Kashpar_E_E/build/hello_world/CMakeFiles/main.dir
+C:/Users/home/Desktop/OOP_PROJECT/Kashpar_E_E/build/hello_world/CMakeFiles/test.dir
+C:/Users/home/Desktop/OOP_PROJECT/Kashpar_E_E/build/hello_world/CMakeFiles/edit_cache.dir
+C:/Users/home/Desktop/OOP_PROJECT/Kashpar_E_E/build/hello_world/CMakeFiles/rebuild_cache.dir

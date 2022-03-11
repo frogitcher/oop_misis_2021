@@ -1,0 +1,43 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "C:/Users/home/Desktop/OOP_PROJECT/Kashpar_E_E/build/CMakeFiles/doctest"
+		},
+		{
+			"file" : "C:/Users/home/Desktop/OOP_PROJECT/Kashpar_E_E/build/CMakeFiles/doctest.rule"
+		},
+		{
+			"file" : "C:/Users/home/Desktop/OOP_PROJECT/Kashpar_E_E/build/CMakeFiles/doctest-complete.rule"
+		},
+		{
+			"file" : "C:/Users/home/Desktop/OOP_PROJECT/Kashpar_E_E/build/doctest/src/doctest-stamp/doctest-build.rule"
+		},
+		{
+			"file" : "C:/Users/home/Desktop/OOP_PROJECT/Kashpar_E_E/build/doctest/src/doctest-stamp/doctest-configure.rule"
+		},
+		{
+			"file" : "C:/Users/home/Desktop/OOP_PROJECT/Kashpar_E_E/build/doctest/src/doctest-stamp/doctest-download.rule"
+		},
+		{
+			"file" : "C:/Users/home/Desktop/OOP_PROJECT/Kashpar_E_E/build/doctest/src/doctest-stamp/doctest-install.rule"
+		},
+		{
+			"file" : "C:/Users/home/Desktop/OOP_PROJECT/Kashpar_E_E/build/doctest/src/doctest-stamp/doctest-mkdir.rule"
+		},
+		{
+			"file" : "C:/Users/home/Desktop/OOP_PROJECT/Kashpar_E_E/build/doctest/src/doctest-stamp/doctest-patch.rule"
+		},
+		{
+			"file" : "C:/Users/home/Desktop/OOP_PROJECT/Kashpar_E_E/build/doctest/src/doctest-stamp/doctest-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"doctest"
+		],
+		"name" : "doctest"
+	}
+}
