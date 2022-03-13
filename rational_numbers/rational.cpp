@@ -17,25 +17,17 @@ int lcm(int a, int b) {
     return a*b/gcd(a, b);
 }
 
-
-
 Rational::Rational(int _num)
     : num(_num)
-    , den(1)
-    {
+    , den(1) {
         Normalize();
 }
 
 Rational::Rational(int _num, int _den)
     : num(_num)
-    , den(_den) 
-    {
+    , den(_den) {
         if (den == 0) {
             throw std::invalid_argument("Denominator must not be equal to 0!");
-        }
-        if (den < 0) {
-            num *= -1;
-            den *= -1;
         }
         Normalize();
 }
@@ -44,8 +36,6 @@ Rational::Rational(const Rational& other)
     : num(other.num)
     , den(other.den)
 {}
-
-
 
 Rational& Rational::operator=(const Rational& rhs) {
     num = rhs.num;
@@ -114,23 +104,25 @@ Rational Rational::operator+() const {
     return Rational(*this);
 }
 
-Rational Rational::operator++() {
+Rational& Rational::operator++() {
     return *this += Rational(1, 1);
 }
 
 Rational Rational::operator++(int a) {
-    return *this += Rational(1, 1);
+    Rational r(*this);
+    *this += Rational(1, 1);
+    return r;
 }
 
-Rational Rational::operator--() {
+Rational& Rational::operator--() {
     return *this -= Rational(1, 1);
 }
 
 Rational Rational::operator--(int a) {
-    return *this -= Rational(1, 1);
+    Rational r(*this);
+    *this -= Rational(1, 1);
+    return r;
 }
-
-
 
 bool Rational::operator==(const Rational& rhs) const {
     return (num == rhs.num) && (den == rhs.den);
@@ -149,14 +141,12 @@ bool Rational::operator>(const Rational& rhs) const {
 }
 
 bool Rational::operator<=(const Rational& rhs) const {
-    return (num * rhs.den) <= (rhs.num * den);
+    return !(*this > rhs);
 }
 
 bool Rational::operator>=(const Rational& rhs) const {
-    return (num * rhs.den) >= (rhs.num * den);
+    return !(*this < rhs);
 }
-
-
 
 int Rational::GetNumerator() const {
     return num;
@@ -167,6 +157,10 @@ int Rational::GetDenominator() const {
 }
 
 void Rational::Normalize() {
+    if (den < 0) {
+        num *= -1;
+        den *= -1;
+    }
     int g = gcd(num, den);
     num /= g;
     den /= g;

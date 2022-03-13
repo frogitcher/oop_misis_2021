@@ -22,9 +22,9 @@ class Rational {
         Rational operator-() const;
         Rational operator+() const;
 
-        Rational operator++();
+        Rational& operator++();
         Rational operator++(int a);
-        Rational operator--();
+        Rational& operator--();
         Rational operator--(int a);
 
         bool operator==(const Rational& rhs) const;
