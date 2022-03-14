@@ -4,10 +4,8 @@ project(project)
 
 include_directories(doctest)
 
-add_executable(main 
-    main.cpp
-    hello_world.h)
-
 add_executable(test
-    test.cpp
+	rational.cpp
+	rational.h
+	test.cpp
 )
