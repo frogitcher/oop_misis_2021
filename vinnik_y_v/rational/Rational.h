@@ -48,9 +48,7 @@ public:
 	Rational& operator--();
 	Rational operator--(int I);
 
-	std::ostream& operator<<(std::ostream& os);
-
-	//operator double() const;
+	operator double() const;
 	std::pair<int, Rational> ToProperFraction();
 
 	int getNum() const { return num; }

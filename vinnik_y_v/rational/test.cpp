@@ -16,7 +16,7 @@ TEST_CASE("Testing init and operational functions") {
 	CHECK(Rational(2, 4).getNum() == 1);
 	CHECK(Rational(2, 4).getDet() == 2);
 	CHECK_THROWS_WITH(Rational(10, 0), "Denominator cannot be equal to 0");
-	//CHECK((double)Rational(1, 2) == 0.5);
+	CHECK((double)Rational(1, 2) == 0.5);
 	CHECK(Rational(3, 2).ToProperFraction() == std::make_pair(1, Rational(1, 2)));
 }
 

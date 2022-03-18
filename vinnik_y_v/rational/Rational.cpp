@@ -184,18 +184,18 @@ Rational Rational::operator--(int I) {
 	return r;
 }
 
+/*
 std::ostream& Rational::operator<<(std::ostream& os)
 {
 	os << std::to_string(num) << "/" << std::to_string(det);
 	return os;
 }
+*/
 
-/*
 Rational::operator double() const
 {
 	return double(num) / double(det);
 }
-*/
 
 std::pair<int, Rational> Rational::ToProperFraction()
 {
