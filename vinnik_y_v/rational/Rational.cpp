@@ -2,26 +2,48 @@
 
 Rational::Rational(const int Num, const int Det) : num(Num), det(Det)
 {
-	if (Det == 0) {
-		num = 0;
-		det = 1;
-	}
 	ReduceFraction();
 }
 
-bool Rational::operator<(const Rational& other)
+Rational::Rational(int I)
+{
+	num = I;
+	det = 1;
+}
+
+bool Rational::operator<(const Rational& other) const
 {
 	return num * other.det < other.num * det;
 }
 
-bool Rational::operator>(const Rational& other)
+bool Rational::operator>(const Rational& other) const
 {
 	return num * other.det > other.num* det;
 }
 
-bool Rational::operator==(const Rational& other)
+bool Rational::operator==(const Rational& other) const
 {
 	return num * other.det == other.num* det;
+}
+
+bool Rational::operator>=(const Rational& other) const
+{
+	return !(*this < other);
+}
+
+bool Rational::operator<=(const Rational& other) const
+{
+	return !(*this > other);
+}
+
+bool Rational::operator!=(const Rational& other) const
+{
+	return !(*this == other);
+}
+
+bool Rational::operator!() const
+{
+	return !num;
 }
 
 Rational Rational::operator-() const
@@ -42,7 +64,7 @@ Rational& Rational::operator=(const Rational& other)
 
 Rational& Rational::operator+=(const Rational& other)
 {
-	num += other.num;
+	num = other.num * det + num * other.det;
 	det *= other.det;
 	ReduceFraction();
 	return *this;
@@ -57,7 +79,7 @@ Rational& Rational::operator+=(const int I)
 
 Rational& Rational::operator-=(const Rational& other)
 {
-	num -= other.num;
+	num = num * other.det - other.num * det;
 	det *= other.det;
 	ReduceFraction();
 	return *this;
@@ -100,62 +122,104 @@ Rational& Rational::operator/=(const int I)
 	return *this;
 }
 
-Rational Rational::operator+(const Rational& other)
+Rational Rational::operator+(const Rational& other) const
 {
-	return Rational(num * other.det + other.num * det, det * other.det);
+	return Rational(*this) += other;
 }
 
-Rational Rational::operator+(const int I)
+Rational Rational::operator+(const int I) const
 {
-	return Rational(num + I * det, det);
+	return Rational(*this) += I;
 }
 
-Rational Rational::operator-(const Rational& other)
+Rational Rational::operator-(const Rational& other) const
 {
-	return Rational(num * other.det - other.num * det, det * other.det);
+	return Rational(*this) -= other;
 }
 
-Rational Rational::operator-(const int I)
+Rational Rational::operator-(const int I) const
 {
-	return Rational(num - I * det, det);
+	return Rational(*this) -= I;
 }
 
-Rational Rational::operator*(const Rational& other)
+Rational Rational::operator*(const Rational& other) const
 {
-	return Rational(num * other.num, det * other.det);
+	return Rational(*this) *= other;
 }
 
-Rational Rational::operator*(const int I)
+Rational Rational::operator*(const int I) const
 {
-	return Rational(num * I, det);
+	return Rational(*this) *= I;
 }
 
-Rational Rational::operator/(const Rational& other)
+Rational Rational::operator/(const Rational& other) const
 {
-	return Rational(num * other.det, det * other.num);
+	return Rational(*this) /= other;
 }
 
-Rational Rational::operator/(const int I)
+Rational Rational::operator/(const int I) const
 {
-	return Rational(num, det * I);
+	return Rational(*this) /= I;
 }
 
-Rational::operator double()
+Rational& Rational::operator++() {
+	*this += 1;
+	return *this;
+}
+
+Rational Rational::operator++(int I) {
+	Rational r(*this);
+	*this += 1;
+	return r;
+}
+
+Rational& Rational::operator--() {
+	*this -= 1;
+	return *this;
+}
+
+Rational Rational::operator--(int I) {
+	Rational r(*this);
+	*this -= 1;
+	return r;
+}
+
+std::ostream& Rational::operator<<(std::ostream& os)
+{
+	os << std::to_string(num) << "/" << std::to_string(det);
+	return os;
+}
+
+/*
+Rational::operator double() const
 {
 	return double(num) / double(det);
 }
+*/
 
 std::pair<int, Rational> Rational::ToProperFraction()
 {
 	return {num / det, Rational(num % det, det)};
 }
 
+void Rational::NormalizeSign()
+{
+	if (det < 0) {
+		num = -num;
+		det = -det;
+	}
+}
+
 void Rational::ReduceFraction()
 {
+	if (det == 0) {
+		throw std::invalid_argument("Denominator cannot be equal to 0");
+	}
 	if (num == 0) {
 		det = 1;
 		return;
 	}
+	NormalizeSign();
 	int _gcd = std::gcd(num, det);
 	num /= _gcd;
 	det /= _gcd;
