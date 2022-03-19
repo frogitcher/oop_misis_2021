@@ -1,6 +1,6 @@
 project(rational_numbers)
 cmake_minimum_required(VERSION 3.0)
-add_compile_options(-std=c++11)
+add_compile_options(-std=c++17)
 
 include(ExternalProject)
 find_package(Git REQUIRED)
@@ -24,9 +24,13 @@ include_directories(${DOCTEST_INCLUDE_DIR})
 
 
 add_executable(test
-	test.cpp
+    rational.h
+    rational.cpp
+    test.cpp
 )
 add_executable(main
+    rational.h
+    rational.cpp
     main.cpp
 )
 # add_subdirectory(tarasov_e_v)

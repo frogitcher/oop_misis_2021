@@ -1,4 +1,6 @@
 #pragma once 
+#include <ostream>
+
 class Rational{
 public:
     Rational() = default;
@@ -23,16 +25,19 @@ public:
     Rational operator+(); // ?????
 
     bool operator==(const Rational& rhs) const;
+    bool operator!=(const Rational& rhs) const;
     bool operator<(const Rational& rhs) const;
     bool operator>(const Rational& rhs) const;
     bool operator<=(const Rational& rhs) const;
     bool operator>=(const Rational& rhs) const;
 
-    int GetNumerator();
-    int GetDenominator();
+    int GetNumerator() const;
+    int GetDenominator() const;
 
     
 private:
     int numerator, denominator; 
     void Normalize();
 };
+
+std::ostream& operator<<(std::ostream& os, const Rational& r);
