@@ -4,6 +4,7 @@
 #include <stdexcept>
 
 void Rational::Normalize(){
+    // вопрос: у нас есть ограничение на версию стандарта c++?
     if (denominator < 0){
         denominator *= -1;
         numerator *= -1;
