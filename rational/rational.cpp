@@ -90,7 +90,7 @@ Rational& Rational::operator++(){
     num += denum;
     return *this;
 }
-Rational Rational::operator++() const {
+Rational Rational::operator++(int) {
     Rational temp(*this);
     ++(*this);
     return temp;
@@ -99,7 +99,7 @@ Rational& Rational::operator--() {
     num -= denum;
     return *this;
 }
-Rational Rational::operator--() const {
+Rational Rational::operator--(int) {
     Rational temp(*this);
     --(*this);
     return temp;
