@@ -6,6 +6,8 @@ TEST_CASE("testing initialization functions") {
     CHECK(Rational(5) == Rational(5, 1));
     CHECK(Rational(7, 2).getnumerator() == 7);
     CHECK(Rational(7, 2).getdenumerator() == 2);
+    CHECK(Rational(20, 15).getnumerator() == 4);
+    CHECK(Rational(20, 15).getdenumerator() == 3);
     CHECK(Rational(3, -7) == Rational(-3, 7));
     CHECK(Rational(12, 18) == Rational(2, 3));
     CHECK(Rational(-2, -3) == Rational(2, 3));
@@ -14,7 +16,7 @@ TEST_CASE("testing initialization functions") {
     CHECK_THROWS_WITH(Rational(8, 0), "denominator must not be equal to 0");
 }
 
-TEST_CASE("testing base ariphmetic operations") {
+TEST_CASE("testing base arithmetic operations") {
     CHECK(Rational(2, 3) + Rational(5, 3) == Rational(7, 3));
     CHECK(Rational(2, 3) + Rational(-11, 4) == Rational(-25, 12));
     CHECK(Rational(5, 6) + Rational(-11, 4) == Rational(-23, 12));

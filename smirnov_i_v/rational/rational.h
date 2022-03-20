@@ -10,8 +10,8 @@ public:
 
 	Rational& operator=(const Rational& rhs);
 
-	Rational operator + (const Rational& rhs) const;
-	Rational operator - (const Rational& rhs) const;
+	Rational operator+ (const Rational& rhs) const;
+	Rational operator- (const Rational& rhs) const;
 	Rational operator*(const Rational& rhs) const;
 	Rational operator/(const Rational& rhs) const;
 

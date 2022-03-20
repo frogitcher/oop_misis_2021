@@ -66,7 +66,9 @@ Rational& Rational::operator*=(const Rational& rhs) {
 }
 
 Rational& Rational::operator/=(const Rational& rhs) {
-	if (rhs.num == 0) throw std::invalid_argument("Devisor can't be 0!");
+	if (rhs.num == 0) {
+		throw std::invalid_argument("Devisor can't be 0!");
+	}
 	num *= rhs.den;
 	den *= rhs.num;
 	this->Normalize();
@@ -97,7 +99,7 @@ bool Rational::operator<(const Rational& rhs) const {
 }
 
 bool Rational::operator<=(const Rational& rhs) const {
-	return (num * rhs.den <= rhs.num* den);
+	return !(*this > rhs);
 }
 
 bool Rational::operator>(const Rational& rhs) const {
@@ -105,7 +107,7 @@ bool Rational::operator>(const Rational& rhs) const {
 }
 
 bool Rational::operator>=(const Rational& rhs) const {
-	return (num * rhs.den >= rhs.num* den);
+	return !(*this < rhs);
 }
 
 bool Rational::operator==(const Rational& rhs) const {
@@ -138,11 +140,11 @@ Rational Rational::operator--(int a) {
 	return b;
 }
 
-int Rational::getnumerator() const{
+int Rational::getnumerator() const {
 	return num;
 }
 
-int Rational::getdenumerator() const{
+int Rational::getdenumerator() const {
 	return den;
 }
 
