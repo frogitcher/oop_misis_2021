@@ -23,26 +23,25 @@ Rational::Rational(int _num, int _denom)
     , denom(_denom) {
     if (denom == 0) {
             throw std::invalid_argument("Denominator can not be 0!");
-        }
+}
     Normalize();
 }
 Rational::Rational(const Rational& other)
     : num(other.num)
-    , denom(other.denom) {
-}
+    , denom(other.denom) {}
 Rational& Rational::operator=(const Rational& rhs) {
     num = rhs.num;
     denom = rhs.denom;
     return *this;
 }
-Rational& Rational::operator+=(const Rational& rhs){
+Rational& Rational::operator+=(const Rational& rhs) {
     num *= rhs.denom;
     num += rhs.num * denom;
     denom *= rhs.denom;
     Normalize();
     return *this;
 }
-Rational Rational::operator+(const Rational& rhs) const{
+Rational Rational::operator+(const Rational& rhs) const {
     return Rational(*this) += rhs;
 }
 Rational& Rational::operator-=(const Rational& rhs){
@@ -97,14 +96,14 @@ Rational& Rational::operator--() {
 }
 Rational Rational::operator--(int a) {
     Rational r(*this);
-    *this-= Rational(1,1);
+    *this -= Rational(1,1);
     return r;
 }
 bool Rational::operator==(const Rational& rhs) const {
     return (num == rhs.num) && (denom == rhs.denom);
 }
 bool Rational::operator!=(const Rational& rhs) const {
-    return !((num == rhs.num) && (denom == rhs.denom));
+    return !(*this == rhs);
 }
 bool Rational::operator<(const Rational& rhs) const {
     return (num * rhs.denom) < (denom * rhs.num);
@@ -129,8 +128,8 @@ void Rational::Normalize(){
     num /= gc;
     denom /= gc;
     if (denom < 0) {
-    denom *= -1;
-    num *= -1;
+        denom *= -1;
+        num *= -1;
   }
 }
 std::ostream& operator<<(std::ostream& os, const Rational& r) {
