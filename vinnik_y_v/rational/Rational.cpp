@@ -197,6 +197,11 @@ Rational::operator double() const
 	return double(num) / double(det);
 }
 
+Rational::operator bool() const
+{
+	return num;
+}
+
 std::pair<int, Rational> Rational::ToProperFraction()
 {
 	return {num / det, Rational(num % det, det)};

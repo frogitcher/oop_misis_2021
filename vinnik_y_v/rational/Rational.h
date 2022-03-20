@@ -49,6 +49,7 @@ public:
 	Rational operator--(int I);
 
 	operator double() const;
+	operator bool() const;
 	std::pair<int, Rational> ToProperFraction();
 
 	int getNum() const { return num; }
