@@ -21,9 +21,9 @@ public:
 	Rational& operator/=(const Rational& rhs);
 
 	Rational& operator++(); //++r
-	Rational operator++() const; //r++
+	Rational operator++(int); //r++
 	Rational& operator--();
-	Rational operator--() const;
+	Rational operator--(int);
 
 	Rational operator-() const;
 
@@ -46,5 +46,3 @@ private:
 
 std::ostream& operator<<(std::ostream& ostrm, const Rational& rhs);
 std::istream& operator>>(std::istream& istrm, Rational& rhs);
-
-

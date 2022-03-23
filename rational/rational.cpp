@@ -25,7 +25,7 @@ Rational::Rational(const Rational& other)
 {}
 
 void Rational::Check() {
-    if ((num >= 0 && denum < 0) || (num < 0 && denum < 0)) {
+    if (denum < 0) {
         num = -num;
         denum = -denum;
     }
@@ -43,21 +43,17 @@ void Rational::Normalize() {
 }
 
 Rational Rational::operator+(const Rational& rhs) const {
-    Rational N(num * rhs.denum + rhs.num * denum, denum * rhs.denum);
-    return N;
+    return Rational(num * rhs.denum + rhs.num * denum, denum * rhs.denum);
 }
 Rational Rational::operator-(const Rational& rhs) const {
-    Rational N(num * rhs.denum - rhs.num * denum, denum * rhs.denum);
-    return N;
+    return Rational(num * rhs.denum - rhs.num * denum, denum * rhs.denum);
 }
 Rational Rational::operator*(const Rational& rhs) const {
-    Rational N(num * rhs.num, denum * rhs.denum);
-    return N;
+    return Rational(num * rhs.num, denum * rhs.denum);
 }
 Rational Rational::operator/(const Rational& rhs) const {
     if (rhs.num != 0) {
-        Rational N(num * rhs.denum, rhs.num * denum);
-        return N;
+        return Rational(num * rhs.denum, rhs.num * denum);
     }
     else {
         throw std::invalid_argument("You cannot divide by zero");
@@ -113,8 +109,8 @@ bool Rational::operator==(const Rational& rhs) const { return num * rhs.denum ==
 bool Rational::operator!=(const Rational& rhs) const { return !operator==(rhs); }
 bool Rational::operator>(const Rational& rhs) const { return num * rhs.denum > denum * rhs.num; }
 bool Rational::operator>=(const Rational& rhs) const { return num * rhs.denum >= denum * rhs.num; }
-bool Rational::operator<(const Rational& rhs) const { return num * rhs.denum < denum * rhs.num; }
-bool Rational::operator<=(const Rational& rhs) const { return num * rhs.denum <= denum * rhs.num; }
+bool Rational::operator<(const Rational& rhs) const { return !(*this >= rhs); }
+bool Rational::operator<=(const Rational& rhs) const { return !(*this > rhs); }
 
 std::ostream& Rational::writeTo(std::ostream& ostrm) const {
     ostrm << num << "/" << denum;

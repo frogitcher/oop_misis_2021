@@ -57,9 +57,7 @@ TEST_CASE("Rational input/output") {
 TEST_CASE("Rational relational") {
 	CHECK(Rational(5, 4) > Rational(1, 3));
 	CHECK(Rational(5, 4) >= Rational(5, 4));
-	CHECK(Rational(-5, 4) < Rational(1, 3));
+	CHECK(Rational(-5, 4) < Rational(1, 4));
 	CHECK(Rational(-5, 4) <= Rational(-5, 4));
 	CHECK(Rational(1, 2) != Rational(5, 8));
 }
-
-
