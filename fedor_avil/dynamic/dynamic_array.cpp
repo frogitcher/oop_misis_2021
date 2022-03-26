@@ -2,109 +2,115 @@
 #include <stdexcept>
 #include <algorithm>
 #include <string>
-Dynamic_Array::Dynamic_Array(size_t _size, int value) {
+#include <stddef.h>
+void DynamicArray::reallocate(size_t new_capacity) {
+	int* new_data = new int[new_capacity];
+	std::copy(data, data + size, new_data);
+	delete[]data;
+	data = new_data;
+	capacity = new_capacity;
+}
+DynamicArray::DynamicArray(size_t _size, int value) {
 	size = _size;
 	capacity = _size;
-	data = new int[_size];
+	data = new int[capacity];
 	std::fill(data, data + size, value);
 }
-Dynamic_Array::Dynamic_Array(const Dynamic_Array& other)
+DynamicArray::DynamicArray(const std::initializer_list<int>& list) {
+	size = list.size();
+	capacity = list.size();
+	data = new int[capacity];
+	std::copy(list.begin(), list.end(), data);
+}
+DynamicArray::DynamicArray(const DynamicArray& other)
 {
-	size = other.Size();
-	capacity = other.Capacity();
-	data = other.Data();
+	size = other.size;
+	capacity = other.capacity;
+	data = new int[capacity];
+	std::copy(other.data, other.data + other.size, data);
 }
-Dynamic_Array::~Dynamic_Array() {
-	delete[]data;
+
+DynamicArray::~DynamicArray() {
+	delete[] data;
 }
-size_t Dynamic_Array::Size() const
-{
-	return this->size;
-}
-size_t Dynamic_Array::Capacity() const
-{
-	return this->capacity;
-}
-bool Dynamic_Array::Empty() const {
-	if (size == 0) return true;
-	else return false;
-}
-void Dynamic_Array::push_back(int _value) {
-	if (size == capacity && capacity!=0) {
-		int* new_data = new int[capacity * 2];
-		std::copy(this->begin(), this->end(), new_data);
+
+void DynamicArray::push_back(int _value) {
+	if (size == capacity) {
+		size_t new_capacity = capacity == 0 ? 1 : capacity * 2;
+		int* new_data = new int[new_capacity];
+		std::copy(data, (data + size), new_data);
 		delete[] data;
 		data = new_data;
-		capacity *= 2; 
+		capacity = new_capacity;
 	}
-	data[size++] = _value;
-}
-void Dynamic_Array::pop_back()
+	
+	size += 1;
+	data[size - 1] = _value;
+}	
+void DynamicArray::erase(size_t index)
 {
-	if (size == 0) {
-		throw std::underflow_error("Array Size <0");
+	if (index >= size) {
+		throw std::out_of_range("Index Out Of Range");
 	}
-	else {
-		this->size--;
-
+	for (; index < size - 1; index++) {
+		*(data + index) = *(data + index + 1);
 	}
+	size--;
 }
-void Dynamic_Array::clear()
+void DynamicArray::insert(size_t index, int num)
 {
-	delete[] data;
-	size = 0;
-}
-void Dynamic_Array::erase(size_t index)
-{
-	for (size_t i = index; i < this->Size()-1; i++) {
-		this[i] = this[i + 1];
+	push_back(0);
+	if (index > size - 1) {
+		throw std::out_of_range("Index Out Of Range");
 	}
-	this->size--;
-}
-void Dynamic_Array::insert(size_t index, int num)
-{
-	this->size++;
-
 	for (size_t i = this->Size() - 1; i > index; i--) {
-		this[i] = this[i-1];
+		data[i] = data[i - 1];
 	}
-	this[index] = num;
+	data[index] = num;
 }
-void Dynamic_Array::assign(size_t new_size, int value)
+void DynamicArray::assign(size_t new_size, int value)
 {
-	*this = Dynamic_Array(new_size, value);
+	if (new_size >= capacity) {
+		int new_capacity = 1;
+		while (new_capacity < new_size) {
+			new_capacity *= 2;
+		}
+		reallocate(new_capacity);
+	}
+	size = new_size;
+	std::fill(data, data + size, value);
 }
-Dynamic_Array& Dynamic_Array::operator=(Dynamic_Array other)
+DynamicArray& DynamicArray::operator=(const DynamicArray other)
 {
-	this->swap(other);
+	if (other.Size() > Size()) {
+		delete[]data;
+		capacity = other.capacity;
+		data = new int[capacity];
+	}
+	size = other.size;
+	std::copy(other.data, (other.data + other.size), data);
 	return *this;
+
 }
-int& Dynamic_Array::operator[](size_t i) const {
+int& DynamicArray::at(size_t i) const {
 	if (i >= this->Size()) {
 		throw std::out_of_range("Index Out Of Range");
 	}
 	return *(data + i);
 }
-void Dynamic_Array::swap(Dynamic_Array& other) {
-	std::swap(this->data, other.data);
+void DynamicArray::swap(DynamicArray& other) {
+
 	std::swap(this->size, other.size);
 	std::swap(this->capacity, other.capacity);
+	std::swap(this->data, other.data);
 }
-
-int* Dynamic_Array::begin()
-{
-	return data;
-}	
-int* Dynamic_Array::end()
-{
-	return data+this->Size();
-}
-bool Dynamic_Array::operator==(Dynamic_Array& other) const
+bool DynamicArray::operator==(const DynamicArray& other) const
 {
 	if (this->Size() == other.Size()) {
-		Dynamic_Array a = *this;
-		for (int i = 0; i < std::min(this->Size(), other.Size()); i++) {
-			if (a[i] != other[i]) {
+		if (size == 0)
+			return true;
+		for (int i = 0; i < Size() - 1; i++) {
+			if (data[i] != other.data[i]) {
 				return false;
 			}
 		}
@@ -114,103 +120,28 @@ bool Dynamic_Array::operator==(Dynamic_Array& other) const
 		return false;
 	}
 }
-bool Dynamic_Array::operator!=(Dynamic_Array& other) const
+bool DynamicArray::operator!=(const DynamicArray& other) const
 {
-	if (this->Size() == other.Size()) {
-		Dynamic_Array a = *this;
-		for (int i = 0; i < std::min(this->Size(), other.Size()); i++) {
-			if (a[i] != other[i]) {
-				return true;
-			}
-		}
-		return false;
-	}
-	else {
-		return true;
-	}
+	return !(*this == other);
 }
-bool Dynamic_Array::operator>=(Dynamic_Array& other) const {
-	if (*this == other) {
-		return true;
-	}
-	else {
-		Dynamic_Array a = *this;
-		for (int i = 0; i < std::min(this->Size(), other.Size()); i++) {
-			if (a[i] < other[i]) {
-				return false;
-			}
-		}
-		if (this->Size() < other.Size() && a[this->Size() - 1] == other[this->Size() - 1]) {
-			return false;
-		}
-		else {
-			return true;
-		}
-	}
-}
-bool Dynamic_Array::operator>(Dynamic_Array& other) const
-{
-	if (*this == other) {
-		return false;
-	}
-	else {
-		Dynamic_Array a = *this;
-		for (int i = 0; i < std::min(this->Size(), other.Size()); i++) {
-			if (a[i] < other[i]) {
-				return false;
-			}
-		}
-		if (this->Size() < other.Size() && a[this->Size() - 1] == other[this->Size() - 1]) {
-			return false;
-		}
-		else {
-			return true;
-		}
-	}
-}
-bool Dynamic_Array::operator<=(Dynamic_Array& other) const {
-{
-	if (*this == other) {
-		return true;
-	}
-	else {
-		Dynamic_Array a = *this;
-		for (int i = 0; i < std::min(this->Size(), other.Size()); i++) {
-			if (a[i] > other[i]) {
-				return false;
-			}
-		}
-		if (this->Size() < other.Size() && a[this->Size() - 1] == other[this->Size() - 1]) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-}
-}
-bool Dynamic_Array::operator<(Dynamic_Array& other) const
-{
-	if (*this==other) {
-		return false;
-	}
-	else {
-		Dynamic_Array a = *this;
-		for (int i = 0; i < std::min(this->Size(), other.Size()); i++) {
-			if (a[i] > other[i]) {
-				return false;
-			}
-		}
-		if (this->Size() < other.Size() && a[this->Size() - 1] == other[this->Size() - 1]) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-}
-int* Dynamic_Array::Data() const
-{
-	return data;
-}
+bool DynamicArray::operator>=(const DynamicArray& other) const {
+	return ((*this > other )|| *this == other);
 
+}
+bool DynamicArray::operator>(const DynamicArray& other) const
+{
+	for (int i = 0; i < std::min(Size(), other.Size()); ++i) {
+		if (data[i] != other.data[i]) {
+			return data[i] > other.data[i];
+		}
+	}
+	return Size() > other.Size();
+}
+bool DynamicArray::operator<=(const DynamicArray& other) const
+{
+	return !(*this > other);
+}
+bool DynamicArray::operator<(const DynamicArray& other) const
+{
+	return (other>=*this);
+}
