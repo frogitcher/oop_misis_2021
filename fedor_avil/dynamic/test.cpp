@@ -1,6 +1,6 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "doctest.h"
-#include "dynamic_array.cpp"
+#include "dynamic.h"
 #include "iostream"
 
 Dynamic_Array a(2, 4);
