@@ -1,21 +1,7 @@
 #include "rational.h"
 #include <stdexcept>
+#include <numeric>
 #include <cmath>
-
-int gcd(int a, int b) {
-    a = std::abs(a);
-    b = std::abs(b);
-    if (a == 0) {
-        return b;
-    }
-    return gcd(b % a, a);
-}
-
-int lcm(int a, int b) {
-    a = std::abs(a);
-    b = std::abs(b);
-    return a*b/gcd(a, b);
-}
 
 Rational::Rational(int _num)
     : num(_num)
@@ -44,7 +30,7 @@ Rational& Rational::operator=(const Rational& rhs) {
 }
 
 Rational& Rational::operator+=(const Rational& rhs) {
-    int l = lcm(den, rhs.den);
+    int l = std::lcm(den, rhs.den);
     num *= l / den;
     num += rhs.num * (l / rhs.den);
     den = l;
@@ -57,7 +43,7 @@ Rational Rational::operator+(const Rational& rhs) const {
 }
 
 Rational& Rational::operator-=(const Rational& rhs) {
-    int l = lcm(den, rhs.den);
+    int l = std::lcm(den, rhs.den);
     num *= l / den;
     num -= rhs.num * (l / rhs.den);
     den = l;
@@ -161,7 +147,7 @@ void Rational::Normalize() {
         num *= -1;
         den *= -1;
     }
-    int g = gcd(num, den);
+    int g = std::gcd(num, den);
     num /= g;
     den /= g;
 }
