@@ -1,6 +1,6 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "doctest.h"
-#include "rational.cpp"
+#include "rational.h"
 
 TEST_CASE("Testing arithmetic operations") {
     CHECK(Rational(25, 30) == Rational(5, 6));
