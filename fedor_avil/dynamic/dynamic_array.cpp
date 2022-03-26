@@ -1,13 +1,12 @@
 #include "dynamic.h"
 #include <stdexcept>
 #include <algorithm>
-#include <compare>
-#include <cmath>
-Dynamic_Array::Dynamic_Array(size_t _size, int _value = 0) {
+#include <string>
+Dynamic_Array::Dynamic_Array(size_t _size, int value) {
 	size = _size;
 	capacity = _size;
 	data = new int[_size];
-	std::fill(data, data + size, _value);
+	std::fill(data, data + size, value);
 }
 Dynamic_Array::Dynamic_Array(const Dynamic_Array& other)
 {
@@ -33,7 +32,7 @@ bool Dynamic_Array::Empty() const {
 void Dynamic_Array::push_back(int _value) {
 	if (size == capacity && capacity!=0) {
 		int* new_data = new int[capacity * 2];
-		std::copy(this->begin, this->end, new_data);
+		std::copy(this->begin(), this->end(), new_data);
 		delete[] data;
 		data = new_data;
 		capacity *= 2; 
@@ -57,7 +56,7 @@ void Dynamic_Array::clear()
 }
 void Dynamic_Array::erase(size_t index)
 {
-	for (int i = index; i < this->Size()-1; i++) {
+	for (size_t i = index; i < this->Size()-1; i++) {
 		this[i] = this[i + 1];
 	}
 	this->size--;
@@ -66,14 +65,14 @@ void Dynamic_Array::insert(size_t index, int num)
 {
 	this->size++;
 
-	for (int i = this->Size() - 1; i > index; i--) {
+	for (size_t i = this->Size() - 1; i > index; i--) {
 		this[i] = this[i-1];
 	}
 	this[index] = num;
 }
 void Dynamic_Array::assign(size_t new_size, int value)
 {
-	Dynamic_Array(new_size, value);
+	*this = Dynamic_Array(new_size, value);
 }
 Dynamic_Array& Dynamic_Array::operator=(Dynamic_Array other)
 {
@@ -102,57 +101,111 @@ int* Dynamic_Array::end()
 }
 bool Dynamic_Array::operator==(Dynamic_Array& other) const
 {
-	return std::equal(this->begin, this->end, other.begin, other.end);
-}
-bool Dynamic_Array::operator!=(Dynamic_Array& other) const
-{
-	return !operator==;
-}
-bool Dynamic_Array::operator>=(Dynamic_Array& other) const {
-	if (operator==) {
+	if (this->Size() == other.Size()) {
+		Dynamic_Array a = *this;
+		for (int i = 0; i < std::min(this->Size(), other.Size()); i++) {
+			if (a[i] != other[i]) {
+				return false;
+			}
+		}
 		return true;
 	}
 	else {
-		if (this->Size() > other.Size()) {
-			return true;
+		return false;
+	}
+}
+bool Dynamic_Array::operator!=(Dynamic_Array& other) const
+{
+	if (this->Size() == other.Size()) {
+		Dynamic_Array a = *this;
+		for (int i = 0; i < std::min(this->Size(), other.Size()); i++) {
+			if (a[i] != other[i]) {
+				return true;
+			}
+		}
+		return false;
+	}
+	else {
+		return true;
+	}
+}
+bool Dynamic_Array::operator>=(Dynamic_Array& other) const {
+	if (*this == other) {
+		return true;
+	}
+	else {
+		Dynamic_Array a = *this;
+		for (int i = 0; i < std::min(this->Size(), other.Size()); i++) {
+			if (a[i] < other[i]) {
+				return false;
+			}
+		}
+		if (this->Size() < other.Size() && a[this->Size() - 1] == other[this->Size() - 1]) {
+			return false;
 		}
 		else {
-
+			return true;
 		}
 	}
 }
 bool Dynamic_Array::operator>(Dynamic_Array& other) const
 {
-	if (operator!=) {
-		return true;
+	if (*this == other) {
+		return false;
 	}
 	else {
-		if (this->Size() > other.Size()) {
+		Dynamic_Array a = *this;
+		for (int i = 0; i < std::min(this->Size(), other.Size()); i++) {
+			if (a[i] < other[i]) {
+				return false;
+			}
+		}
+		if (this->Size() < other.Size() && a[this->Size() - 1] == other[this->Size() - 1]) {
+			return false;
+		}
+		else {
 			return true;
 		}
 	}
 }
 bool Dynamic_Array::operator<=(Dynamic_Array& other) const {
-	if (operator==) {
+{
+	if (*this == other) {
 		return true;
 	}
 	else {
-		if (this->Size() < other.Size()) {
+		Dynamic_Array a = *this;
+		for (int i = 0; i < std::min(this->Size(), other.Size()); i++) {
+			if (a[i] > other[i]) {
+				return false;
+			}
+		}
+		if (this->Size() < other.Size() && a[this->Size() - 1] == other[this->Size() - 1]) {
 			return true;
 		}
 		else {
-				
+			return false;
 		}
 	}
 }
+}
 bool Dynamic_Array::operator<(Dynamic_Array& other) const
 {
-	if (operator!=) {
-		return true;
+	if (*this==other) {
+		return false;
 	}
 	else {
-		if (this->Size() < other.Size()) {
+		Dynamic_Array a = *this;
+		for (int i = 0; i < std::min(this->Size(), other.Size()); i++) {
+			if (a[i] > other[i]) {
+				return false;
+			}
+		}
+		if (this->Size() < other.Size() && a[this->Size() - 1] == other[this->Size() - 1]) {
 			return true;
+		}
+		else {
+			return false;
 		}
 	}
 }
