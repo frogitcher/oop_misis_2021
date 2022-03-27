@@ -77,8 +77,8 @@ void Dynamic_Array::erase(size_t index)
 void Dynamic_Array::insert(size_t index, int num)
 {
 	this->size++;
-	if (size == capacity) {
-		capacity *= 2;
+	if (index > size-1) {
+		throw std::out_of_range("Index Out Of Range");
 	}
 	for (size_t i = this->Size() - 1; i > index; i--) {
 		this[i] = this[i - 1];
