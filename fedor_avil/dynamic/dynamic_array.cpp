@@ -2,6 +2,7 @@
 #include <stdexcept>
 #include <algorithm>
 #include <string>
+#include <stddef.h>
 Dynamic_Array::Dynamic_Array(size_t _size, int value) {
 	size = _size;
 	capacity = _size;
@@ -17,11 +18,11 @@ Dynamic_Array::Dynamic_Array(const Dynamic_Array& other)
 Dynamic_Array::~Dynamic_Array() {
 	delete[]data;
 }
-size_t Dynamic_Array::Size() const
+const size_t Dynamic_Array::Size() const
 {
 	return this->size;
 }
-size_t Dynamic_Array::Capacity() const
+const size_t Dynamic_Array::Capacity() const
 {
 	return this->capacity;
 }
@@ -37,7 +38,8 @@ void Dynamic_Array::push_back(int _value) {
 		data = new_data;
 		capacity *= 2; 
 	}
-	data[size++] = _value;
+	size++;
+	data[size] = _value;
 }
 void Dynamic_Array::pop_back()
 {
@@ -76,8 +78,7 @@ void Dynamic_Array::assign(size_t new_size, int value)
 }
 Dynamic_Array& Dynamic_Array::operator=(Dynamic_Array other)
 {
-	this->swap(other);
-	return *this;
+	return other;
 }
 int& Dynamic_Array::operator[](size_t i) const {
 	if (i >= this->Size()) {
@@ -86,9 +87,10 @@ int& Dynamic_Array::operator[](size_t i) const {
 	return *(data + i);
 }
 void Dynamic_Array::swap(Dynamic_Array& other) {
-	std::swap(this->data, other.data);
+	
 	std::swap(this->size, other.size);
 	std::swap(this->capacity, other.capacity);
+	std::swap(this->data, other.data);
 }
 
 int* Dynamic_Array::begin()
@@ -99,7 +101,7 @@ int* Dynamic_Array::end()
 {
 	return data+this->Size();
 }
-bool Dynamic_Array::operator==(Dynamic_Array& other) const
+bool Dynamic_Array::operator==(const Dynamic_Array& other) const
 {
 	if (this->Size() == other.Size()) {
 		Dynamic_Array a = *this;
@@ -114,7 +116,7 @@ bool Dynamic_Array::operator==(Dynamic_Array& other) const
 		return false;
 	}
 }
-bool Dynamic_Array::operator!=(Dynamic_Array& other) const
+bool Dynamic_Array::operator!=(const Dynamic_Array& other) const
 {
 	if (this->Size() == other.Size()) {
 		Dynamic_Array a = *this;
@@ -129,7 +131,7 @@ bool Dynamic_Array::operator!=(Dynamic_Array& other) const
 		return true;
 	}
 }
-bool Dynamic_Array::operator>=(Dynamic_Array& other) const {
+bool Dynamic_Array::operator>=(const Dynamic_Array& other) const {
 	if (*this == other) {
 		return true;
 	}
@@ -148,7 +150,7 @@ bool Dynamic_Array::operator>=(Dynamic_Array& other) const {
 		}
 	}
 }
-bool Dynamic_Array::operator>(Dynamic_Array& other) const
+bool Dynamic_Array::operator>(const Dynamic_Array& other) const
 {
 	if (*this == other) {
 		return false;
@@ -168,7 +170,7 @@ bool Dynamic_Array::operator>(Dynamic_Array& other) const
 		}
 	}
 }
-bool Dynamic_Array::operator<=(Dynamic_Array& other) const {
+bool Dynamic_Array::operator<=(const Dynamic_Array& other) const {
 {
 	if (*this == other) {
 		return true;
@@ -189,7 +191,7 @@ bool Dynamic_Array::operator<=(Dynamic_Array& other) const {
 	}
 }
 }
-bool Dynamic_Array::operator<(Dynamic_Array& other) const
+bool Dynamic_Array::operator<(const Dynamic_Array& other) const
 {
 	if (*this==other) {
 		return false;
