@@ -22,12 +22,12 @@ public:
 	int* begin();
 	int* end();
 	bool operator==(const Dynamic_Array& other) const;
-	bool operator>=(const Dynamic_Array& other) const;
+	bool operator>=(const Dynamic_Array& other) const ;
 	bool operator>(const Dynamic_Array& other) const;
 	bool operator<(const Dynamic_Array& other) const;
 	bool operator<=(const Dynamic_Array& other) const;
 	bool operator!=(const Dynamic_Array& other) const;
-	Dynamic_Array& operator=(Dynamic_Array other);
+	Dynamic_Array& operator=(const Dynamic_Array other);
 	int& operator[](size_t i) const;
 
 private:
