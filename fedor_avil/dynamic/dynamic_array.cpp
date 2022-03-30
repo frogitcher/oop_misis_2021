@@ -11,6 +11,14 @@ Dynamic_Array::Dynamic_Array(size_t _size, int value) {
 		std::fill(data, data + size, value);
 	}
 }
+Dynamic_Array::Dynamic_Array(const std::initializer_list<int>& list) {
+	size = list.size();
+	capacity = list.size();
+	data = new int[capacity];
+	if (size != 0) {
+		std::copy(list.begin(), list.end(), data);
+	}
+}
 Dynamic_Array::Dynamic_Array(const Dynamic_Array& other)
 {
 	size = other.size;
@@ -91,7 +99,7 @@ void Dynamic_Array::assign(size_t new_size, int value)
 	size = new_size;
 	capacity = new_size;
 	data = new int[capacity];
-	if (size != 0) {
+	if (size != 0	) {
 		std::fill(data, data + size, value);
 	}
 }

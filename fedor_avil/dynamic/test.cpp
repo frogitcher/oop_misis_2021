@@ -7,16 +7,23 @@ Dynamic_Array a = Dynamic_Array(2, 4);
 Dynamic_Array b(5);
 Dynamic_Array a_copy(a);
 Dynamic_Array a_copy2 = a;
-
+Dynamic_Array c{ 1,2,3,4 };
 TEST_CASE("Testing Contructors") {
+    std::cout << "TWO ARGUMENTS: ";
     for (int i = 0; i < a.Size(); i++) {
         std::cout << a[i] << " ";
     }
-    std::cout << std::endl;
+    std::cout << std::endl << "ONE ARGUMENT: ";
     for (int i = 0; i < b.Size(); i++) {
         std::cout << b[i] << " ";
     } 
+
     CHECK(b.Size() == 5);
+    std::cout << std::endl<<"INITIALIZER: ";
+    for (int i = 0; i < c.Size(); i++) {
+        std::cout << c[i] << " ";
+    }
+    std::cout << std::endl;
 }
 
 TEST_CASE("Testing Editors"){

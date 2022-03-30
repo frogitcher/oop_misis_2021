@@ -6,7 +6,7 @@ public:
 	Dynamic_Array() = default;
 	Dynamic_Array(size_t length, int value=0);
 	Dynamic_Array(const Dynamic_Array& other);
-	//Dynamic_Array(const std::initializer_list<int>& list);
+	Dynamic_Array(const std::initializer_list<int>& list);
 	~Dynamic_Array();
 	const size_t Size() const;
 	const size_t Capacity() const;
