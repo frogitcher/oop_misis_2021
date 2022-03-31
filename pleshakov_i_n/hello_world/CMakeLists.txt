@@ -1,7 +1,6 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.14)
 
 project(project)
-
 
 add_executable(main main.cpp hello_world.h)
 

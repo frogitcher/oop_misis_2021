@@ -108,7 +108,7 @@ Rational& Rational::operator++() {
     return *this += Rational(1, 1);
 }
 
-Rational Rational::operator++(int a) {
+const Rational Rational::operator++(int a) {
     Rational r(*this);
     *this += Rational(1, 1);
     return r;
@@ -118,7 +118,7 @@ Rational& Rational::operator--() {
     return *this -= Rational(1, 1);
 }
 
-Rational Rational::operator--(int a) {
+const Rational Rational::operator--(int a) {
     Rational r(*this);
     *this -= Rational(1, 1);
     return r;
