@@ -22,9 +22,8 @@ TEST_CASE("Testing arithmetic operations") {
     CHECK((Rational(8, 2) /= Rational(1, 2)) == Rational(8, 1));
 }
 
-TEST_CASE("Testing boolean functions") {
+TEST_CASE("Testing boolean functions (True cases)") {
 
-    // True cases
     CHECK(Rational(1, -1) == Rational(-1, 1));
     CHECK(Rational(-1, 1) != Rational(1, 1));
     CHECK(Rational(20, 1) > Rational(1, 20));
@@ -34,17 +33,19 @@ TEST_CASE("Testing boolean functions") {
     CHECK(Rational(3, 14) <= (Rational(7, 15)));
     CHECK(Rational(3, 14) <= (Rational(3, 14)));
 
-    // False Cases
+}
+
+TEST_CASE("Testing boolean functions (False cases)") {
+
     CHECK(!(Rational(10, 1) == Rational(9, 1)));
     CHECK(!(Rational(10, 5) == Rational(12, 4)));
-    CHECK(Rational(-1, 1) != Rational(1, 1));
-    CHECK(Rational(20, 1) > Rational(1, 20));
-    CHECK(Rational(-6, 9) < (Rational(5, -9)));
-    CHECK(Rational(4, 7) >= (Rational(7, 31)));
-    CHECK(Rational(4, 7) >= (Rational(4, 7)));
-    CHECK(Rational(3, 14) <= (Rational(7, 15)));
-    CHECK(Rational(3, 14) <= (Rational(3, 14)));
-
+    CHECK(!(Rational(-1, 1) != Rational(-1, 1)));
+    CHECK(!(Rational(1, 20) > Rational(20, 1)));
+    CHECK(!(Rational(-6, 9) < (Rational(8, -9)));
+    CHECK(!(Rational(-4, 7) >= (Rational(7, 31)));
+    CHECK(!(Rational(3, 7) >= (Rational(4, 7)));
+    CHECK(!(Rational(15, 14) <= (Rational(7, 15)));
+    CHECK(!(Rational(3, 14) <= (Rational(4, 14)));
 
 }
 
