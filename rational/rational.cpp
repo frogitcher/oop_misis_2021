@@ -94,7 +94,7 @@ bool Rational::operator==(const Rational& rhs) const{
 }
 
 bool Rational::operator!=(const Rational& rhs) const{
-    return !(numerator * rhs.denominator == denominator * rhs.numerator);
+    return !(*this == rhs);
 }
 
 bool Rational::operator<(const Rational& rhs) const{
