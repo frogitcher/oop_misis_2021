@@ -83,8 +83,7 @@ Rational Rational::operator--(int a) {
 }
 
 Rational& Rational::operator/=(const Rational& rhs) {
-	if (rhs.num == 0)
-	{
+	if (rhs.num == 0){
 		throw std::invalid_argument("exception - denominator must be more then 0");
 	}
 	num *= rhs.den;
@@ -105,8 +104,7 @@ Rational Rational::operator-(const Rational& rhs) const {
 	return Rational(*this) -= rhs;
 }
 
-Rational& Rational::operator+=(const Rational& rhs)
-{
+Rational& Rational::operator+=(const Rational& rhs) {
 	num = num * rhs.den + rhs.num * den;
 	den = den * rhs.den;
 	Normalize();
@@ -120,8 +118,7 @@ Rational& Rational::operator*=(const Rational& rhs) {
 	return *this;
 }
 
-bool Rational::operator!=(const Rational& rhs)const
-{
+bool Rational::operator!=(const Rational& rhs)const {
 	return (num != rhs.num || den != rhs.den);
 }
 

@@ -1,5 +1,4 @@
 #pragma once
-#include <iostream>
 
 int gcd(int a, int b);
 
@@ -38,7 +37,3 @@ private:
 	int num, den;
 	Rational& Normalize();
 };
-
-
-
-

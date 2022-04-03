@@ -29,11 +29,9 @@ TEST_CASE("test bool operators") {
 	CHECK(Rational(1, 4) > Rational(1, 8));
 	CHECK(Rational(100, 1) > Rational(1,40));
 
-
 	CHECK(Rational(1, 4) < Rational(1));
 	CHECK(Rational(-11, 2) < Rational(11, 2));
 	CHECK(Rational(10) < Rational(100));
-
 }
 
 TEST_CASE("test unary operators") {
@@ -64,7 +62,6 @@ TEST_CASE("test binary operators") {
 	CHECK((Rational(1) - Rational(-1, 2)) == Rational(1, 2));
 	CHECK((Rational(-1, 4) - Rational(-1, 4)) == Rational(-1, 2));
 
-
 	CHECK((Rational(1, 2) * Rational(3)) == Rational(3, 2));
 	CHECK((Rational(2) * Rational(-1, 2)) == Rational(-1));
 	CHECK((Rational(-1, 4) * Rational(-1, 4)) == Rational(1, 16));
@@ -74,9 +71,7 @@ TEST_CASE("test binary operators") {
 	CHECK((Rational(-1) / Rational(1, 2)) == Rational(-2));
 	CHECK((Rational(100, 1) / Rational(1, 2)) == Rational(200));
 	CHECK_THROWS_WITH(Rational(1, 1) / Rational(0), "exception - denominator must be more then 0");
-
 }
-
 
 TEST_CASE("test binary operators") {
 	CHECK(++Rational(1) == Rational(2));
@@ -87,7 +82,6 @@ TEST_CASE("test binary operators") {
 	CHECK(--Rational(-1, 2) == Rational(-3, 2));
 
 }
-
 
 TEST_CASE("test unary operators") {
 	Rational a = Rational(1,2);
