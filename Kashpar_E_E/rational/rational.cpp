@@ -103,8 +103,6 @@ Rational Rational::operator-() const{
     Rational temp(*this);
     temp *= Rational(-1);
     return temp;
-
-    // return -this...
 }
 
 bool Rational::operator<(const Rational& rhs) const {
