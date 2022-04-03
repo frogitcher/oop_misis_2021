@@ -1,5 +1,4 @@
 cmake_minimum_required(VERSION 3.0)
-project(Rational_1)
 
 include(ExternalProject)
 find_package(Git REQUIRED)
@@ -20,10 +19,5 @@ ExternalProject_Add(
 ExternalProject_Get_Property(doctest source_dir)
 set(DOCTEST_INCLUDE_DIR ${source_dir}/doctest CACHE INTERNAL "Path to include folder for doctest")
 include_directories(${DOCTEST_INCLUDE_DIR})
-include_directories(doctest)
 
-add_executable(test
-	Rational.cpp
-	Rational.h
-	test.cpp
-)
+add_subdirectory(hello_world)
