@@ -28,9 +28,4 @@ add_executable(test
     rational.cpp
     test.cpp
 )
-add_executable(main
-    rational.h
-    rational.cpp
-    main.cpp
-)
 # add_subdirectory(tarasov_e_v)

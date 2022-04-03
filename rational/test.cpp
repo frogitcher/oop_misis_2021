@@ -2,8 +2,13 @@
 #include "doctest.h"
 #include "rational.h"
 
+TEST_CASE("Testing output"){
+    std::stringstream teststream;
+    teststream << Rational(1, 2);
+    CHECK(teststream.str() == "1/2");
+}
+
 TEST_CASE("Testing arithmetic operations") {
-    std::cout << Rational(1, 2) << " - output test" << std::endl;
     CHECK(Rational(100, 1000) == Rational(1, 10));
     CHECK(Rational(1, 2) + Rational(1, 2) == Rational(1, 1));
     CHECK(Rational(3, 3) - Rational(1, 2) == Rational(2, 4));

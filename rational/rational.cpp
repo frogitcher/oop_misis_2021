@@ -4,7 +4,6 @@
 #include <stdexcept>
 
 void Rational::Normalize(){
-    // вопрос: у нас есть ограничение на версию стандарта c++?
     if (denominator < 0){
         denominator *= -1;
         numerator *= -1;
@@ -14,21 +13,21 @@ void Rational::Normalize(){
     denominator /= g;
 }
 
-Rational::Rational(int _numenator){
-    numerator = _numenator;
-    denominator = 1;
+Rational::Rational(int _numerator)
+    : numerator(_numerator)
+    , denominator(1){
 }
 
-Rational::Rational(const Rational& rhs){
-    numerator = rhs.numerator;
-    denominator = rhs.denominator;
+Rational::Rational(const Rational& rhs)
+    :numerator(rhs.numerator)
+    , denominator(rhs.denominator){
 }
 
-Rational::Rational(int _numenator, int _denominator){
+Rational::Rational(int _numerator, int _denominator){
     if (_denominator == 0){
         throw std::invalid_argument("denominator must not be 0");
     }
-    numerator = _numenator;
+    numerator = _numerator;
     denominator = _denominator;
     Normalize();
 }
@@ -107,11 +106,11 @@ bool Rational::operator>(const Rational& rhs) const{
 }
 
 bool Rational::operator<=(const Rational& rhs) const{
-    return (numerator * rhs.denominator <= denominator * rhs.numerator);
+    return !(*this > rhs);
 }
 
 bool Rational::operator>=(const Rational& rhs) const{
-    return (numerator * rhs.denominator >= denominator * rhs.numerator);
+    return !(*this < rhs);
 }
 
 int Rational::GetNumerator() const{
