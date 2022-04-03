@@ -59,15 +59,25 @@ Rational Rational::operator/(const Rational& rhs) const{
 }
 
 Rational& Rational::operator+=(const Rational& rhs){
-    numerator += rhs.numerator * denominator;
-    denominator *= rhs.denominator ;
+    if (denominator == rhs.denominator){
+        numerator += rhs.numerator;
+    } else{
+        numerator *= rhs.denominator;
+        numerator += rhs.numerator * denominator;
+        denominator *= rhs.denominator ;
+    }
     Normalize();
     return *this;
 }
 
 Rational& Rational::operator-=(const Rational& rhs){
-    numerator -= rhs.numerator * denominator;
-    denominator *= rhs.denominator;
+    if (denominator == rhs.denominator){
+        numerator -= rhs.numerator;
+    } else{
+        numerator *= rhs.denominator;
+        numerator -= rhs.numerator * denominator;
+        denominator *= rhs.denominator ;
+    }
     Normalize();
     return *this;
 }

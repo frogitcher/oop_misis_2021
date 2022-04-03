@@ -24,11 +24,11 @@ TEST_CASE("Testing arithmetic operations") {
     CHECK(Rational(121, 242) + Rational(121, 242) == Rational(1, 1));
     CHECK(Rational(237716, 275) - Rational(51673, 671) == Rational(13208851, 16775));
     CHECK(Rational(8553467, 51653) - Rational(93545, 250) == Rational(-538702627, 2582650));
-    CHECK(Rational(34625, 24513) * Rational(6791, 7973) == Rational(235138375, 1954422149));
+    CHECK(Rational(34625, 24513) * Rational(6791, 7973) == Rational(235138375, 195442149));
     CHECK(Rational(3462, 8551) / Rational(9515, 7217) == Rational(24985254, 81362765));
     CHECK(Rational(3462, 8551) / Rational(9515, -7217) == Rational(-24985254, 81362765));
-    CHECK((Rational(3555, 7976) += Rational(6761, 9515)) == Rational(87751561, 75891640));
-    CHECK((Rational(34625, 8551) *= Rational(6791, 7973)) == Rational(235138375, 1954422149));
+    CHECK((Rational(121, 242) += Rational(121, 242)) == Rational(1, 1));
+    CHECK((Rational(34625, 8551) *= Rational(6791, 7973)) == Rational(235138375, 68177123));
     CHECK((Rational(8553467, 51653) -= Rational(93545, 250)) == Rational(-538702627, 2582650));
     CHECK((Rational(3462, 8551) /= Rational(9515, 7217)) == Rational(24985254, 81362765));
 }
@@ -52,11 +52,11 @@ TEST_CASE("Testing boolean functions (False cases)") {
     CHECK(!(Rational(10, 5) == Rational(12, 4)));
     CHECK(!(Rational(-1, 1) != Rational(-1, 1)));
     CHECK(!(Rational(1, 20) > Rational(20, 1)));
-    CHECK(!(Rational(-6, 9) < (Rational(8, -9)));
-    CHECK(!(Rational(-4, 7) >= (Rational(7, 31)));
-    CHECK(!(Rational(3, 7) >= (Rational(4, 7)));
-    CHECK(!(Rational(15, 14) <= (Rational(7, 15)));
-    CHECK(!(Rational(3, 14) <= (Rational(4, 14)));
+    CHECK(!(Rational(-6, 9) < Rational(8, -9)));
+    CHECK(!(Rational(-4, 7) >= Rational(7, 31)));
+    CHECK(!(Rational(3, 7) >= Rational(4, 7)));
+    CHECK(!(Rational(15, 14) <= Rational(7, 15)));
+    CHECK(!(Rational(4, 14) <= Rational(3, 14)));
 
 }
 
