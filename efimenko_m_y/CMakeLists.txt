@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.0)
 
-project(Rational)
+project(OOP)
 
-include_directories(Rational doctest)
+include_directories(rational doctest)
 
-add_subdirectory(Rational)
+add_subdirectory(rational)
