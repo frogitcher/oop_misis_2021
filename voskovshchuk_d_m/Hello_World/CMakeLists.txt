@@ -1,7 +1,16 @@
-project(project)
 cmake_minimum_required(VERSION 3.0)
 
-include(ExternalProject)
-find_package(Git REQUIRED)
+project(project)
 
-add_subdirectory(Hello_World)
+include_directories(doctest)
+
+add_executable(main
+	Hello_World.cpp
+	Hello_World.h
+)
+
+
+add_executable(test
+	test.cpp
+)
+
