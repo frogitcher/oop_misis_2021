@@ -13,6 +13,9 @@ TEST_CASE("testing the basics") {
     CHECK((Rational(3, 2) -= Rational(-1, 4)) == Rational(7, 4));
     CHECK((Rational(2, 9) += Rational(0, 17)) == Rational(2, 9));
     CHECK((Rational(1, 9) /= Rational(1, 9)) == Rational(1));
+    CHECK((Rational(234, 9) == Rational(25)) == false );
+    CHECK((Rational(2, 7) * Rational(-5, 4) == Rational(5, 14)) == false);
+    CHECK((Rational(25, 3) /= Rational(9, 3)) == Rational(25, 9));
 }
 TEST_CASE(" testing rational operators") {
     CHECK(Rational(1, 2) > Rational(1, 4));
@@ -20,6 +23,8 @@ TEST_CASE(" testing rational operators") {
     CHECK(Rational(12, 13) != Rational(15, 16));
     CHECK(Rational(3, 6) <= (Rational(1, 2)));
     CHECK(Rational(2, 3) >= Rational(2, 3));
+    CHECK((Rational(2, 3) > Rational(2, 3)) == false);
+    CHECK(Rational(78, 1) < Rational(2553, 32));  
     CHECK(Rational(-1, 2) == Rational(-2, 4));
 }
 
@@ -43,6 +48,15 @@ TEST_CASE(" testing the exceptions") {
 }
 TEST_CASE(" testing input/ output") {
     Rational r;
-    std::cin >> r;
-    std::cout << r;
+    r = Rational(27, 3);
+    std::ostringstream out;
+    out << r;
+    std::istringstream in;
+    in >> r;
+    CHECK(r == Rational(27, 3));
+    CHECK((r == Rational(-27, 3) )== false);
+    Rational t = Rational(24, 8);
+    in >> t;
+    CHECK((t == Rational(3)));
+    CHECK((t == Rational(4, 2)) == false);
 }
