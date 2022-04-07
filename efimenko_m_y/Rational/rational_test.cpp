@@ -1,6 +1,6 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
-#include <doctest.h>
-#include <rational/rational.h>
+#include "doctest.h"
+#include "rational.h"
 #include <iostream>
 TEST_CASE("testing the basics") {
     CHECK((Rational(3) == Rational(3, 1)));
@@ -33,9 +33,15 @@ TEST_CASE(" testing other operators") {
     b = a++;
     CHECK(b == Rational(2, 7));
     CHECK(a == Rational(9, 7));
+    b = ++a;
+    CHECK(a == Rational(16, 7));
+    CHECK(b == a);
     b = a--;
-    CHECK(b == Rational(9, 7));
+    CHECK(b == Rational(16, 7));
+    CHECK(a == Rational(9, 7));
+    b = --a;
     CHECK(a == Rational(2, 7));
+    CHECK(b == a);
     CHECK((--Rational(5, 7)) == Rational(-2, 7));
     CHECK(-Rational(100, 20) == Rational(-5));
     CHECK(+Rational(240, 40) == Rational(6));
@@ -51,12 +57,10 @@ TEST_CASE(" testing input/ output") {
     r = Rational(27, 3);
     std::ostringstream out;
     out << r;
-    std::istringstream in;
+    CHECK(out.str() == "9/1");
+    std::istringstream in("5/3");
     in >> r;
-    CHECK(r == Rational(27, 3));
-    CHECK((r == Rational(-27, 3) )== false);
-    Rational t = Rational(24, 8);
-    in >> t;
-    CHECK((t == Rational(3)));
-    CHECK((t == Rational(4, 2)) == false);
+    CHECK(r == Rational(5,3));
+    std::istringstream cin("5\3");
+    CHECK_THROWS_WITH((cin >> r), "Wrong slash used");
 }

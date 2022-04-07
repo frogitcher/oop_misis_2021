@@ -22,10 +22,10 @@ public:
 
 	Rational operator +() const;
 	Rational operator - () const;
-	Rational operator++();
-	Rational& operator++(int);
-	Rational operator--();
-	Rational& operator--(int);
+	Rational& operator++();
+	Rational operator++(int);
+	Rational& operator--();
+	Rational operator--(int);
 
 
 	bool operator< (const Rational& rhs) const;

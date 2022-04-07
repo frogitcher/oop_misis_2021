@@ -64,22 +64,22 @@ Rational& Rational::operator /=(const Rational& rhs) {
 	return *this;
 }
 
-Rational Rational:: operator++() {
+Rational& Rational:: operator++() {
 	*this = *this + 1;
 	Normalize();
 	return *this;
 }
-Rational& Rational:: operator++(int) {
+Rational Rational:: operator++(int) {
 	Rational before = *this;
 	*this = *this + 1;
 	return before;
 }
-Rational Rational:: operator--() {
+Rational& Rational:: operator--() {
 	*this = *this - 1;
 	Normalize();
 	return *this;
 }
-Rational& Rational:: operator--(int) {
+Rational Rational:: operator--(int) {
 	Rational before = *this;
 	*this = *this - 1;
 	return before;
@@ -118,14 +118,18 @@ std::ostream& operator<<(std::ostream& out, const Rational& value) {
 }
 
 std::istream& operator>>(std::istream& in, Rational& value) {
-	in >> value.num >> value.den;
-	if (value.den == 0) {
-		throw std::invalid_argument("Denominator must not be equal to zero");
+	char slash(0);
+	in >> value.num >>slash>> value.den;
+	if (slash == '/') {
+		if (value.den == 0) {
+			throw std::invalid_argument("Denominator must not be equal to zero");
+		}
+		if (value.den < 0) {
+			throw std::invalid_argument("Denominator must be a natural number");
+		}
+		value.Normalize();
 	}
-	if (value.den < 0) {
-		throw std::invalid_argument("Denominator must be a natural number");
-	}
-	value.Normalize();
+	else { throw std::invalid_argument("Wrong slash used"); }
 	return in;
 }
 
