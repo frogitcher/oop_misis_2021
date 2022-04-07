@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.0)
 project(oop)
 
+add_compile_options(-std=c++17)
+
 include(ExternalProject)
 find_package(Git REQUIRED)
 
@@ -21,9 +23,4 @@ ExternalProject_Get_Property(doctest source_dir)
 set(DOCTEST_INCLUDE_DIR ${source_dir}/doctest CACHE INTERNAL "Path to include folder for doctest")
 include_directories(${DOCTEST_INCLUDE_DIR})
 
-add_executable(
-	rational_test
-	test.cpp
-	rational.cpp
-)
-	
+add_subdirectory(rational_numbers)
