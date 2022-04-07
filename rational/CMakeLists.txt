@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 3.0)
 
-project(project)
+project(rational)
 
-add_executable(main
-	main.cpp
-	hello_world.h
+add_executable(rational
+	rational.cpp
+	rational.h
 )
 
 add_executable(test
