@@ -1,6 +1,6 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "doctest.h"
-#include "Stack.h"
+//#include "Stack.h"
 #include "Stack.cpp" //I've no idea why this should be here, but it doesn't work without it... 
 
 #include <string>
