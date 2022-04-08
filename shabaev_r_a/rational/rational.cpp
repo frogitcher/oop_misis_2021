@@ -118,8 +118,15 @@ int Rational::getdenumerator() const {
 }
 
 void Rational::Normalize() {
-    if (num == 0) {den=1; return;}
+    if (num == 0) {
+        den=1;
+        return;
+    }
     int g = std::gcd(abs(num), den);
-    num/=g, den/=g;
-    if (den < 0) num*=-1, den*=-1;
+    num/=g;
+    den/=g;
+    if (den < 0) {
+        num*=-1;
+        den*=-1
+    };
 }
