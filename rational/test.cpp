@@ -46,7 +46,7 @@
 	
 	    Rational b(1, 2);
 	
-	    CHECK_THROWS_WITH(Rational(5, 0), "The denominator is just not 00");
+	    CHECK_THROWS_WITH(Rational(5, 0), "The denominator is just not 0");
 	    CHECK_THROWS_WITH((b /= Rational(0, 5)), "The denominator is just not 0");
 	}
 	
