@@ -11,7 +11,8 @@ public:
     struct Node {
         Node* next = nullptr;
         T value;
-        //explicit Node(const T& val);
+        explicit Node(const Node* from);
+        Node(Node* _next, T _value);
     };
 
     Stack() = default;
@@ -37,6 +38,7 @@ public:
     Stack<T>& operator+=(Stack<T>& oth);
     Stack<T> operator+(Stack<T>& oth);
 private:
+    void CopyFromOth(const Stack<T>& oth);
     void InitFromInitializerList(const std::initializer_list<T>& list);
 private:
     size_t size = 0;

@@ -1,9 +1,19 @@
 #include "Stack.h"
 
-//template<typename T>
-//Stack<T>::Node::Node(const T& val) : value(val) {
-//
-//}
+template<typename T>
+inline Stack<T>::Node::Node(const Node * from)
+{
+    value = from->value;
+    if (from->next == nullptr) {
+        return;
+    }
+    next = new Node(from->next);
+}
+
+template<typename T>
+Stack<T>::Node::Node(Node* _next, T _value) : next(_next), value(_value)
+{
+}
 
 template<typename T>
 Stack<T>::Stack(const Stack<T>& st)
@@ -12,9 +22,7 @@ Stack<T>::Stack(const Stack<T>& st)
         return;
     }
 
-    head = st.head;
-    tail = st.tail;
-    size = st.size;
+    CopyFromOth(st);
 }
 
 template<typename T>
@@ -60,12 +68,13 @@ void Stack<T>::Push(const T& value) {
 template<typename T>
 void Stack<T>::Pop() {
     if (size == 0) {
-        throw std::out_of_range("Cannot pop element from an empty stack!");
+        throw std::out_of_range("Cannot pop element from an empty stack");
     }
     else if (size == 1) {
         delete head;
         head = nullptr;
         tail = nullptr;
+        --size;
         return;
     }
     Node* curNode = head;
@@ -79,6 +88,9 @@ void Stack<T>::Pop() {
 
 template<typename T>
 T& Stack<T>::Get() const {
+    if (size == 0) {
+        throw std::out_of_range("Cannot get element from an empty stack");
+    }
     return tail->value;
 }
 
@@ -105,13 +117,11 @@ void Stack<T>::Merge(Stack<T>& st) {
         return;
     }
 
-    if (Empty()) {
-        head = st.head;
+    Node* curNode = st.head;
+    while (curNode != nullptr) {
+        Push(curNode->value);
+        curNode = curNode->next;
     }
-    else {
-        tail->next = st.head;
-    }
-    tail = st.tail;
 }
 
 template<typename T>
@@ -126,15 +136,17 @@ Stack<T>& Stack<T>::operator=(const Stack<T>& oth) {
     if (this == &oth) {
         return *this;
     }
-
-    head = oth.head;
-    tail = oth.tail;
-    size = oth.size;
+    Clear();
+    if (oth.size == 0) {
+        return *this;
+    }
+    CopyFromOth(oth);
     return *this;
 }
 
 template<typename T>
 Stack<T>& Stack<T>::operator=(const std::initializer_list<T>& list) {
+    Clear();
     InitFromInitializerList(list);
     return *this;
 }
@@ -186,6 +198,20 @@ template<typename T>
 bool Stack<T>::operator!=(const std::initializer_list<T>& list) const
 {
     return !(*this == list);
+}
+
+template<typename T>
+void Stack<T>::CopyFromOth(const Stack<T>& oth)
+{
+    Clear();
+    if (oth.size == 0) {
+        return;
+    }
+    Node* curNode = oth.head;
+    while (curNode != nullptr) {
+        Push(curNode->value);
+        curNode = curNode->next;
+    }
 }
 
 template<typename T>
