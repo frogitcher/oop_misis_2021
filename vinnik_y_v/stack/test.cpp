@@ -12,7 +12,6 @@ struct human {
 };
 
 TEST_CASE("Testing init functions") {
-    //Stack<int>::Node i{ nullptr, 0 };
     Stack<int> st1{1, 2};
     Stack<int> st2;
     Stack<std::string> st3{"std", "string"};
@@ -26,6 +25,7 @@ TEST_CASE("Testing init functions") {
     CHECK(st3.Size() == 2);
     CHECK(st3.Get() == "string");
     CHECK(st4.Get() == "string");
+    
     std::vector<Stack<std::string>> vst;
     //Before move
     CHECK(st3 == st4);
@@ -35,7 +35,8 @@ TEST_CASE("Testing init functions") {
     CHECK(st4 == vst[0]);
     vst.push_back(std::move(st4));
     CHECK(vst[0] == vst[1]);
-    //Check if deleting parent stack will lead to deleting child stack
+    
+    //Check if deleting parent stack will lead to child stack having deleted pointers
     Stack<float>* st5 = new Stack<float>{ 1.f, 2.f, 3.05f };
     Stack<float> st6(*st5);
     CHECK(st6 == *st5);
@@ -79,7 +80,7 @@ TEST_CASE("Testing core stack functionality") {
     st4.Clear();
     CHECK(st4.Empty());
 
-    //Check if deleting stack object after merging\swapping is safe
+    //Check if deleting stack object after merging/swapping is safe
     Stack<human>* st_ptr1 = new Stack<human>{ human{56, "Joe"}, human{43, "Suzy"} };
     Stack<human>* st_ptr2 = new Stack<human>{ human{22, "David"}, human{34, "Jeff"} };
     Stack<human>* st_ptr3 = new Stack<human>{};
@@ -118,7 +119,7 @@ TEST_CASE("Testing additional stack operators") {
     CHECK(st5.Get() == "please?");
     CHECK(st5 == Stack<std::string>{"Can", "I", "get", "an approve", "please?"});
 
-    //Test != operator (just in case)
+    //Testing != operator (just in case)
     Stack<unsigned long long> st6 = { 1, 2 };
     Stack<unsigned long long> st7 = { 3, 1 };
     Stack<unsigned long long> st8;
