@@ -4,5 +4,5 @@
 #include <string>
 
 TEST_CASE("testing hello world") {
-    CHECK(HelloWorld() == "Hello World");
+    CHECK(HelloWorld() == "Hello World")
 }
