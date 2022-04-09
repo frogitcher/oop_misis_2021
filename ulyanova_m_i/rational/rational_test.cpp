@@ -11,6 +11,8 @@ TEST_CASE("Main Testing") {
 	CHECK((Rational(-2, -4) == Rational(1, 2)));
 	CHECK((Rational(-2, 4) == Rational(-1, 2)));
 	CHECK((Rational(0, 7) == Rational(0, 1)));
+	CHECK((-Rational(12, 7) == Rational(12, -7)));
+	CHECK((-Rational(57, 3) == Rational(-57, 3)));
 }
 
 TEST_CASE("Arithmetic Testing") {
