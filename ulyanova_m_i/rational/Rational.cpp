@@ -1,42 +1,31 @@
-﻿#include <iostream>
-#include "Rational.h"
+﻿#include "Rational.h"
 #include <stdexcept>
-#include <math.h>
+#include <cmath>
 #include <algorithm>
 
-Rational::Rational(double _num) {
-    num = _num;
-    den = 1.0;
+Rational::Rational(int _num) 
+    : num(_num)
+    , den(1) {
 }
 
 Rational Rational::operator+(const Rational& rhs) { 
-    if (den == rhs.den) {
-        return ((num + rhs.num) / den * 1.0);
-    }
-    else {
-        return ((1.0 * num * rhs.den + 1.0 * rhs.num * den) / (den * rhs.den) * 1.0);
-    }
+    return (Rational(*this) += rhs);
 }
 
 Rational Rational::operator-(const Rational& rhs) { 
-    if (den == rhs.den) {
-        return ((num - rhs.num) / den);
-    }
-    else {
-        return ((num * rhs.den - rhs.num * den) / (den * rhs.den));
-    }
+    return (Rational(*this) -= rhs);
 }
 
 Rational Rational::operator*(const Rational& rhs) { 
-    return ((num * rhs.num) / (den * rhs.den));
+    return (Rational(*this) *= rhs);
 }
 
 Rational Rational::operator/(const Rational& rhs) { 
-    return ((num * rhs.den) / (den * rhs.num));
+    return (Rational(*this) /= rhs);
 }
 
 bool Rational::operator<(const Rational& rhs) { 
-    return (num * rhs.den < rhs.num* den);
+    return (num * rhs.den < rhs.num * den);
 }
 
 bool Rational::operator>(const Rational& rhs) {
@@ -44,11 +33,11 @@ bool Rational::operator>(const Rational& rhs) {
 }
 
 bool Rational::operator<=(const Rational& rhs) {
-    return (num * rhs.den <= rhs.num * den);
+    return (!(num * rhs.den > rhs.num * den));
 }
 
 bool Rational::operator>=(const Rational& rhs) {
-    return (num * rhs.den >= rhs.num * den);
+    return (!(num * rhs.den < rhs.num * den));
 }
 
 bool Rational::operator==(const Rational& rhs) {
@@ -60,58 +49,79 @@ bool Rational::operator!=(const Rational& rhs) {
 }
 
 Rational& Rational::operator+=(const Rational& rhs){ 
-    double x = num * rhs.den * 1.0 + rhs.num * den * 1.0;
-    double y = den * rhs.den * 1.0;
-    *this = x / y;
+    num = num * rhs.den + rhs.num * den;
+    den = den * rhs.den;
+    Normalize();
     return *this;
 }
 
 Rational& Rational::operator-=(const Rational& rhs) {
-    double x = num * rhs.den * 1.0 - rhs.num * den * 1.0;
-    double y = den * rhs.den * 1.0;
-    *this = x / y;
+    num = num * rhs.den - rhs.num * den;
+    den = den * rhs.den;
+    Normalize();
     return *this;
 }
 
 Rational& Rational::operator*=(const Rational& rhs) {
-    double x = num * rhs.num * 1.0;
-    double y = den * rhs.den * 1.0;
-    *this = x / y;
+    num = num * rhs.num;
+    den = den * rhs.den;
+    Normalize();
     return *this;
 }
 
 Rational& Rational::operator/=(const Rational& rhs) {
-    double x = num * rhs.den * 1.0;
-    double y = den * rhs.num * 1.0;
-   *this = x / y;
+    num = num * rhs.den;
+    den = den * rhs.num;
+    Normalize();
     return *this;
 }
 
 Rational& Rational::operator=(const Rational& rhs) {
     num = rhs.num;
     den = rhs.den;
-    //*this = num / den;
     return *this;
 }
 
-Rational::Rational(double _num, double _den) 
+Rational::Rational(int _num, int _den) 
     : num(_num)
     , den(_den) {
-    if (den == 0) {
-        throw std::invalid_argument("denominator must not be 0");
-    }
+        if (den == 0) {
+            throw std::invalid_argument("denominator must not be 0");
+        }
 }
 
+Rational::Rational(const Rational& other)
+    : num(other.num)
+    , den(other.den)
+{}
+
 void Rational::Normalize() {
-    int g = gcd(abs(num), den);
+    if (den < 0) {
+        num *= -1;
+        den *= -1;
+    }
+    int g = gcd(num, den);
     num /= g;
     den /= g;
 }
 
 int Rational::gcd(int num, int den) {
+    if (num == 1) {
+        return num;
+    }
+
+    if (num == 0) {
+        return den;
+    }
+
+    if (den == 0) {
+        return num;
+    }
+
     if (num == den) {
         return num;
-    }   
+    }  
+
     if (num > den) {
         return gcd(num % den, den);
     }      
@@ -119,8 +129,18 @@ int Rational::gcd(int num, int den) {
 }
 
 Rational Rational::operator-() {
-    int res = -(num / den);
-    return res;
+    num *= -1;
+    return *this;
 }
+
+Rational& Rational::operator--() {
+    return (Rational(*this) -= Rational(1, 1));
+}
+
+Rational& Rational::operator++() {
+    return (Rational(*this) += Rational(1, 1));
+}
+
+
 
 

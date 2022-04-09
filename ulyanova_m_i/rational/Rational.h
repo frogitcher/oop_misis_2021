@@ -1,19 +1,18 @@
+#pragma once
 #include <iostream>
 #include <fstream>
-#pragma once
-#ifndef RATIONAL_RATIONAL_H_20220311
-#define RATIONAL_RATIONAL_H_20220311
 
 class Rational {
+
 public:
 
+    int num, den;
+
     Rational() = default;
-    Rational(double _num); 
-    Rational(double _num, double _den); 
+    Rational(int _num); 
+    Rational(int _num, int _den); 
     Rational(const Rational& other); 
     ~Rational() = default; 
-
-    double num, den; 
 
     Rational operator+(const Rational& rhs); 
     Rational operator-(const Rational& rhs);
@@ -25,6 +24,9 @@ public:
     Rational& operator-=(const Rational& rhs);
     Rational& operator*=(const Rational& rhs);
     Rational& operator/=(const Rational& rhs);
+ 
+    Rational& operator++();
+    Rational& operator--();
 
     bool operator<(const Rational& rhs);
     bool operator>(const Rational& rhs);
@@ -50,4 +52,3 @@ inline std::istream& operator>>(std::istream& is, Rational& rhs)
     is >> rhs.num >> rhs.den;
     return is;
 }
-#endif 
