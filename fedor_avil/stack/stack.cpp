@@ -50,8 +50,6 @@ Stack<T>::Stack(const std::initializer_list<T>& list)
 		this->Push(el);
 	}
 }
-
-
 template<typename T>
 Stack<T>::~Stack()
 {
