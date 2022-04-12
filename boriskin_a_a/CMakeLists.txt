@@ -21,4 +21,12 @@ ExternalProject_Get_Property(doctest source_dir)
 set(DOCTEST_INCLUDE_DIR ${source_dir}/doctest CACHE INTERNAL "Path to include folder for doctest")
 include_directories(${DOCTEST_INCLUDE_DIR})
 
+if (MSVC)
+  add_compile_options(/std:c++17)
+else()
+  add_compile_options(-std=c++17)
+endif()
+
+
+add_subdirectory(Rational)
 add_subdirectory(hello_world)
