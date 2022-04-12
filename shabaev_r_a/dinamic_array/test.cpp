@@ -6,7 +6,7 @@
 
 TEST_CASE("Testing iterator"){
 
-    Stable_Dynamic_Array mas={1, 2, 3, 4, 5, 6};
+    Stable_Dynamic_Array mas{1, 2, 3, 4, 5, 6};
     SUBCASE("check *"){
         auto it=mas.begin();
         it++;
@@ -49,4 +49,61 @@ TEST_CASE("Testing iterator"){
     }
 
 }
+
+TEST_CASE("testing size and empty"){
+    Stable_Dynamic_Array mas={1, 2, 3};
+    CHECK(mas.Size()==3);
+    CHECK(mas.Empty() == false);
+    for(int i=0; i<100; i++){
+        mas.push_back(i);
+    }
+    CHECK(mas.Size()==103);
+    CHECK(mas.Empty() == false);
+    for(int i=0; i<103; i++){
+        mas.pop_back();
+    }
+    CHECK(mas.Size()==0);
+    CHECK(mas.Empty() == true);
+    mas.resize(100);
+    CHECK(mas.Size()==100);
+    CHECK(mas.Empty() == false);
+}
+
+
+TEST_CASE("testing push_back/insert") {
+    SUBCASE("empty array") {
+        Stable_Dynamic_Array mas;
+        SUBCASE("push_back") {
+            mas.push_back(4);
+            CHECK(mas.Size() == 1);
+            CHECK(mas[0] == 4);
+        }
+        SUBCASE("insert") {
+            mas.insert(0, 4);
+            CHECK(mas.Size() == 1);
+            CHECK(mas[0] == 4);
+        }
+    }
+    SUBCASE("array with some elements") {
+        Stable_Dynamic_Array mas = {1, 2, 3, 4};
+        SUBCASE("push_back") {
+            mas.push_back(10);
+            CHECK((mas.Size() == 5));
+            CHECK((mas[4] == 10));
+        }
+        SUBCASE("insert in end") {
+            mas.insert(4, 10);
+            CHECK(mas.Size() == 5);
+            CHECK(mas[4] == 10);
+        }
+        SUBCASE("insert in middle") {
+            mas.insert(2, 10);
+            CHECK(mas.Size() == 5);
+            CHECK(mas == (Stable_Dynamic_Array) {1, 2, 10, 3, 4});
+        }
+    }
+}
+
+
+
 

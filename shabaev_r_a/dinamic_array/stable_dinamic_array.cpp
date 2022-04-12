@@ -38,9 +38,6 @@ Iterator_Stable_Dynamic_Array Iterator_Stable_Dynamic_Array::operator++(int a) {
     return it;
 }
 
-int Iterator_Stable_Dynamic_Array::operator*() const {
-    return pos->value;
-}
 
 Iterator_Stable_Dynamic_Array::Iterator_Stable_Dynamic_Array(Node *_pos) :pos(_pos){}
 
@@ -57,6 +54,17 @@ Iterator_Stable_Dynamic_Array Iterator_Stable_Dynamic_Array::operator--(int a) {
 
 bool Iterator_Stable_Dynamic_Array::operator==(const Iterator_Stable_Dynamic_Array &other) {
     return this->pos ==other.pos;;
+}
+
+Iterator_Stable_Dynamic_Array::Iterator_Stable_Dynamic_Array(Iterator_Stable_Dynamic_Array const &array):pos(array.pos) {
+}
+
+bool Iterator_Stable_Dynamic_Array::operator!=(const Iterator_Stable_Dynamic_Array &other) {
+    return !((*this) == other);
+}
+
+int Iterator_Stable_Dynamic_Array::operator*() {
+    return (pos->value);
 }
 
 
@@ -138,7 +146,7 @@ void Stable_Dynamic_Array::resize(size_t new_size, int value) {
 void Stable_Dynamic_Array::insert(size_t index, int value) {
     if(index>size){return;}
     while(index<size){
-        std::swap((*(data+index-1))->value, value);
+        std::swap((*(data+index))->value, value);
         index++;
     }
     push_back(value);
@@ -185,8 +193,11 @@ Stable_Dynamic_Array &Stable_Dynamic_Array::operator=(const Stable_Dynamic_Array
 }
 
 bool Stable_Dynamic_Array::operator==(const Stable_Dynamic_Array &rhs) const {
+
+    if(size!=rhs.Size()) return false;
     for(int i=0; i<size; i++){
-        if(data+i != rhs.data+i) return false;
+
+        if((*(data+i))->value != (*(rhs.data+i))->value) return false;
     }
     return true;
 }

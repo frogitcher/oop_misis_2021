@@ -60,6 +60,9 @@ private:
 };
 class Iterator_Stable_Dynamic_Array{
 public:
+    Iterator_Stable_Dynamic_Array(Iterator_Stable_Dynamic_Array const &array);
+
+    int operator*();
     Iterator_Stable_Dynamic_Array operator+(int a) const;
     Iterator_Stable_Dynamic_Array operator+= (int a);
     Iterator_Stable_Dynamic_Array operator-(int a) const;
@@ -69,8 +72,8 @@ public:
     Iterator_Stable_Dynamic_Array operator--();
     Iterator_Stable_Dynamic_Array operator--(int a);
     bool operator==(const Iterator_Stable_Dynamic_Array &other);
+    bool operator!=(const Iterator_Stable_Dynamic_Array &other);
     friend Stable_Dynamic_Array;
-    int operator*() const;
 
 private:
     Node* pos;
