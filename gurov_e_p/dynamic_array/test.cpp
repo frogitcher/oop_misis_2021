@@ -38,9 +38,9 @@ TEST_CASE("Testing dynamic array class") {
     CHECK(b[b.Size() - 1] == -9);
 
     DynamicArray d_copy(d);
-    d.reallocate(50);
+    Reallocate(d, 50);
     CHECK(d_copy.Size() == d.Size());
-    CHECK(d.Capacity() == 50);
+    CHECK(d.Capacity() == d_copy.Capacity());
     for (int64_t i = 0; i < d.Size(); ++i) {
         CHECK(d[i] == d_copy[i]);
     }
@@ -89,9 +89,8 @@ TEST_CASE("Testing dynamic array class") {
     for (int64_t i = 0; i < old_size; ++i) {
         CHECK(b[i] == 4);
     }
-    b.resize(15, 2);
-    for (int64_t i = 0; i < b.Size(); ++i) {
-        CHECK(b[i] == 2);
+    for (int64_t i = old_size + 1; i < b.Size(); ++i) {
+        CHECK(b[i] == 125);
     }
 
     CHECK_THROWS_WITH(b.resize(-16, 8), "Length can't be negative!");
