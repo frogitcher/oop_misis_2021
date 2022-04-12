@@ -1,6 +1,7 @@
 #include "dyn_array.h"
 #include <stdexcept>
 
+
 void DynArray::reallocate(int64_t new_capacity) {
 	int* new_data = new int[new_capacity];
 	std::copy(data, data + size, new_data);
@@ -12,7 +13,6 @@ void DynArray::reallocate(int64_t new_capacity) {
 DynArray::DynArray(int64_t _size, int value) 
 	: size(_size)
 	, capacity(_size) {
-		if (_size < 0) throw std::invalid_argument("Size can't be negative");
 		data = new int[size];
 		std::fill(data, data + _size, value);
 }
@@ -21,9 +21,7 @@ DynArray::DynArray(const DynArray& other)
 	: size(other.size)
 	, capacity(other.capacity) {
 		data = new int[size];
-		for (int i = 0; i < size; i++) {
-			data[i] = other.data[i];
-		}
+		std::copy(other.begin(), other.end(), begin());
 }
 
 DynArray::DynArray(const std::initializer_list<int>& list) 
@@ -60,12 +58,7 @@ int& DynArray::at(int64_t i) const {
 
 void DynArray::push_back(int value) {
 	if (size == capacity) {
-		if (capacity == 0) {
-			reallocate(1);
-		}
-		else {
-			reallocate(capacity * 2);
-		}
+		reallocate(capacity == 0 ? 1 : capacity * 2);
 	}
 	data[size++] = value;
 }
@@ -78,10 +71,7 @@ void DynArray::pop_back() {
 }
 
 void DynArray::clear() {
-	delete[]data;
-	data = new int[0];
 	size = 0;
-	capacity = 0;
 }
 
 void DynArray::erase(int64_t i) {
@@ -117,9 +107,6 @@ void DynArray::insert(int64_t i, int value) {
 	if (i >= size) {
 		throw std::out_of_range("Index out of array's range");
 	}
-	if (i == size) {
-		push_back(value);
-	}
 	else {
 		this->resize(size + 1);
 		for (int k = size - 1; k > i; k++) {
@@ -134,27 +121,18 @@ int* DynArray::begin() const {
 }
 
 int* DynArray::end() const {
-	return data + size - 1;
+	return data + size;
 }
 
 void DynArray::swap(DynArray& other) {
-	int* t = data;
-	data = other.data;
-	other.data = t;
-	int64_t m = size;
-	size = other.size;
-	other.size = m;
-	int64_t c = capacity;
-	capacity = other.capacity;
-	other.capacity = c;
+	std::swap(data, other.data);
+	std::swap(size, other.size);
+	std::swap(capacity, other.capacity);
 }
 
 bool DynArray::operator==(const DynArray& rhs) const {
 	if (size != rhs.size) return false;
-	for (int i = 0; i < size; i++) {
-		if (data[i] != rhs.data[i]) return false;
-	}
-	return true;
+	return std::equal(begin(), end(), rhs.begin());
 }
 
 bool DynArray::operator!=(const DynArray& rhs) const {
