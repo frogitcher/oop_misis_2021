@@ -62,7 +62,7 @@ class Iterator_Stable_Dynamic_Array{
 public:
     Iterator_Stable_Dynamic_Array(Iterator_Stable_Dynamic_Array const &array);
 
-    int operator*();
+    int& operator*();
     Iterator_Stable_Dynamic_Array operator+(int a) const;
     Iterator_Stable_Dynamic_Array operator+= (int a);
     Iterator_Stable_Dynamic_Array operator-(int a) const;

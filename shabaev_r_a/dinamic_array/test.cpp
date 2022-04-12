@@ -102,7 +102,36 @@ TEST_CASE("testing push_back/insert") {
             CHECK(mas == (Stable_Dynamic_Array) {1, 2, 10, 3, 4});
         }
     }
+    SUBCASE("some test for insert"){
+        Stable_Dynamic_Array mas;
+        CHECK_THROWS_WITH(mas.insert(4, 4), "out of range");
+    }
 }
+
+TEST_CASE("check [] and at()"){
+    Stable_Dynamic_Array mas={1};
+    CHECK(mas[0]==1);
+    CHECK(mas.at(0)==1);
+    CHECK_THROWS_WITH(mas.at(1), "out of range");
+}
+
+TEST_CASE("check =="){
+    SUBCASE("empty mas"){
+        Stable_Dynamic_Array mas, mas1;
+        CHECK(mas==mas1);
+        mas.push_back(1);
+        CHECK(mas!=mas1);
+    }
+    SUBCASE("uwu"){
+        Stable_Dynamic_Array mas={1, 1, 1, 2};
+        Stable_Dynamic_Array mas1(4, 1);
+        CHECK(mas!=mas1);
+        mas1.pop_back();
+        mas1.push_back(2);
+        CHECK(mas==mas1);
+    }
+}
+
 
 
 

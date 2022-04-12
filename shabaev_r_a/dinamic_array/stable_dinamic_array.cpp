@@ -63,7 +63,7 @@ bool Iterator_Stable_Dynamic_Array::operator!=(const Iterator_Stable_Dynamic_Arr
     return !((*this) == other);
 }
 
-int Iterator_Stable_Dynamic_Array::operator*() {
+int& Iterator_Stable_Dynamic_Array::operator*() {
     return (pos->value);
 }
 
@@ -144,7 +144,7 @@ void Stable_Dynamic_Array::resize(size_t new_size, int value) {
 }
 
 void Stable_Dynamic_Array::insert(size_t index, int value) {
-    if(index>size){return;}
+    if(index>size){throw std::out_of_range("out of range");}
     while(index<size){
         std::swap((*(data+index))->value, value);
         index++;
@@ -181,7 +181,7 @@ int &Stable_Dynamic_Array::operator[](size_t i) const {
 
 int &Stable_Dynamic_Array::at(size_t i) const {
     if(i>=size){
-        throw std::out_of_range("size>i");
+        throw std::out_of_range("out of range");
     }
     return (*this)[i];
 }
