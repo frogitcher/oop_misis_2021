@@ -18,10 +18,12 @@ class Rational
     Rational operator+(const Rational&rhs);
     Rational operator-(const Rational&rhs);
     Rational operator*(const Rational&rhs) const;
+    Rational operator/(const Rational&rhs) const;
     //-,*,/
     Rational& operator+=(const Rational&rhs);
     Rational& operator-=(const Rational&rhs);
     Rational& operator*=(const Rational& rhs);
+    Rational& operator/=(const Rational& rhs);
 
     Rational& operator--();
     Rational operator--(int a);
@@ -38,7 +40,7 @@ class Rational
 
     int GetNumerator() const;
     int GetDenumerator() const;
-   private:
+    private:
     void Normalize();
     int num,den;
 };

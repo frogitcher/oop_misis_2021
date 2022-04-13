@@ -37,12 +37,12 @@ TEST_CASE("boolean things")
 }
 TEST_CASE("other stuff")
 {
-     Rational a=Rational(11,3);
+    Rational a=Rational(11,3);
     Rational b=Rational(15,5);
     Rational c=Rational(3,1);
     Rational d=Rational(7,11);
     CHECK((a++)==Rational(14,3));
-     CHECK((b--)==Rational(2,1));
+    CHECK((b--)==Rational(2,1));
 }
 TEST_CASE("exceptions")
 {
