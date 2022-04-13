@@ -131,7 +131,9 @@ void DynArray::swap(DynArray& other) {
 }
 
 bool DynArray::operator==(const DynArray& rhs) const {
-	if (size != rhs.size) return false;
+	if (size != rhs.size) {
+		return false;
+	}
 	return std::equal(begin(), end(), rhs.begin());
 }
 
