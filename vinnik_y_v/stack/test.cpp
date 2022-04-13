@@ -3,7 +3,6 @@
 #include "Stack.h"
 
 #include <string>
-#include <vector>
 
 struct human {
     int age;
