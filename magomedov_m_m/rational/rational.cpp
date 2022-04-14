@@ -3,8 +3,12 @@
 #include <iostream>
 
 int gcd(int a, int b) {
-	if (b == 0)return a;
-	else return gcd(b, a % b);
+	if (b == 0){
+		return a;
+	}
+	else {
+		return gcd(b, a % b);
+	}
 }
 Rational::Rational(const Rational& other) {
 	*this = other;
@@ -49,16 +53,16 @@ bool Rational:: operator>(const Rational& rhs) const {
 	return (num * rhs.den > den * rhs.num);
 }
 bool Rational:: operator<=(const Rational& rhs) const {
-	return (num * rhs.den <= den* rhs.num);
+	return !(*this>rhs);
 }
 bool Rational:: operator>=(const Rational& rhs) const {
-	return (num * rhs.den >= den * rhs.num);
+	return !(*this<rhs);
 }
 bool Rational:: operator==(const Rational& rhs) const {
 	return (num * rhs.den == den* rhs.num);
 }
 bool Rational:: operator!=(const Rational& rhs) const {
-	return (num * rhs.den != den * rhs.num);
+	return !(*this==rhs);
 }
 
 
