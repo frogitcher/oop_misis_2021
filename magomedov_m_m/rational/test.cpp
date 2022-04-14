@@ -31,9 +31,12 @@ TEST_CASE("+ - * / += *= -= /=") {
 TEST_CASE("++ --") {
     Rational a(1, 2), b(-3, 4), c, d(1), f(5, 10);
     CHECK(!(Rational (1,2)== ++a));
+    CHECK((Rational (3,2)== a));
     CHECK((Rational (-3,4) == b++));
+    CHECK((Rational (1,4) == b));
     CHECK((Rational () == --d));
     CHECK((Rational (5,10)==  f--));
+    CHECK((Rational (-5,10)==  f));
 }
 
 TEST_CASE("Errors") {
