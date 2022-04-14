@@ -13,15 +13,15 @@ void DynArray::reallocate(int64_t new_capacity) {
 DynArray::DynArray(int64_t _size, int value) 
 	: size(_size)
 	, capacity(_size) {
-		data = new int[size];
-		std::fill(data, data + _size, value);
+	data = new int[size];
+	std::fill(data, data + _size, value);
 }
 
 DynArray::DynArray(const DynArray& other)
 	: size(other.size)
 	, capacity(other.capacity) {
-		data = new int[size];
-		std::copy(other.begin(), other.end(), begin());
+	data = new int[size];
+	std::copy(other.begin(), other.end(), begin());
 }
 
 DynArray::DynArray(const std::initializer_list<int>& list) 
@@ -52,7 +52,9 @@ int& DynArray::operator[](int64_t i) const {
 }
 
 int& DynArray::at(int64_t i) const {
-	if (i >= size) throw std::out_of_range("Index out of array's range");
+	if (i >= size) {
+		throw std::out_of_range("Index out of array's range");
+	}
 	return *(data + i);
 }
 
@@ -79,7 +81,7 @@ void DynArray::erase(int64_t i) {
 		throw std::out_of_range("Index out of array's range");
 	}
 	for (; i < size-1; i++) {
-		*(data + i) = *(data + i + 1);
+		data[i] = data[i + 1];
 	}
 	size--;
 }
@@ -108,7 +110,7 @@ void DynArray::insert(int64_t i, int value) {
 		throw std::out_of_range("Index out of array's range");
 	}
 	else {
-		this->resize(size + 1);
+		resize(size + 1);
 		for (int k = size - 1; k > i; k++) {
 			*(data + k) = *(data + k - 1);
 		}
@@ -131,10 +133,7 @@ void DynArray::swap(DynArray& other) {
 }
 
 bool DynArray::operator==(const DynArray& rhs) const {
-	if (size != rhs.size) {
-		return false;
-	}
-	return std::equal(begin(), end(), rhs.begin());
+	return (size == rhs.size && std::equal(begin(), end(), rhs.begin());
 }
 
 bool DynArray::operator!=(const DynArray& rhs) const {
