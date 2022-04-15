@@ -49,7 +49,7 @@ Rational& Rational::operator/=(const Rational& rhs)
     Normalize();
     return *this;
 }
-Rational Rational::operator+(const Rational& rhs)
+Rational Rational::operator+(const Rational& rhs) const
 {
     Rational r(*this);
     return r+=rhs;
@@ -62,7 +62,7 @@ Rational Rational::operator/(const Rational& rhs) const
 {
     return Rational(*this) /=rhs;
 }
-Rational Rational::operator-(const Rational& rhs)
+Rational Rational::operator-(const Rational& rhs) const
 {
     Rational r(*this);
     return r-=rhs;
