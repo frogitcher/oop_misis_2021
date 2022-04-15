@@ -19,10 +19,6 @@ void Rational::make_simple() {
 	int nod = make_nod(abs(num), abs(den));
 	num /= nod;
 	den /= nod;
-	if (num < 0 && den < 0) {
-		num *= -1;
-		den *= -1;
-	}
 	if (den < 0) {
 		num *= -1;
 		den *= -1;
@@ -44,7 +40,6 @@ Rational::Rational(int numumerator, int denominator) {
 	check_zero();
 	make_simple();
 }
-Rational::~Rational() = default;
 
 //"+"
 Rational Rational::operator+(const Rational& num2) const {
@@ -98,36 +93,37 @@ Rational Rational::operator/=(const Rational& num2) {
 }
 
 //"++x"
-Rational Rational::operator++() {
+Rational& Rational::operator++() {
 	*this += 1;
 	return *this;
 }
 
 //"x++"
-Rational Rational::operator++(const int num2) {
+Rational Rational::operator++(int num2) {
 	Rational temp = *this;
 	++(*this);
 	return temp;
 }
 
 //"--x"
-Rational Rational::operator--() {
+Rational& Rational::operator--() {
 	*this -= 1;
 	return *this;
 }
 
 //"x--"
-Rational Rational::operator--(const int num2) {
+Rational Rational::operator--(int num2) {
 	Rational temp = *this;
 	--(* this);
 	return temp;
 }
 
-Rational Rational::operator-() {
-	num *= -1;
-	return *this;
+//"-x"
+Rational Rational::operator-() const {
+	return Rational(-num, den);
 }
 
+//"+x"
 Rational Rational::operator+() const{
 	return *this;
 }
@@ -149,7 +145,7 @@ bool Rational::operator>(const Rational& num2) const {
 
 //"<"
 bool Rational::operator<(const Rational& num2) const {
-	return !(*this > num2 || *this == num2);
+	return (num2 > *this);
 }
 
 //">="

@@ -4,7 +4,7 @@ public:
 	Rational();
 	Rational(int numerator);
 	Rational(int numerator, int denominator);
-	~Rational();
+	~Rational() = default;
 
 	//"+"
 	Rational operator+(const Rational& rhs) const;
@@ -34,19 +34,19 @@ public:
 	Rational operator/=(const Rational& rhs);
 
 	//"++x"
-	Rational operator++();
+	Rational& operator++();
 
 	//"x++"
-	Rational operator++(const int);
+	Rational operator++(int);
 
 	//"--x"
-	Rational operator--();
+	Rational& operator--();
 
 	//"x--"
-	Rational operator--(const int);
+	Rational operator--(int);
 
 	//"-x"
-	Rational operator-();
+	Rational operator-() const;
 
 	//"+x"
 	Rational operator+() const;

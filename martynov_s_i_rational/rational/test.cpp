@@ -27,6 +27,8 @@ TEST_CASE("Rational") {
 	CHECK(r <= Rational(100, 18));
 	CHECK(r != Rational(6, 18));
 	CHECK((r == Rational(5, 2)) == true);
+	CHECK((q != Rational(11, 2)) == false);
+	CHECK((w == Rational(11, 2)) == false);
 
 	// ++,--, -, +
 	CHECK(++q == Rational(13, 2));
