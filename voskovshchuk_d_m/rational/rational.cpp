@@ -1,25 +1,11 @@
-﻿#include <iostream>
-#include "rational.h"
-
-/*
-int main()
-{
-}
-*/
+﻿#include "rational.h"
+#include <cstdlib>
 
 
 unsigned _int64 findDenum(const double x) {
     int i;
-    for (i = 1; (abs(round(x * i) - x * i) > 0.01) && i <= 100; i++);
+    for (i = 1; (abs(round(x * i) - x * i) >= 0.05) && i <= 100; i++);
     return i;
-}
-unsigned _int64 lcm(_int64 a, _int64 b) {  //least common multiple
-    _int64 s = a * b;
-    _int64 mi = (a < b ? a : b);
-    for (_int64 i = 2; i * i <= mi; i++)
-        if (a % i && b % i)
-            s /= i--;
-    return s;
 }
 unsigned _int64 gcd(_int64 a, _int64 b) { //greatest common divisor
     if (a % b == 0)
@@ -30,87 +16,44 @@ unsigned _int64 gcd(_int64 a, _int64 b) { //greatest common divisor
         return gcd(a % b, b);
     return gcd(a, b % a);
 }
+unsigned _int64 lcm(_int64 a, _int64 b) {  //least common multiple
+    return a * b / gcd(a, b);
+}
 void rational::normal() { //makes it common
-    stateCheck();
-    _int64 n = (sign == Sign::negative ? gcd(-num, denum) : gcd(num, denum));
+    _int64 n = gcd(abs(num), denum);
     num /= n;
     denum /= n;
-    stateCheck();
-}
-void rational::stateCheck() {
-    if (num == 0) {
-        Sign sign = Sign::null;
-        State state = State::integer;
-    }
-    else {
-        sign = (num > 0 ? Sign::positive : Sign::negative);
-        state = (num % denum == 0 ? State::integer : State::real);
-    }
 }
 
-
-template<typename Type>
-rational::rational(const Type rhs) {
-    int inte = rhs / 1;
-    double real = rhs - inte;
-    denum = (real == 0 ? 1 : findDenum(real));
-    num = (int)(round(real / (1.0 / denum)) + inte * denum);
-    stateCheck();
+rational::rational(const _int64 x) {
+    denum = 1;
+    num = x;
 }
-template rational::rational(const int rhs);
-template rational::rational(const double rhs);
+rational::rational(const _int64 x, const _int64 y) {
+    denum = y;
+    num = x;
+}
 
 rational rational::operator+ (const rational& rhs) const { //plus function
-    rational tmp;
     _int64 n = lcm(rhs.denum, denum);
-    tmp.denum = n;
-    tmp.num = rhs.num * (n / rhs.denum) + num * (n / denum);
-    tmp.normal();
-    return tmp;
+    return rational(rhs.num * (n / rhs.denum) + num * (n / denum), n);
 }
 rational rational::operator- (const rational& rhs) const { //minus function
-    rational tmp;
     _int64 n = lcm(rhs.denum, denum);
-    tmp.denum = n;
-    tmp.num = num * (n / denum) - rhs.num * (n / rhs.denum);
-    tmp.normal();
-    return tmp;
+    return rational(rhs.num * (n / rhs.denum) - num * (n / denum), n);
 }
 rational rational::operator* (const rational& rhs) const { // multiplication function
-    rational tmp;
-    tmp.denum = rhs.denum * denum;
-    tmp.num = rhs.num * num;
-    tmp.normal();
-    return tmp;
+    return rational(rhs.num * num, rhs.denum * denum);
 }
 rational rational::operator/ (const rational& rhs) const { //division function
-    if (rhs.sign == Sign::null)
+    if (rhs == 0)
         return NULL;
-    rational tmp;
-    tmp.num = rhs.denum * num;
-    tmp.denum = rhs.num * denum;
-    if (rhs.state == State::integer)
-        tmp.num %= tmp.denum;
-    tmp.normal();
-    return tmp;
-}
-rational rational::operator% (const rational& rhs) const { //reminder of dividon on integer
-    if (rhs.state == State::integer) {
-        rational tmp;
-        tmp.num = num % (rhs.num * denum);
-        tmp.denum = denum;
-        tmp.normal();
-        return tmp;
-    }
-    else
-        return NULL;
+    return rational(rhs.denum * num - (rhs.denum == 1 ? (rhs.denum * num % rhs.num * denum) : 0), rhs.num * denum);
 }
 
 rational& rational::operator= (const rational& rhs)  {
     num = rhs.num;
     denum = rhs.denum;
-    sign = rhs.sign;
-    state = rhs.state;
     return *this;
 }
 rational& rational::operator+= (const rational& rhs)  {
@@ -127,10 +70,6 @@ rational& rational::operator*= (const rational& rhs)  {
 }
 rational& rational::operator/= (const rational& rhs)  {
     *this = *this / rhs;
-    return *this;
-}
-rational& rational::operator%= (const rational& rhs) {
-    *this = *this % rhs;
     return *this;
 }
 
@@ -154,34 +93,24 @@ rational rational::operator-- (int) {
 }
 
 bool rational::operator== (const rational& rhs) const {
-    return (num == rhs.num && denum == rhs.denum ? 1 : 0);
+    return (num == rhs.num && denum == rhs.denum);
 }
-
-
-/*
-bool operator> (const rational x) {
-    if (value > x.value)
-        return 1;
-    else return 0;
+bool rational::operator> (const rational& rhs) const{
+    rational tmp = *this - rhs;
+    return (tmp > 0);
 }
-bool operator>= (const rational x) {
-    if (value >= x.value)
-        return 1;
-    else return 0;
+bool rational::operator< (const rational& rhs) const {
+    rational tmp = rhs - *this;
+    return (tmp < 0);
 }
-bool operator<= (const rational x) {
-    if (value <= x.value)
-        return 1;
-    else return 0;
+bool rational::operator>= (const rational& rhs) const {
+    rational tmp = *this - rhs;
+    return (tmp >= 0);
 }
-bool operator< (const rational x) {
-    if (value < x.value)
-        return 1;
-    else return 0;
+bool rational::operator<= (const rational& rhs) const {
+    rational tmp = rhs - *this;
+    return (tmp <= 0);
 }
-bool operator== (const rational x) {
-    if (value == x.value)
-        return 1;
-    else return 0;
+bool rational::operator!= (const rational& rhs) const {
+    return (num != rhs.num || denum != rhs.denum ? 1 : 0);
 }
-*/
