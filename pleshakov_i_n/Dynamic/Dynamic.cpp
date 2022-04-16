@@ -8,32 +8,23 @@ DynamicArray::DynamicArray()
     : array_size(0)
     , array_capacity(1)
     , data (nullptr){
+        data = new int[1];
 }
 
 DynamicArray::DynamicArray(size_t _size, int value)
     : array_size(_size)
     , array_capacity(_size)
     , data(nullptr){
-        if (array_size < 0){
-            throw std::invalid_argument("size can't be < 0");
-        }else{
-            data = new int[array_size];
-            std::fill(data, data + array_size, value);
-        }
+        data = new int[array_size];
+        std::fill(data, data + array_size, value);
 }
 
 DynamicArray::DynamicArray(const DynamicArray& other)
     : array_size(other.array_size)
     , array_capacity(other.array_size)
     , data(nullptr){
-        if (array_size == 0){
-            data = nullptr;
-        }else{
-            data = new int[array_size];
-            for (int i=0; i<array_size; ++i){
-                data[i] = other.data[i];
-            }
-        }
+        data = new int[array_size];
+        std::copy(other.data, other.data + other.array_capacity, data);
 }
 
 DynamicArray::DynamicArray(const std::initializer_list<int>& input_list)
@@ -55,7 +46,7 @@ void DynamicArray::create_data(size_t new_size){
     data = new_data;
 }
 
-void DynamicArray::resize(size_t new_size){
+void DynamicArray::Resize(size_t new_size){
     if (new_size > array_capacity){
         create_data(new_size);
     }
@@ -94,36 +85,30 @@ bool DynamicArray::operator==(const DynamicArray& other) const{
 }
 
 void DynamicArray::operator=(const DynamicArray& other){
-    resize(other.array_size);
+    Resize(other.array_size);
     array_size = other.array_size;
     array_capacity = other.array_size;
-    for (int i=0; i<array_size; ++i){
-        data[i] = other.data[i];
-    }
+    std::copy(other.data, other.data + other.array_capacity, data);
 }
 
-int& DynamicArray::at(int i) const{
-    if (i < 0 && i + array_size >= 0){
-        return data[array_size + i];
-    }
-    if (i >= 0 && i < array_size){
+int& DynamicArray::At(size_t i) const{
+    if(i >= array_size){
+        throw std::invalid_argument("Incorrect index");
+    }else {
         return data[i];
     }
-    if((i < 0 && i + array_size < 0) || (i >= 0 && i >= array_size)){
-        throw std::invalid_argument("Incorrect index");
-    }
 }
 
-int& DynamicArray::operator[](int i){
-    at(i);
+int& DynamicArray::operator[](size_t i){
+    At(i);
 }
 
-void DynamicArray::push_back(int value){
-    resize(array_size + 1);
+void DynamicArray::Push_back(int value){
+    Resize(array_size + 1);
     data[array_size-1] = value;
 }
 
-void DynamicArray::pop_back(){
+void DynamicArray::Pop_back(){
     if (array_size == 0){
         throw std::invalid_argument("Array is empty");
     }else{
@@ -131,16 +116,16 @@ void DynamicArray::pop_back(){
     }
 }
 
-void DynamicArray::clear(){
+void DynamicArray::Clear(){
     array_size = 0;
 }
 
-void DynamicArray::erase(size_t index){
-    if (index < 0 || index >= array_size){
-        throw std::invalid_argument("Incorrect index");
-    }
+void DynamicArray::Erase(size_t index){
     if (array_size == 0){
         throw std::invalid_argument("Array is empty");
+    }
+    if (index >= array_size){
+        throw std::invalid_argument("Incorrect index");
     }
     for (int i=index; i<array_size; ++i){
         data[i] = data[i+1];
@@ -148,57 +133,51 @@ void DynamicArray::erase(size_t index){
     --array_size;
 }
 
-void DynamicArray::insert(size_t index, int value){
-    resize(array_size + 1);
+void DynamicArray::Insert(size_t index, int value){
+    Resize(array_size + 1);
+    if (index > array_size){
+        throw std::invalid_argument("Incorrect index");
+    }
     for (int i=array_size-1; i>index; --i){
         data[i] = data[i-1];
     }
     data[index] = value;
 }
 
-void DynamicArray::swap(DynamicArray& other){
+void DynamicArray::Swap(DynamicArray& other){
     if (other.array_size >= array_size){
         size_t save_size = array_size;
-        resize(other.array_size);
+        Resize(other.array_size);
         int second_value;
         for (int i=0; i<other.array_size; ++i){
             second_value = other.data[i];
             other.data[i] = data[i];
             data[i] = second_value;
         }
-        other.resize(save_size);
+        other.Resize(save_size);
     }else{
         size_t save_size = other.array_size;
-        other.resize(array_size);
+        other.Resize(array_size);
         int second_value;
         for (int i=0; i<array_size; ++i){
             second_value = other.data[i];
             other.data[i] = data[i];
             data[i] = second_value;
         }
-        resize(save_size);
+        Resize(save_size);
     }
 }
 
-void DynamicArray::assign(size_t new_size, int value){
-    resize(new_size);
+void DynamicArray::Assign(size_t new_size, int value){
+    Resize(new_size);
     array_size = new_size;
     std::fill(data, data+array_size, value);
 }
 
 int* DynamicArray::end(){
-    return data+array_size-1;
+    return data+array_size;
 }
 
 int* DynamicArray::begin(){
     return data;
 }
-
-
-
-
-
-
-
-
-

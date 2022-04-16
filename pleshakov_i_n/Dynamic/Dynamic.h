@@ -16,22 +16,22 @@ public:
     size_t Capacity() const;
     bool Empty() const;
 
-    int& operator[](int i);
+    int& operator[](size_t i);
     bool operator==(const DynamicArray& other) const;
     void operator=(const DynamicArray& other);
 
-    int& at(int i) const;
+    int& At(size_t i) const;
 
-    void push_back(int value);
-    void pop_back();
-    void clear();
+    void Push_back(int value);
+    void Pop_back();
+    void Clear();
+    void Resize(size_t new_size);
+    void Erase(size_t index);
+    void Insert(size_t index, int value);
+    void Swap(DynamicArray& other);
+    void Assign(size_t new_size, int value);
     int* end();
-    void resize(size_t new_size);
-    void erase(size_t index);
-    void insert(size_t index, int value);
     int* begin();
-    void swap(DynamicArray& other);
-    void assign(size_t new_size, int value);
 
 private:
     void create_data(size_t new_size);

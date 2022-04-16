@@ -3,71 +3,102 @@
 #include "Dynamic.h"
 #include <string>
 #include <iostream>
+#include <algorithm>
 
-TEST_CASE("testing") {
+TEST_CASE("testing Push_back, Pop_back, Clear, [], At, Size") {
 
-    DynamicArray a(10,1), b(5);
-    DynamicArray d(a);
+    DynamicArray a(5, 1), b(3), c({1, 2, 3, 4, 5}), d(b), checking({1, 2, 3, 4, 5, 10});
+    DynamicArray h;
 
-    CHECK(a.Size() == 10);
+    h.Push_back(10);
+    h.Push_back(9);
+    h.Push_back(8);
+
+    c.Push_back(10);
+
+    b.Push_back(9);
+
+    a.Push_back(8);
+
+    CHECK(h[0] == 10);
+    CHECK(h.At(2) == 8);
+
+    CHECK(b == DynamicArray({0, 0, 0, 9}));
+
     CHECK(a[1] == 1);
-    CHECK(b[1] == 0);
-    CHECK(b.Empty() == false);
-    CHECK(a[-1] == 1);
-    CHECK(d.Size() == 10);
-    CHECK(d[2] == 1);
+    CHECK_THROWS_WITH(a[6], "Incorrect index");
 
-    a.push_back(10);
-    CHECK(a[-1] == 10);
-    CHECK(a[-2] == 1);
-    CHECK(*a.end() == 10);
-    CHECK(a.at(-1) == 10);
+    CHECK(d.Size() == 3);
+    d.Pop_back();
+    CHECK(d.Size() == 2);
 
-    a.pop_back();
-    CHECK(*a.end() == 1);
+    d.Pop_back();
+    CHECK_THROWS_WITH(d[1], "Incorrect index");
 
-    a.resize(20);
-    CHECK(a.Size() == 20);
-    CHECK(*a.end() == 0);
+    d.Pop_back();
+    CHECK_THROWS_WITH(d.Pop_back(), "Array is empty");
 
-    DynamicArray c(3);
-    c[0] = 2;
-    c[1] = 3;
-    c[2] = 4;
+    for (int i=0; i<6; ++i){
+        CHECK(checking[i] == c[i]);
+    }
+}
 
-    c.erase(1);
-    CHECK(c[1] == 4);
-    CHECK(c.Size() == 2);
+TEST_CASE("testing Size, Clear, Resize, ==") {
+    DynamicArray a(4, 1), b, c({1, 2, 3}), d(4, 3);
 
+    CHECK_FALSE(a == b);
 
-    c.insert(1, 8);
-    c.insert(3, 9);
-    c.insert(0, 10);
-    //c = [10, 2, 8, 4, 9]
+    b.Resize(4);
 
-    CHECK(*c.begin() == 10);
-    CHECK(c == DynamicArray({10, 2, 8, 4, 9}));
+    CHECK(a.Size() == b.Size());
 
+    b.Clear();
+    b.Push_back(1);
+    b.Push_back(2);
+    b.Push_back(3);
 
-    DynamicArray f(3), F(f), C({10, 2, 8, 4, 9});
-    c.swap(f);
-    CHECK(c == F);
-    CHECK(C == f);
+    CHECK(b == c);
 
-    c.assign(3, 0);
-    CHECK(c == DynamicArray({0, 0, 0}));
+    d.Resize(2);
+    CHECK(d == DynamicArray({3, 3}));
+}
 
-    DynamicArray l = DynamicArray({1, 2, 3});
-    CHECK(l == DynamicArray({1, 2, 3}));
+TEST_CASE("testing Erase, Insert, Assign"){
+    DynamicArray a(4, 1), b, c({1, 2, 3}), d(5), checking({0, 1, 2});
 
-    DynamicArray h(3, 1);
-    h.resize(4);
-    CHECK(h == DynamicArray({1, 1, 1, 0}));
-    h.resize(5);
-    CHECK(h == DynamicArray({1, 1, 1, 0, 0}));
-    h.push_back(5);
-    CHECK(h == DynamicArray({1, 1, 1, 0, 0, 5}));
+    a.Assign(3, 2);
+    d.Erase(2);
+    d.Insert(2, 2);
+    c.Insert(0, 4);
+    c.Erase(c.Size() - 1);
 
-    DynamicArray v({5, 4, 3, 2, 1});
+    CHECK(a.Size() == c.Size());
+    CHECK(a[2] == 2);
+    CHECK(c[0] == 4);
+    CHECK_THROWS_WITH(b.Erase(0), "Array is empty");
+    CHECK_THROWS_WITH(a.Erase(100), "Incorrect index");
+    CHECK(d == DynamicArray({0, 0, 2, 0, 0}));
+
+    b.Insert(0, 0);
+    b.Insert(1, 2);
+    b.Insert(1, 1);
+    b.Insert(2, 3);
+    b.Erase(2);
+    for (int i=0; i<3; ++i){
+        CHECK(checking[i] == b[i]);
+    }
+
+}
+
+TEST_CASE("testing begin, end, Swap"){
+    DynamicArray a(4, 1), c({1, 2, 3}), d({3, 1, 4, 6});
+
+    a.Swap(c);
+    CHECK(a == DynamicArray({1, 2, 3}));
+    CHECK(c[1] == 1);
+    CHECK(c.Size() == 4);
+
+    std::sort(d.begin(), d.end());
+    CHECK(d == DynamicArray({1, 3, 4, 6}));
 
 }
