@@ -1,3 +1,4 @@
+project(project)
 cmake_minimum_required(VERSION 3.0)
 
 include(ExternalProject)
@@ -21,3 +22,4 @@ set(DOCTEST_INCLUDE_DIR ${source_dir}/doctest CACHE INTERNAL "Path to include fo
 include_directories(${DOCTEST_INCLUDE_DIR})
 
 add_subdirectory(hello_world)
+add_subdirectory(rational)
