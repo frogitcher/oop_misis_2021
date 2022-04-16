@@ -34,7 +34,7 @@ TEST_CASE("Testing dynamic array class") {
     // b is not empty
     CHECK_FALSE(b.Empty());
 
-    CHECK_THROWS_WITH(a.at(1), "Index is out of range!");
+    CHECK_THROWS_WITH(a.at(1), "Index is out of range");
 
     int64_t old_size = b.Size();
     b.push_back(-9);
@@ -43,6 +43,7 @@ TEST_CASE("Testing dynamic array class") {
 
     DynamicArray d_copy(d);
     Reallocate(d, 50);
+
     CHECK(d_copy.Size() == d.Size());
     CHECK(d.Capacity() == d_copy.Capacity());
     for (int64_t i = 0; i < d.Size(); ++i) CHECK(d[i] == d_copy[i]);
@@ -53,12 +54,13 @@ TEST_CASE("Testing dynamic array class") {
     CHECK(d.Size() == old_size - 1);
     for (int64_t i = 0; i < d.Size(); ++i) CHECK(d[i] == d_copy[i]);
 
-    CHECK_THROWS_WITH(a.pop_back(), "Array is empty!"); // pop_back() on empty array
+    CHECK_THROWS_WITH(a.pop_back(), "Array is empty"); // pop_back() on empty array
 
     d.clear();
     CHECK(d.Empty());
 
     // b = {4, 4, 4, 4, 4, -9};
+
     DynamicArray b_copy(b);
     b.erase(0);
     CHECK(b.Size() == b_copy.Size() - 1);
@@ -76,6 +78,7 @@ TEST_CASE("Testing dynamic array class") {
     }
 
     b.erase(b.Size() - 1);
+
     CHECK(b.Size() == b_copy.Size() - 3);
 
     for (int64_t i = 0; i < b.Size(); ++i) {
@@ -86,16 +89,16 @@ TEST_CASE("Testing dynamic array class") {
         CHECK(b[i] == b_copy[i + 1]);
     }
 
-    // b = {4, 4, 4}
+
     old_size = b.Size();
     b.resize(23, 125);
     CHECK(b.Size() == 23);
-    for (int64_t i = 0; i < old_size; ++i) CHECK(b[i] == 4);
+    for (int64_t i = 0; i < old_size; ++i) CHECK(b[i] == 0);
 
     for (int64_t i = old_size + 1; i < b.Size(); ++i) CHECK(b[i] == 125);
 
 
-    CHECK_THROWS_WITH(b.resize(-16, 8), "Length can't be negative!");
+    CHECK_THROWS_WITH(b.resize(-16, 8), "Size must be positive");
 
     b.resize(0);
     CHECK(b.Empty());
@@ -105,7 +108,7 @@ TEST_CASE("Testing dynamic array class") {
     for (int64_t i = 0; i < b.Size(); ++i) CHECK(b[i] == 52);
 
 
-    CHECK_THROWS_WITH(b.assign(-16, 8), "Length can't be negative!");
+    CHECK_THROWS_WITH(b.assign(-16, 8), "Size must be positive");
 
     b.assign(0);
     CHECK(b.Empty());

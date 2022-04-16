@@ -1,7 +1,5 @@
 project(rational_numbers)
 cmake_minimum_required(VERSION 3.0)
-SET(CMAKE_C_COMPILER  C:\\\\Program Files\\\\JetBrains\\\\CLion 2021.3.4\\\\bin\\\\mingw\\\\bin\\\\gcc.exe)
-SET(CMAKE_CXX_COMPILER C:\\\\Program Files\\\\JetBrains\\\\CLion 2021.3.4\\\\bin\\\\mingw\\\\bin\\\\g++.exe)
 add_compile_options(-std=c++17)
 
 include(ExternalProject)
@@ -27,6 +25,6 @@ include_directories(${DOCTEST_INCLUDE_DIR})
 
 add_executable(test
         dynamicarray.cpp
-
+        test.cpp
         )
 # add_subdirectory(tarasov_e_v)

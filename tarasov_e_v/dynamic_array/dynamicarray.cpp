@@ -91,11 +91,10 @@ void DynamicArray::swap(DynamicArray &other) {
 }
 
 void DynamicArray::reallocate(int64_t new_size) {
-    int64_t new_capacity = capacity;
+    uint64_t new_capacity = capacity;
     if (new_size > capacity) new_capacity *= 2;
     int* new_data = new int[new_capacity];
     std::copy(begin(), end(), new_data);
-    delete[] data;
     data = new_data;
 }
 
