@@ -13,8 +13,9 @@ DynamicArray::DynamicArray(int64_t _size, int _value)
 }
 
 DynamicArray::DynamicArray(const DynamicArray &other)
-        : size(other.size), capacity(other.capacity) {
-    data = other.data;
+        :size(other.size), capacity(other.capacity){
+    data = new int[other.size];
+    std::copy(other.data, other.data + size, data);
 }
 
 DynamicArray::DynamicArray(const std::initializer_list<int> &list)

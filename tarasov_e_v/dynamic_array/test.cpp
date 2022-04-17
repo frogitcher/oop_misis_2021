@@ -22,13 +22,13 @@ TEST_CASE("Testing dynamic array initialisation") {
     }
 
 // TODO: надо найти ошибку
-// FATAL ERROR: test case CRASHED: SIGABRT - Abort (abnormal termination) signal
-//    DynamicArray c(b);
-//    CHECK(c.Size());
-//    CHECK(c.begin() == c.GetData());
-//    for (int64_t i = 0; i < c.Size(); ++i) {
-//        CHECK(c[i] == b[i]);
-//    }
+//FATAL ERROR: test case CRASHED: SIGABRT - Abort (abnormal termination) signal
+    DynamicArray c(b);
+    CHECK(c.Size());
+    CHECK(c.begin() == c.GetData());
+    for (int64_t i = 0; i < c.Size(); ++i) {
+        CHECK(c[i] == b[i]);
+    }
 
     DynamicArray d = {5, 5, 5, 5, 5};
     CHECK(d.Size() == 5);
