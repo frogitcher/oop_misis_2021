@@ -21,8 +21,7 @@ TEST_CASE("Testing dynamic array initialisation") {
         CHECK(v == 5);
     }
 
-// TODO: надо найти ошибку
-//FATAL ERROR: test case CRASHED: SIGABRT - Abort (abnormal termination) signal
+
     DynamicArray c(b);
     CHECK(c.Size());
     CHECK(c.begin() == c.GetData());
