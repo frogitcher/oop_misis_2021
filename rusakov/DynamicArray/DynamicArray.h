@@ -1,5 +1,4 @@
 #pragma once
-
 class DynamicArray {
 private:
 	size_t size = 0;

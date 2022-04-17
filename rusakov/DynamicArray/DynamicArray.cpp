@@ -1,7 +1,6 @@
 #include<iostream>
 #include "DynamicArray.h"
 #include <stdexcept>
-#include <vector>
 
 DynamicArray::DynamicArray() {
 	data = nullptr;

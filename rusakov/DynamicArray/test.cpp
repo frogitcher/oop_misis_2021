@@ -24,6 +24,8 @@ TEST_CASE("Testing init dynamic array") {
 TEST_CASE("Testing void Empty") {
 	DynamicArray a;
 	CHECK(a.Empty() == true);
+	DynamicArray b{ 1,2,3 };
+	CHECK(b.Empty() == false);
 }
 
 TEST_CASE("Testing void push_back") {
