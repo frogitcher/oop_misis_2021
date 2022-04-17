@@ -6,9 +6,8 @@ private:
 	int* data;
 	size_t capacity = 0;
 public:
-	DynamicArray();  
 	~DynamicArray();
-	DynamicArray(size_t length, int value = 0);
+	DynamicArray(size_t length = 0, int value = 0);
 	DynamicArray(const DynamicArray& other);
 	DynamicArray(const std::initializer_list<int>& list); 
 	size_t Size() const; 
@@ -21,8 +20,8 @@ public:
 	void clear();
 	void erase(size_t index); 
 	void resize(size_t new_size);
-	int* begin();
-	int* end();
+	int* begin() const;
+	int* end() const;
 	void swap(DynamicArray& other);
 	void assign(size_t new_size, int value); 
 	bool operator==(const DynamicArray& other) const;

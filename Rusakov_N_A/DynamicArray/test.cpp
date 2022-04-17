@@ -24,6 +24,10 @@ TEST_CASE("Testing init dynamic array") {
 TEST_CASE("Testing void Empty") {
 	DynamicArray a;
 	CHECK(a.Empty() == true);
+	DynamicArray b{ 1,2,3 };
+	CHECK(b.Empty() == false);
+	DynamicArray c{ 1 };
+	CHECK(c.Empty() == false);
 }
 
 TEST_CASE("Testing void push_back") {
@@ -45,6 +49,12 @@ TEST_CASE("Testing void push_back") {
 	CHECK(b.Size() == 5);
 	b.push_back(6);
 	CHECK(b.Size() == 6);
+	b.push_back(7);
+	b.push_back(8);
+	b.push_back(9);
+	b.push_back(10);
+	b.push_back(11);
+	CHECK(b.Size() == 11);
 	CHECK(b[5] == 6);
 }
 
@@ -127,11 +137,7 @@ TEST_CASE("Testing void erase") {
 TEST_CASE("Testing void begin") {
 	DynamicArray a{ 1,2,3,4 };
 	CHECK(*a.begin() == 1);
-	CHECK(*a.end() == 4);
-	
-	DynamicArray b;
-	CHECK(b.begin() == nullptr);
-	CHECK(b.end() == nullptr);
+	CHECK(*(a.end()-1) == 4);
 }
 
 TEST_CASE("Testing void swap") {
