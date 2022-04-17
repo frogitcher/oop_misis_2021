@@ -12,7 +12,7 @@
 
 class DynamicArray {
 public:
-    [[maybe_unused]] DynamicArray(int64_t size=0, int value = 0);
+    DynamicArray(int64_t size=0, int value = 0);
     DynamicArray(const DynamicArray& other);
     DynamicArray(const  std::initializer_list<int>& list);
     ~DynamicArray();
