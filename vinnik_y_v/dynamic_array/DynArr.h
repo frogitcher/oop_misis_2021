@@ -97,7 +97,7 @@ DynArr<T>::DynArr(size_t len, const T& value)
 {
 	size = len;
 	capacity = len;
-	data = new T[len];
+	data = Alloc(len);
 	std::fill(data, data + size, value);
 }
 
@@ -106,7 +106,7 @@ DynArr<T>::DynArr(const DynArr& oth)
 {
 	size = oth.size;
 	capacity = oth.capacity;
-	data = new T[capacity];
+	data = Alloc(capacity);
 	std::copy(oth.data, oth.data + oth.size, data);
 }
 
@@ -217,17 +217,13 @@ void DynArr<T>::Pop_front()
 		throw std::out_of_range("Cannot pop first element from an empty array");
 	}
 	else if (size == 1) {
-		DeleteData();
 		size = 0;
-		capacity = 0;
-		data = nullptr;
 		return;
 	}
-	T* new_data = Alloc(size - 1);
+	T* new_data = Alloc(capacity);
 	std::copy(data + 1, data + size, new_data);
 	DeleteData();
 	--size;
-	capacity = size;
 	data = new_data;
 }
 
@@ -298,7 +294,7 @@ template<typename T>
 void DynArr<T>::Resize(size_t new_size, const T& value)
 {
 	if (new_size < size) {
-		Erase(new_size, size - new_size);
+		size = new_size;
 		return;
 	}
 	DynArr tmp(new_size - size, value);
@@ -328,7 +324,7 @@ inline T* DynArr<T>::Begin() const
 template<typename T>
 inline T* DynArr<T>::End() const
 {
-	return data + size - 1;
+	return data + size;
 }
 
 template<typename T>
@@ -435,21 +431,13 @@ DynArr<T>& DynArr<T>::operator=(const DynArr& oth)
 template<typename T>
 inline T& DynArr<T>::operator[](size_t i) const
 {
-	return At(i);
+	return data[i];
 }
 
 template<typename T>
 bool DynArr<T>::operator==(const DynArr& oth) const
 {
-	if (size != oth.size) {
-		return false;
-	}
-	for (int i = 0; i < size; ++i) {
-		if (data[i] != oth.data[i]) {
-			return false;
-		}
-	}
-	return true;
+	return std::equal(Begin(), End(), oth.Begin());
 }
 
 template<typename T>
@@ -467,13 +455,7 @@ bool DynArr<T>::operator>=(const DynArr& oth) const
 template<typename T>
 bool DynArr<T>::operator>(const DynArr& oth) const
 {
-	for (int i = 0; i < std::min(size, oth.size); ++i) {
-		if (data[i] == oth.data[i]) {
-			continue;
-		}
-		return data[i] > oth.data[i];
-	}
-	return size > oth.size;
+	return oth < *this;
 }
 
 template<typename T>

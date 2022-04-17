@@ -31,7 +31,7 @@ TEST_CASE("Testing main functionality of DynArr") {
 	CHECK(arr1.Front() == 0.5f);
 	arr2.Swap(arr3);
 	CHECK(arr3 == DynArr<double>{0.f, 0.f, 0.f});
-	CHECK(*(arr2.End()) == 1.34f);
+	CHECK(*(arr2.End() - 1) == 1.34f);
 	CHECK_THROWS_WITH(arr4.Back(), "Cannot get last element of an empty array");
 	CHECK_THROWS_WITH(arr4.Front(), "Cannot get first element of an empty array");
 	arr1.SwapItemsAt(0, 2);
@@ -124,7 +124,6 @@ TEST_CASE("Testing non-comparasment operators") {
 	CHECK(arr1 + arr1 == arr2);
 	CHECK(arr1[0] == 0.1f);
 	CHECK(arr2[2] == 0.1f);
-	CHECK_THROWS_WITH(arr1[4], "Index is out of range");
 }
 
 TEST_CASE("Testing comparasment operators") {
