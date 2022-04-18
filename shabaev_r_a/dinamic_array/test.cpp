@@ -99,7 +99,7 @@ TEST_CASE("testing push_back/insert") {
         SUBCASE("insert in middle") {
             mas.insert(2, 10);
             CHECK(mas.Size() == 5);
-            CHECK(mas == (Stable_Dynamic_Array) {1, 2, 10, 3, 4});
+            CHECK(mas == Stable_Dynamic_Array{1, 2, 10, 3, 4});
         }
     }
     SUBCASE("some test for insert"){
@@ -123,6 +123,7 @@ TEST_CASE("check =="){
         CHECK(mas!=mas1);
     }
     SUBCASE("uwu"){
+
         Stable_Dynamic_Array mas={1, 1, 1, 2};
         Stable_Dynamic_Array mas1(4, 1);
         CHECK(mas!=mas1);
