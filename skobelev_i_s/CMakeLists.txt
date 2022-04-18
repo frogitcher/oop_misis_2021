@@ -1,11 +1,8 @@
-cmake_minimum_required(VERSION 2.9)
-
-project(project)
 cmake_minimum_required(VERSION 3.0)
 
+project(project)
 include(ExternalProject)
 find_package(Git REQUIRED)
-
 ExternalProject_Add(
     doctest
     PREFIX ${CMAKE_BINARY_DIR}/doctest
@@ -18,11 +15,8 @@ ExternalProject_Add(
     LOG_DOWNLOAD ON
 )
 
-# Expose required variable (DOCTEST_INCLUDE_DIR) to parent scope
 ExternalProject_Get_Property(doctest source_dir)
 set(DOCTEST_INCLUDE_DIR ${source_dir}/doctest CACHE INTERNAL "Path to include folder for doctest")
 include_directories(${DOCTEST_INCLUDE_DIR})
 
-add_subdirectory(fadeev_a_u)
-
-add_subdirectory(hello_world)
+add_subdirectory(rational)
