@@ -40,10 +40,8 @@ TEST_CASE("Testing other operators") {
     CHECK((a == Rational(4, 7))==true);
     CHECK((d == Rational(-2, 3))==true);
     CHECK((--b == Rational(-5, 13))==true);
-    CHECK(((-d) == Rational(4, 12))==true);
 }
 TEST_CASE("Testing exceptions") {
-    //проверка ошибок
     CHECK_THROWS_WITH(Rational(2, 0), "Denominator can not be 0!");
     CHECK_THROWS_WITH((Rational(3, 6) /= Rational(0, 81)), "Division can not be 0!");
 }

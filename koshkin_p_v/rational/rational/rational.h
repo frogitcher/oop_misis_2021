@@ -1,7 +1,6 @@
 #pragma once
 #include <iostream>
 
-using namespace std;
 
 class Rational {
 public:
@@ -43,4 +42,4 @@ private:
     void Normalize();
 };
 
-ostream& operator<<(ostream& os, const Rational& r);
+std::ostream& operator<<(std::ostream& os, const Rational& r);
