@@ -27,6 +27,8 @@ public:
  
     Rational& operator++();
     Rational& operator--();
+    Rational operator--(int x);
+    Rational operator++(int x);
 
     bool operator<(const Rational& rhs);
     bool operator>(const Rational& rhs);

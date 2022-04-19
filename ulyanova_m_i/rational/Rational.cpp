@@ -21,7 +21,10 @@ Rational Rational::operator*(const Rational& rhs) {
 }
 
 Rational Rational::operator/(const Rational& rhs) { 
-    return (Rational(*this) /= rhs);
+    if (rhs.num != 0) {
+        return (Rational(*this) /= rhs);
+    }
+    throw std::invalid_argument("denominator must not be 0");
 }
 
 bool Rational::operator<(const Rational& rhs) { 
@@ -70,10 +73,13 @@ Rational& Rational::operator*=(const Rational& rhs) {
 }
 
 Rational& Rational::operator/=(const Rational& rhs) {
-    num = num * rhs.den;
-    den = den * rhs.num;
-    Normalize();
-    return *this;
+    if (rhs.num != 0) {
+        num = num * rhs.den;
+        den = den * rhs.num;
+        Normalize();
+        return *this;
+    }
+    throw std::invalid_argument("denominator must not be 0");
 }
 
 Rational& Rational::operator=(const Rational& rhs) {
@@ -106,8 +112,9 @@ void Rational::Normalize() {
 }
 
 int Rational::gcd(int num, int den) {
+
     if (num == 1) {
-        return num;
+        return 1;
     }
 
     if (num == 0) {
@@ -139,6 +146,18 @@ Rational& Rational::operator--() {
 
 Rational& Rational::operator++() {
     return (Rational(*this) += Rational(1, 1));
+}
+
+Rational Rational::operator--(int x) {
+    Rational r(*this);
+    *this -= Rational(1, 1);
+    return r;
+}
+
+Rational Rational::operator++(int x) {
+    Rational r(*this);
+    *this += Rational(1, 1);
+    return r;
 }
 
 
