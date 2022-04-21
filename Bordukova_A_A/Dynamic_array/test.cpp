@@ -9,6 +9,8 @@ Dynamic_Array a_copy(a);
 Dynamic_Array d = a;
 Dynamic_Array c;
 Dynamic_Array e({ 11, 42, 83, 54, 52, 61 });
+Dynamic_Array f({ 11, 42, 83, 54, 52, 61 });
+
 
 TEST_CASE("Testing Creation and Fillability") {
     CHECK(a.Size() == 10);
@@ -21,13 +23,16 @@ TEST_CASE("Testing Creation and Fillability") {
     CHECK(d.Size() == a.Size());
     CHECK(a.Capacity() == a_copy.Capacity());
     CHECK(e[1] == 42);
+    std::sort(f.begin(), f.end());
+    CHECK(f[2] == 52);
+    
 }
 
 TEST_CASE("Testing Actions with Array") {
     size_t old_size = a.Size();
     a.push_back(10);
     CHECK(a[10] == 10);
-    CHECK(*a.end() == 10); 
+    CHECK(a.end() == a.Get_Data() + a.Size());
     CHECK(a.Size() == old_size + 1);
 
     a.pop_back();
@@ -37,7 +42,6 @@ TEST_CASE("Testing Actions with Array") {
     d.clear();
     CHECK(d.Empty());
 
-    CHECK_THROWS_WITH(c.erase(1), "Array is empty!");
     CHECK_THROWS_WITH(e.erase(-1), "Index is out of the range!");
     CHECK_THROWS_WITH(e.erase(137), "Index is out of the range!");
     e.erase(3);
@@ -50,7 +54,7 @@ TEST_CASE("Testing Actions with Array") {
 
     d.resize(37);
     CHECK(d.Size() == 37);
-    CHECK(*d.end() == 0);
+    CHECK(d.end() == d.Get_Data() + d.Size());
 
     c.assign(3, 947);
     CHECK(c == Dynamic_Array({ 947, 947, 947 }));
@@ -69,7 +73,7 @@ TEST_CASE("Testing Pointers") {
     Dynamic_Array one(5, 12);
     Dynamic_Array two(7, 53);
     CHECK(*one.begin() == 12);
-    CHECK(*two.end() == 53);
+    CHECK(two.end() == two.Get_Data() + two.Size());
 }
 
 //They have been also dested in previos cases

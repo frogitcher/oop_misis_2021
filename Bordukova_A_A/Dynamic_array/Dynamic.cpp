@@ -6,61 +6,32 @@
 //Array Creation
 Dynamic_Array::Dynamic_Array()
 	: size(0)
-	, capacity(1)
-	, data(nullptr) {
+	, capacity(1) {
 }
 Dynamic_Array::~Dynamic_Array() {
 	delete[]data;
 }
 Dynamic_Array::Dynamic_Array(size_t _size, int value) :
 	size(_size),
-	capacity(_size), 
-	data(nullptr){
-	if (size <= 0) {
-		throw std::invalid_argument("Size must be >0!");
-	}
-	else {
+	capacity(_size) {
 		data = new int[size];
 		std::fill(data, data + size, value);
-	}
 }
 Dynamic_Array::Dynamic_Array(const Dynamic_Array& other) :
 	size(other.size),
-	capacity(other.capacity),
-	data(nullptr) {
-	if (size == 0) {
-		data = nullptr;
-	}
-	else {
+	capacity(other.capacity) {
 		data = new int[capacity];
 		std::copy(other.data, other.data + other.size, data);
-	}
 }
 Dynamic_Array::Dynamic_Array(const std::initializer_list<int>& list): 
 	size(list.size()), 
-	capacity(list.size()), 
-	data(nullptr){
-	data = new int[capacity];
-	if (size != 0) {
-		std::copy(list.begin(), list.end(), data);
+	capacity(list.size()) 
+{
+		data = new int[capacity];
+		if (size != 0) {
+			std::copy(list.begin(), list.end(), data);
+		}
 	}
-}
-
-//Array Fillability
-const size_t Dynamic_Array::Size() const
-{
-	return size;
-}
-const size_t Dynamic_Array::Capacity() const
-{
-	return capacity;
-}
-bool Dynamic_Array::Empty() const {
-	return size == 0;
-}
-int* Dynamic_Array::Get_Data() const {
-	return data;
-}
 
 //Actions with arrays
 void Dynamic_Array::push_back(int value) {
@@ -78,24 +49,17 @@ void Dynamic_Array::pop_back()
 }
 void Dynamic_Array::clear()
 {
-	delete[] data;
 	size = 0;
 	capacity = 0;
-	data = nullptr;
 }
 void Dynamic_Array::erase(size_t index)
 {
-	if (size == 0) {
-		throw std::underflow_error("Array is empty!");
-	}
 	if (index < 0 || index >= size) {
 		throw std::out_of_range("Index is out of the range!");
 	}
-	int* new_data = new int[capacity];
-	std::copy(begin(), begin() + index, new_data);
-	std::copy(begin() + index + 1, end(), new_data + index);
-	delete[] data;
-	data = new_data;
+	for (size_t i = index; i < size - 1; ++i) {
+		data[i] = data[i + 1];
+	}
 	--size;
 }
 void Dynamic_Array::insert(size_t index, int value)
@@ -123,14 +87,9 @@ void Dynamic_Array::resize(size_t new_size)
 }
 void Dynamic_Array::assign(size_t new_size, int value)
 {
-	if (new_size < 0) {
-		throw std::length_error("Length must be > 0!");
-	}
-	else {
 		resize(new_size);
 		size = new_size;
 		std::fill(data, data + size, value);
-	}
 }
 void Dynamic_Array::swap(Dynamic_Array& other) {
 
@@ -139,15 +98,6 @@ void Dynamic_Array::swap(Dynamic_Array& other) {
 	std::swap(data, other.data);
 }
 
-//Pointers
-int* Dynamic_Array::begin()
-{
-	return data;
-}
-int* Dynamic_Array::end()
-{
-	return data + size  - 1;
-}
 
 //Logical functions
 bool Dynamic_Array::operator==(const Dynamic_Array& other) const
@@ -177,16 +127,7 @@ Dynamic_Array& Dynamic_Array::operator=(const Dynamic_Array other)
 	return *this;
 }
 
-//Indexing and referencing
-int& Dynamic_Array::operator[](size_t i) const {
-	if (i >= size) {
-		throw std::out_of_range("Index is out of the range!");
-	}
-	if (i <=0) {
-		throw std::length_error("Index must be > 0!");
-	}
-	return *(data + i);
-}
+//Referencing
 int& Dynamic_Array::at(size_t i) const {
 	if (i >= size) {
 		throw std::out_of_range("Index is out of the range!");

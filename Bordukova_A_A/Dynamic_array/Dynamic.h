@@ -12,10 +12,22 @@ public:
 	Dynamic_Array(const std::initializer_list<int>& list);
 
 	//Array Fillability
-	const size_t Size() const;
-	const size_t Capacity() const;
-	bool Empty() const;
-	int* Get_Data() const;
+	inline const size_t Size() const
+	{
+		return size;
+	}
+	inline const size_t Capacity() const
+	{
+		return capacity;
+	}
+	inline bool Empty() const
+	{
+		return size == 0;
+	}
+	inline int* Get_Data() const
+	{
+		return data;
+	}
 
 	//Actions with arrays
 	void push_back(int value);
@@ -28,8 +40,14 @@ public:
 	void swap(Dynamic_Array& other);
 
 	//Pointers
-	int* begin();
-	int* end();
+	inline int* begin()
+	{
+		return data;
+	}
+	inline int* end()
+	{
+		return  data + size;
+	}
 
 	//Logical functions
 	bool operator==(const Dynamic_Array& other) const;
@@ -39,11 +57,14 @@ public:
 	Dynamic_Array& operator=(const Dynamic_Array other);
 
 	//Indexing and referencing
-	int& operator[](size_t i) const;
+	inline int& operator[](size_t i) const
+	{
+		return *(data + i);
+	}
 	int& at(size_t el) const;
 
 private:
-	size_t size = 0;
+	int64_t size = 0;
 	size_t capacity = 0;
 	int* data;
 	void reallocate(size_t new_capacity);
