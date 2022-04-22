@@ -24,6 +24,7 @@ class Iterator_Stable_Dynamic_Array;
 
 class Stable_Dynamic_Array {
 public:
+    typedef int value_type;
     typedef Iterator_Stable_Dynamic_Array<int> iter;
     typedef Iterator_Stable_Dynamic_Array<const int> const_iter;
     Stable_Dynamic_Array(size_t size = 0, int value = 0);
