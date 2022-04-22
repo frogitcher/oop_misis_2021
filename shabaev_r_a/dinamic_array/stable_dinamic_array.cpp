@@ -3,37 +3,27 @@
 //
 
 #include "stable_dinamic_array.h"
-/*
 
-*/
-
-
-Stable_Dynamic_Array::Stable_Dynamic_Array(size_t size, int value):size(size), capacity(size) {
+Stable_Dynamic_Array::Stable_Dynamic_Array(size_t size, int value):capacity(size) {
     data = new Node*[capacity+1];
-    for(int i=0; i<size+1; i++){
-        (*(data+i))=new Node;
-        (*(data+i))->up=(data+i);
-    }
-    std::fill(begin(), end(), value);
+    (*data)=new Node;
+    (*data)->up=data;
+    std::fill_n(std::back_inserter(*this), size, value);
 
 }
 
-Stable_Dynamic_Array::Stable_Dynamic_Array(const Stable_Dynamic_Array &other):size(other.size), capacity(other.size) {
-    data =new Node*[capacity+1];
-    for (int i = 0; i < size+1; ++i) {
-        (*(data+i))=new Node;
-        (*(data+i))->up=(data+i);
-    }
-    std::copy(other.begin(), other.end(), begin());
+Stable_Dynamic_Array::Stable_Dynamic_Array(const Stable_Dynamic_Array &other):capacity(other.size) {
+    data = new Node*[capacity+1];
+    (*data)=new Node;
+    (*data)->up=data;
+    std::copy(other.begin(), other.end(), std::back_inserter(*this));
 }
 
-Stable_Dynamic_Array::Stable_Dynamic_Array(const std::initializer_list<int> &list):size(list.size()), capacity(list.size()) {
-    data =new Node*[capacity+1];
-    for (int i = 0; i < size+1; ++i) {
-        *(data+i)=new Node;
-        (*(data+i))->up=(data+i);
-    }
-    std::copy((list.begin()), (list.end()), begin());
+Stable_Dynamic_Array::Stable_Dynamic_Array(const std::initializer_list<int> &list):capacity(list.size()) {
+    data = new Node*[capacity+1];
+    (*data)=new Node;
+    (*data)->up=data;
+    std::copy((list.begin()), (list.end()), std::back_inserter(*this));
 }
 
 size_t Stable_Dynamic_Array::Size() const {
@@ -49,7 +39,7 @@ bool Stable_Dynamic_Array::Empty() const {
 }
 
 void Stable_Dynamic_Array::push_back(int value) {
-    if (size + 1 > capacity) relocate(size + 1);
+    relocate(size + 1);
     size++;
     (*(data+size))=new Node;
     (*(data+size))->up=(data+size);
@@ -78,7 +68,7 @@ void Stable_Dynamic_Array::erase(size_t index) {
 }
 
 void Stable_Dynamic_Array::resize(size_t new_size, int value) {
-    if(new_size>capacity) relocate(new_size);
+    relocate(new_size);
     while(size!=new_size){
         push_back(value);
     }
@@ -141,6 +131,7 @@ bool Stable_Dynamic_Array::operator!=(const Stable_Dynamic_Array &rhs) const {
 }
 
 void Stable_Dynamic_Array::relocate(size_t new_size) {
+    if (new_size <= capacity) return;
     capacity=new_size*2;
     Node** new_data= new Node*[capacity+1];
     for(int i=0; i<size+1; i++){
@@ -155,10 +146,9 @@ void Stable_Dynamic_Array::relocate(size_t new_size) {
 
 Stable_Dynamic_Array::~Stable_Dynamic_Array() {
 
-    for(size_t i=0; i<size; i++){
+    for(size_t i=0; i<size+1; i++){
         delete *(data+i);
     }
-
     delete []data;
 
 }
