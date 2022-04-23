@@ -27,6 +27,9 @@ public:
     typedef int value_type;
     typedef Iterator_Stable_Dynamic_Array<int> iter;
     typedef Iterator_Stable_Dynamic_Array<const int> const_iter;
+    typedef int& reference;
+    typedef const int& const_reference;
+
     Stable_Dynamic_Array(size_t size = 0, int value = 0);
     Stable_Dynamic_Array(const Stable_Dynamic_Array& other);
     Stable_Dynamic_Array( Stable_Dynamic_Array&& other);
@@ -50,8 +53,10 @@ public:
     const_iter begin() const;
     const_iter end() const;
 
-    int& operator[](size_t i) const;
-    int& at(size_t i) const;
+    const_reference operator[](size_t i) const;
+    const_reference at(size_t i) const;
+    reference operator[](size_t i);
+    reference at(size_t i);
 
     Stable_Dynamic_Array& operator=(const Stable_Dynamic_Array& rhs);
 

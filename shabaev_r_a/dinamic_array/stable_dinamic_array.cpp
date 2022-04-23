@@ -50,7 +50,7 @@ void Stable_Dynamic_Array::push_back(int value) {
 }
 
 void Stable_Dynamic_Array::pop_back() {
-    if(size==0){return;}
+    if(size==0) return;
     size--;
 
 }
@@ -102,11 +102,11 @@ Stable_Dynamic_Array::iter Stable_Dynamic_Array::end() {
     return {*(data+size)};
 }
 
-int &Stable_Dynamic_Array::operator[](size_t i) const {
+Stable_Dynamic_Array::const_reference &Stable_Dynamic_Array::operator[](size_t i) const {
     return (*(data+i))->value;
 }
 
-int &Stable_Dynamic_Array::at(size_t i) const {
+Stable_Dynamic_Array::const_reference &Stable_Dynamic_Array::at(size_t i) const {
     if(i>=size){
         throw std::out_of_range("out of range");
     }
@@ -159,6 +159,17 @@ Stable_Dynamic_Array::const_iter Stable_Dynamic_Array::begin() const {
 
 Stable_Dynamic_Array::const_iter Stable_Dynamic_Array::end() const {
     return {*(data+size)};
+}
+
+int &Stable_Dynamic_Array::operator[](size_t i) {
+    return (*(data+i))->value;
+}
+
+int &Stable_Dynamic_Array::at(size_t i) {
+    if(i>=size){
+        throw std::out_of_range("out of range");
+    }
+    return (*this)[i];
 }
 
 
