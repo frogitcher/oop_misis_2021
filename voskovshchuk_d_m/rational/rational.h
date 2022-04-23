@@ -10,6 +10,7 @@ public:
     rational() = default;
     rational(const _int64 num);
     rational(const _int64 num, const _int64 denum);
+    rational(const rational& num);
     ~rational() = default;
     
     rational operator+ (const rational& rhs) const;
@@ -17,7 +18,6 @@ public:
     rational operator* (const rational& rhs) const;
     rational operator/ (const rational& rhs) const;
 
-    rational& operator= (const rational& rhs);
     rational& operator+= (const rational& rhs);
     rational& operator-= (const rational& rhs);
     rational& operator*= (const rational& rhs);
