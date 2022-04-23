@@ -26,11 +26,11 @@ Stable_Dynamic_Array::Stable_Dynamic_Array(const std::initializer_list<int> &lis
     std::copy((list.begin()), (list.end()), std::back_inserter(*this));
 }
 
-size_t Stable_Dynamic_Array::Size() const {
+Stable_Dynamic_Array::size_type Stable_Dynamic_Array::Size() const {
     return size;
 }
 
-size_t Stable_Dynamic_Array::Capacity() const {
+Stable_Dynamic_Array::size_type Stable_Dynamic_Array::Capacity() const {
     return capacity;
 }
 

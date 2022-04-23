@@ -27,6 +27,7 @@ public:
     typedef int value_type;
     typedef Iterator_Stable_Dynamic_Array<int> iter;
     typedef Iterator_Stable_Dynamic_Array<const int> const_iter;
+    typedef std::size_t size_type;
     typedef int& reference;
     typedef const int& const_reference;
 
@@ -36,11 +37,12 @@ public:
     Stable_Dynamic_Array(const std::initializer_list<int>& list);
     ~Stable_Dynamic_Array();
 
-    size_t Size() const;
-    size_t Capacity() const;
+    size_type Size() const;
+    size_type Capacity() const;
     bool Empty() const;
 
     void push_back(int value);
+
     void pop_back();
     void clear();
     void erase(size_t index);
