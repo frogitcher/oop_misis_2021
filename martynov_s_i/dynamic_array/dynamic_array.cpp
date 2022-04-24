@@ -12,7 +12,6 @@ DynamicArray::DynamicArray(size_t _size, int value) {
 DynamicArray::DynamicArray(const DynamicArray& other) {
 	int* new_data = new int[other.capacity];
 	std::copy(other.data, other.data + other.size, new_data);
-	delete[] data;
 	data = new_data;
 	size = other.size;
 	capacity = other.capacity;
@@ -23,7 +22,6 @@ DynamicArray::DynamicArray(const std::initializer_list<int>& list) {
 	capacity = list.size();
 	int* new_data = new int[capacity];
 	std::copy(list.begin(), list.end(), new_data);
-	delete[] data;
 	data = new_data;
 }
 
@@ -55,20 +53,13 @@ void DynamicArray::pop_back() {
 
 void DynamicArray::clear() {
 	size = 0;
-	capacity = 0;
-	delete[] data;
-	data = new int[0];
 }
 
 void DynamicArray::erase(size_t index) {
 	if (size == 0 || index >= size) {
 		throw "size 0 or index out";
 	}
-	for (size_t i = 0; i < size - 1; ++i) {
-		if (i >= index) {
-			data[i] = *(data + i + 1);
-		}
-	}
+	std::copy(data + index + 1, data + size, data + index);
 	--size;
 }
 
@@ -77,33 +68,31 @@ void DynamicArray::insert(size_t index, int value) {
 		throw "index out";
 	}
 	resize(++size);
-	int temp, temp2;
-	for (size_t i = 0; i < size; ++i) {
-		if (i == index) {
-			temp = data[i];
-			data[i] = value;
-		}
-		else if (i > index) {
-			temp2 = data[i];
-			data[i] = temp;
-			temp = temp2;
-		}
+	for (size_t i = index; i < size; ++i) {
+		std::swap(data[i], value);
 	}
 }
 
 void DynamicArray::resize(size_t new_size) {
 	if (new_size > capacity) {
 		capacity = std::max(new_size, size * 2);
+		int* new_data = new int[capacity];
+		std::copy(data, data + size, new_data);
+		if (new_size > size) {
+			for (size_t i = size; i < new_size; ++i) {
+				new_data[i] = 0;
+			}
+		}
+		delete[] data;
+		data = new_data;
 	}
-	int* new_data = new int[capacity];
-	std::copy(data, data + size, new_data);
-	if (new_size > size) {
-		for (size_t i = size; i < new_size; ++i) {
-			new_data[i] = 0;
+	else {
+		if (new_size > size) {
+			for (size_t i = size; i < new_size; ++i) {
+				data[i] = 0;
+			}
 		}
 	}
-	delete[] data;
-	data = new_data;
 	size = new_size;
 }
 
@@ -119,24 +108,9 @@ void DynamicArray::assign(size_t new_size, int value) {
 }
 
 void DynamicArray::swap(DynamicArray& other) {
-	size_t size1 = size, size2 = other.size;
-	size_t capacity1 = capacity, capacity2 = other.capacity;
-	if (size1 > size2) {
-		other.resize(size1);
-	}
-	else {
-		resize(size2);
-	}
-	size_t max_size = std::max(size1, size2);
-	for (size_t i = 0; i < max_size; ++i) {
-		int temp = data[i];
-		data[i] = other.data[i];
-		other.data[i] = temp;
-	}
-	size = size2;
-	other.size = size1;
-	capacity = capacity2;
-	other.capacity = capacity1;
+	std::swap(size, other.size);
+	std::swap(capacity, other.capacity);
+	std::swap(data, other.data);
 }
 
 
@@ -150,10 +124,7 @@ int* DynamicArray::end() {
 
 
 int& DynamicArray::at(size_t index) const {
-	if (index >= size) {
-		throw "index out";
-	}
-	return *(data + index);
+	return (*this)[index];
 }
 
 int& DynamicArray::operator[](size_t index) const {
@@ -165,22 +136,14 @@ int& DynamicArray::operator[](size_t index) const {
 
 
 bool DynamicArray::empty() const {
-	if (size == 0) {
-		return true;
-	}
-	return false;
+	return size == 0;
 }
 
 bool DynamicArray::operator==(const DynamicArray& other) const {
 	if (size != other.size) {
 		return false;
 	}
-	for (size_t i = 0; i < size; ++i) {
-		if (data[i] != other.data[i]) {
-			return false;
-		}
-	}
-	return true;
+	return std::equal(data, data + size, other.data);
 }
 
 bool DynamicArray::operator!=(const DynamicArray& other) const {
@@ -188,11 +151,16 @@ bool DynamicArray::operator!=(const DynamicArray& other) const {
 }
 
 DynamicArray& DynamicArray::operator=(const DynamicArray& other) {
-	int* new_data = new int[other.capacity];
-	std::copy(other.data, other.data + other.capacity, new_data);
-	delete[] data;
-	data = new_data;
+	if (size >= other.size) {
+		std::copy(other.data, other.data + other.size, data);
+	}
+	else {
+		int* new_data = new int[other.capacity];
+		std::copy(other.data, other.data + other.capacity, new_data);
+		delete[] data;
+		data = new_data;
+		capacity = other.capacity;
+	}
 	size = other.size;
-	capacity = other.capacity;
 	return *this;
 }

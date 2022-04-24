@@ -14,7 +14,6 @@ TEST_CASE("Dynamic Array") {
 	a.clear();
 	CHECK(a.empty() == true);
 	CHECK(a.Size() == 0);
-	CHECK(a.Capacity() == 0);
 	CHECK(a == DynamicArray());
 
 	DynamicArray b({ 5, 6, 7, 1, 2, 3 });
@@ -32,7 +31,7 @@ TEST_CASE("Dynamic Array") {
 	CHECK(a.Size() == 6);
 	CHECK(a == DynamicArray({ 5, 6, 7, 300, 1, 3 }));
 	CHECK(b.Size() == 0);
-	CHECK(b.Capacity() == 0);
+	CHECK(b == DynamicArray());
 
 	DynamicArray c;
 	CHECK(c.Size() == 0);
