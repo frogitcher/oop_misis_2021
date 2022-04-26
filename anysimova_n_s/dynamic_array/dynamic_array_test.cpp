@@ -2,6 +2,7 @@
 #include "doctest.h"
 #include "dynamic_array.h"
 
+
 TEST_CASE("DynamicArray constructors & member access operators") {
 	DynamicArray empty;
 	CHECK(empty.Size() == 0);
@@ -34,7 +35,6 @@ TEST_CASE("DynamicArray constructors & member access operators") {
 	}
 
 	CHECK_THROWS_WITH(DA.at(DA.Size()), "index out of range");
-	CHECK_THROWS_WITH(DynamicArray st(-5), "The size must be positive number");
 }
 
 TEST_CASE("push_back") {
@@ -70,17 +70,17 @@ TEST_CASE("erase") {
 
 	first.erase(4);
 	CHECK(first.Size() == 9);
-	for (int i = 0; i < 3; i++) {
+	for (int i = 0; i < 4; i++) {
 		CHECK(first[i] == second[i]);
 	}
-	for (int i = 3; i < first.Size(); i++) {
+	for (int i = 4; i < first.Size(); i++) {
 		CHECK(first[i] == second[i + 1]);
 	}
 	for (int i = 0; i < first.Size(); i++) {
-		CHECK(first[i] != 7);
+		CHECK(first[i] != 6);
 	}
 
-	third.erase(third.Size());
+	third.erase(third.Size() - 1);
 	CHECK(first.Size() == 9);
 	for (int i = 0; i < third.Size(); i++) {
 		CHECK(third[i] == second[i]);
@@ -155,15 +155,15 @@ TEST_CASE("insert") {
 	DynamicArray third{ 13, 42, 4, 2, 1, 5};
 	third.push_back(87);
 
-	first.insert(1, 15);
+	first.insert(0, 15);
 	CHECK(first.Size() == 8);
 	CHECK(first[0] == 15);
 	for (int i = 1; i < first.Size(); i++) {
 		CHECK(first[i] == second[i - 1]);
 	}
-	first.erase(1);
+	first.erase(0);
 
-	first.insert(6, 18);
+	first.insert(5, 18);
 	CHECK(first.Size() == 8);
 	CHECK(first[5] == 18);
 	for (int i = 0; i < 5; i++) {
@@ -172,16 +172,16 @@ TEST_CASE("insert") {
 	for (int i = 6; i < first.Size(); i++) {
 		CHECK(first[i] == second[i - 1]);
 	}
-	first.erase(6);
+	first.erase(5);
 
-	first.insert(first.Size() + 1, 76);
+	first.insert(first.Size(), 76);
 	CHECK(first.Size() == 8);
 	CHECK(first[7] == 76);
 	for (int i = 0; i < first.Size() - 1; i++) {
 		CHECK(first[i] == second[i]);
 	}
 
-	third.insert(6, 143);
+	third.insert(5, 143);
 	CHECK(third.Size() == 8);
 	CHECK(third[5] == 143);
 	for (int i = 0; i < 5; i++) {
@@ -209,7 +209,7 @@ TEST_CASE("begin & end") {
 	DynamicArray first{ 13, 42, 4, 2, 1 };
 
 	CHECK(*(first.begin()) == 13);
-	CHECK(*(first.end()) == 1);
+	CHECK(*(first.end() - 1) == 1);
 }
 
 TEST_CASE("operator=") {
@@ -236,10 +236,13 @@ TEST_CASE("operator== & operator!=") {
 	DynamicArray first{ 13, 42, 4, 2, 1, 5, 87 };
 	DynamicArray second(7, 5);
 	DynamicArray third(7, 5);
+	DynamicArray forth{ 13, 42, 4, 2, 1, 5, 87 };
+
 
 	CHECK(!(first == second));
 	CHECK(!(first == third));
 	CHECK(second == third);
+	CHECK(first == forth);
 	CHECK(first != second);
 	CHECK(first != third);
 	CHECK(!(second != third));
