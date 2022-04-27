@@ -3,16 +3,14 @@
 #include <initializer_list>
 
 template<typename T>
-Stack<T>::Stack(const std::initializer_list<T>& list)
-{
+Stack<T>::Stack(const std::initializer_list<T>& list) {
     for (T l : list) {
         push(l);
     }
 }
 
 template<typename T>
-Stack<T>::Stack(const Stack<T>& other)
-{
+Stack<T>::Stack(const Stack<T>& other) {
     *this = other;
 }
 
@@ -32,8 +30,7 @@ Stack<T>::~Stack() {
 }
 
 template<typename T>
-void Stack<T>::push(const T value)
-{
+void Stack<T>::push(const T value) {
     head = new Node(value, head);
     if (tail == nullptr) {
         tail = head;
@@ -42,8 +39,7 @@ void Stack<T>::push(const T value)
 }
 
 template<typename T>
-void Stack<T>::pop()
-{
+void Stack<T>::pop() {
     if (size == 0) {
         throw std::logic_error("Stack is empty");
     }
@@ -103,8 +99,7 @@ void Stack<T>::clear() {
 }
 
 template<typename T>
-bool Stack<T>::operator==(const Stack<T>& other) const
-{
+bool Stack<T>::operator==(const Stack<T>& other) const {
     if (size != other.size) {
         return false;
     }
@@ -121,8 +116,7 @@ bool Stack<T>::operator==(const Stack<T>& other) const
 }
 
 template<typename T>
-bool Stack<T>::operator!=(const Stack<T>& other) const
-{
+bool Stack<T>::operator!=(const Stack<T>& other) const {
     return !(* this == other);
 }
 
