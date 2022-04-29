@@ -1,68 +1,64 @@
 #pragma once
-#include <cstdint>
 #include <initializer_list>
+#include <stddef.h>
+#include <stdexcept>
 #include <algorithm>
-
 class DynamicArray {
-    public:
-	    ~DynamicArray();
-        DynamicArray(int64_t size = 0, int value = 0);
+public:
+	~DynamicArray();
+        DynamicArray(int_t long = 0, int value = 0);
         DynamicArray(const DynamicArray& other);
         DynamicArray(const std::initializer_list<int>& list);
         
-		
-        int64_t Size() const;
-        int64_t Capacity() const;
-        inline bool Empty() const {
-            return size == 0;
-        }
-        inline int* GetData() const {
-            return data;
-        }
-
-
+	inline const int_t Size() const {
+		return size;
+	};
+	inline const int_t Capacity() const {
+		return capacity;
+	};
+	inline int* Data() const {
+		return data;
+	};
+	inline bool Empty() const {
+		return size == 0;
+	};
         void push_back(int value);
-        void pop_back();
+        inline void pop_back() {
+		if (size == 0) {
+			throw std::out_of_range("Array Size < 0");
+		}
+		else {
+			this->size--;
+		};
+	};
         inline void clear() {
             size = 0;
         }
-        void erase(int64_t index);
-        void resize(int64_t new_size, int value = 0);
-        void assign(int64_t new_size, int value = 0);
-        void insert(int64_t index, int value);
+        void erase(int_t  index);
+        void assign(int_t new_size, int value);
+        void insert(int_t index, int num);
         void swap(DynamicArray& other);
         inline int* begin() {
             return data;
         }
 
         inline int* end() {
-            return data + size;
+            return data + Size();
         }
-
-        inline int& operator[](int64_t i) const {
-            return *(data + i);
-        }
-        int& at(int64_t i) const;
-
-        DynamicArray& operator=(const DynamicArray& rhs);
-
-        bool operator==(const DynamicArray& rhs) const {
-            return std::equal<int*, int*>(data, data + size, rhs.data);
-        }
-        inline bool operator!=(const DynamicArray& rhs) const {
-            return !(*this == rhs);
-        }
-
-        inline friend void Reallocate(DynamicArray& da, int64_t new_size) {
-            da.reallocate(new_size);
-        }
-
-    private:
-        int64_t size = 0;
-        int64_t capacity = 0;
+	
+	bool operator== (const DynamicArray& other) const;
+	bool operator>= (const DynamicArray& other) const;
+	bool operator> (const DynamicArray& other) const;
+	bool operator< (const DynamicArray& other) const;
+	bool operator<= (const DynamicArray& other) const;
+	bool operator!= (const DynamicArray& other) const;
+	
+	DynamicArray& operator=(const DynamicArray other);
+	inline int& operator[](int_t i) const { return *(data + i); };
+	int& at(int_t i) const;
+private:
+        int_t size = 0;
+        int_t capacity = 0;
         int* data;
-
-        void reallocate(int64_t new_capacity);
+        void reallocate(int_t new_capacity);
 };
-
-inline void Reallocate(DynamicArray& da, int64_t new_size);
