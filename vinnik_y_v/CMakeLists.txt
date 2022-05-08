@@ -22,3 +22,4 @@ include_directories(${DOCTEST_INCLUDE_DIR})
 
 add_subdirectory(rational)
 add_subdirectory(stack)
+add_subdirectory(matrix)
