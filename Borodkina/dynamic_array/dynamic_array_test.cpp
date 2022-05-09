@@ -152,7 +152,7 @@ TEST_CASE("Methods")
     CHECK(d.begin() == d.GetData());
 
     DynamicArray e({7,8,9});
-    CHECK(*(e.end()) == 9);
+    CHECK(*(e.end()-1) == 9);
     CHECK(*(e.begin()) == 7);
     DynamicArray f({7,8,9});
     DynamicArray g({1,2,3,4,5});

@@ -37,12 +37,7 @@ int* DynamicArray::GetData() const
 }
 bool DynamicArray::Empty() const
 {
-    if (size == 0){
-        return true;
-    }
-    else { 
-        return false;
-    }
+   return size == 0;
 }
 
 int& DynamicArray::operator[](int64_t i) const
@@ -62,15 +57,9 @@ int& DynamicArray::operator[](int64_t i) const
 void DynamicArray::push_back(int value) 
 {
     if (size == capacity) {
-        if (capacity == 0) {
-            capacity++;
-        }
-        int* new_data = new int[capacity * 2];
-        std::copy(data, data + capacity, new_data);
-        delete[] data;
-        data = new_data;
-        capacity *= 2;
+        reallocate(capacity*2+1);
     }
+    
     data[size++] = value;
 }
 void DynamicArray::pop_back()
@@ -123,16 +112,14 @@ void DynamicArray::reallocate(int64_t new_capacity)
 void DynamicArray::assign(int64_t new_size, int value)
 {
     resize(new_size);
-    for (int i = 0; i < new_size; i++){
-        data[i] = value;
-    }
+    std:: fill(data, data+size, value);
 }
   void DynamicArray::insert(int64_t index, int value)
   {
-    if (index < 0| index>size) {
+    if (index < 0  || index > size) {
         throw "the pointer does not match the size of the array"; 
     }
-    resize(size+1);
+    resize(size + 1);
      for (int i = size-1; i > index; i--){
         data[i] = data[i-1];
     }
@@ -152,7 +139,7 @@ void DynamicArray::assign(int64_t new_size, int value)
   int* DynamicArray::end()
  {
      if (size == 0){return data;}
-     return data + size-1;
+     return data + size;
  }
  DynamicArray& DynamicArray::operator=(const DynamicArray& other)
  {
@@ -162,16 +149,7 @@ void DynamicArray::assign(int64_t new_size, int value)
  }
  bool DynamicArray::operator==(const DynamicArray& other) const
  {
-     if (size == other.size){
-         for (int i = 0; i < size; i++) {
-             if (data[i] != other.data[i]) {
-                 return false;
-            }
-        }
-    } else {
-        return false;
-    }
-     return true;
+     return (size == other.size && std:: equal(data, data+size, other.data, other.data + other.size));
  }
   bool DynamicArray::operator!=(const DynamicArray& other) const
  {
