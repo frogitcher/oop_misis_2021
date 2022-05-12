@@ -1,6 +1,9 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "Rational_numbers.h"
 #include "doctest.h"
+#include <string>
+#include <sstream>
+#include <iostream>
 TEST_CASE("Testing constructors."){
     CHECK(Rational(5) == Rational(5, 1));
     Rational a = Rational(5, 1);
@@ -13,6 +16,11 @@ TEST_CASE("Testing compare."){
     CHECK(Rational(13, 3) > Rational(9, 4));
     CHECK(Rational(45, 25) >= Rational(9, 5));
     CHECK(Rational(45, 25) == Rational(9, 5));
+    CHECK_FALSE(Rational(43, 25) == Rational(9, 5));
+    CHECK_FALSE(Rational(43, 25) >= Rational(9, 5));
+    CHECK_FALSE(Rational(48, 25) <= Rational(9, 5));
+    CHECK_FALSE(Rational(45, 25) < Rational(9, 5));
+    CHECK_FALSE(Rational(45, 25) > Rational(9, 5));
 }
 TEST_CASE("Testing arithmetic operations") {
     CHECK(Rational(200, 2000) == Rational(1, 10));
@@ -38,7 +46,11 @@ TEST_CASE("Testing boolean functions") {
     CHECK(Rational(3, 14) <= (Rational(3, 14)));
 }
 TEST_CASE("Testing other stuff") {
-    std::cout << Rational(3, 4) << " - output test" << std::endl;
+    std::stringstream str;
+    std::stringstream str2;
+    str << "3/4";
+    str2 << Rational(3,4);
+    CHECK(str.str() == str2.str());
     CHECK(-Rational(250, 50) == Rational(-5));
     CHECK(+Rational(450, 50) == Rational(9));
     CHECK(++Rational(1, 2) == Rational(3, 2));
