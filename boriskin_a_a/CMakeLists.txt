@@ -30,3 +30,4 @@ endif()
 
 add_subdirectory(Rational)
 add_subdirectory(hello_world)
+add_subdirectory(DynamicArray)
