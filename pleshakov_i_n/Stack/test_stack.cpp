@@ -2,7 +2,7 @@
 #include <string>
 
 #include "doctest.h"
-#include "stack.cpp"
+#include "stack.h"
 
 
 TEST_CASE ("testing Constructors, Pop, Push, Size, ==, ="){
