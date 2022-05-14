@@ -60,8 +60,13 @@ Stack<T>::Stack(Stack<T>&& st){
 
 template <typename T>
 Stack<T>::Stack(const std::initializer_list<T>& List){
+    bool flag = true;
     for (auto i : List){
         head = new Node({i, head});
+        if (flag){
+            tail = head;
+            flag = false;
+        }
         ++size;
     }
 }
@@ -81,7 +86,9 @@ void Stack<T>::Push(const T& value){
 
 template <typename T>
 void Stack<T>::Pop(){
-    if (size == 0) throw std::invalid_argument("Stack is empty");
+    if (size == 0) {
+        throw std::invalid_argument("Stack is empty");
+    }
 
     Node* new_head = head->next;
     delete head;
@@ -118,24 +125,15 @@ bool Stack<T>::Empty() const{
 
 template <typename T>
 bool Stack<T>::operator==(const Stack<T>& st) const{
-    bool flag = true;
     if (size != st.size) return false;
 
     Node* head_copy = head;
     Node* sthead_copy = st.head;
-    int count = size;
-    while (flag){
-        if (count == 0) break;
-        if (head_copy->value != sthead_copy->value){
-            flag = false;
-        }
-        --count;
+    while (head_copy != nullptr && head_copy->value == sthead_copy->value){
         head_copy = head_copy -> next;
         sthead_copy = sthead_copy -> next;
     }
-
-    if (flag) return true;
-    return false;
+    return (head_copy == nullptr);
 }
 
 template<typename T>
@@ -147,9 +145,7 @@ template<typename T>
 void Stack<T>::Swap(Stack<T>& st){
     std::swap(head, st.head);
     std::swap(tail, st.tail);
-    size_t a = st.size;
-    st.size = size;
-    size = a;
+    std::swap(size, st.size);
 }
 
 template <typename T>
@@ -165,7 +161,6 @@ void Stack<T>::operator=(const Stack<T>& st){
             cur = cur -> next;
         }
         tail = prev;
-        delete cur;
     }
     size = st.size;
 }
@@ -178,19 +173,10 @@ void Stack<T>::operator=(Stack<T>&& st){
 
 template <typename T>
 void Stack<T>::Merge(Stack<T>& st){
-    Node* sthead_copy = st.head;
-    Node* st_copy = nullptr;
-
-    while (sthead_copy != nullptr){
-        st_copy = new Node({sthead_copy->value, st_copy});
-        sthead_copy = sthead_copy->next;
-    }
-
-    while (st_copy != nullptr){
-        head = new Node({st_copy->value, head});
-        st_copy = st_copy->next;
-        ++size;
-    }
+    tail->next = st.head;
+    tail = st.tail;
+    size += st.size;
+    st.Clear();
 }
 
 
