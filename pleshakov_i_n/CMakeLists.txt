@@ -19,6 +19,11 @@ ExternalProject_Get_Property(doctest source_dir)
 set(DOCTEST_INCLUDE_DIR ${source_dir}/doctest CACHE INTERNAL "Path to include folder for doctest")
 include_directories(${DOCTEST_INCLUDE_DIR})
 
+<<<<<<< pleshakov/DynamicArray
+add_subdirectory(Stack)
+
+add_subdirectory(Dynamic)
+=======
 <<<<<<< origin/pleshakov/Stack
 
 add_subdirectory(Stack)
@@ -28,4 +33,5 @@ add_subdirectory(Stack)
 add_subdirectory(hello_world)
 
 add_subdirectory(Rational)
+>>>>>>> main
 >>>>>>> main
