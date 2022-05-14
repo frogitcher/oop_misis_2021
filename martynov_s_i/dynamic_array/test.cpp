@@ -55,5 +55,4 @@ TEST_CASE("Dynamic Array") {
 	CHECK_THROWS_WITH(b.erase(4), "size 0 or index out");
 	CHECK_THROWS_WITH(a.insert(6, 77), "index out");
 	CHECK_THROWS_WITH(a.at(6), "index out");
-	CHECK_THROWS_WITH(a[6], "index out");
 }

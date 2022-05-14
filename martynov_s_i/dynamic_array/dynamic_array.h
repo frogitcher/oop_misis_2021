@@ -5,10 +5,10 @@ class DynamicArray {
 private:
 	size_t capacity = 0;
 	size_t size = 0;
-	int* data = new int[0];
+	int* data = nullptr;
+	void Create(size_t size, size_t capacity, int* oth_data);
 public:
-	DynamicArray() = default;
-	DynamicArray(size_t lenght, int value = 0);
+	DynamicArray(size_t lenght = 0, int value = 0);
 	DynamicArray(const DynamicArray& other);
 	DynamicArray(const std::initializer_list<int>& list);
 	~DynamicArray();
@@ -17,7 +17,7 @@ public:
 	size_t Capacity() const;
 
 	void push_back(int value);
-	void pop_back(); /// кинуть когда пустой
+	void pop_back();
 	void clear();
 	void erase(size_t index);
 	void insert(size_t index, int value);
