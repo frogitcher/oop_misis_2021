@@ -25,8 +25,8 @@ public:
 	void assign(size_t new_size, int value);
 	void swap(DynamicArray& other);
 
-	int* begin();
-	int* end();
+	int* begin() const;
+	int* end() const;
 
 	int& operator[] (size_t i) const;
 	int& at(size_t i) const;

@@ -4,7 +4,7 @@
 
 void DynamicArray::Create(size_t oth_size, size_t oth_capacity, int* oth_data) {
 	int* new_data = new int[oth_capacity];
-	std::copy(oth_data, oth_data + oth_capacity, new_data);
+	std::copy(oth_data, oth_data + oth_size, new_data);
 	delete[] data;
 	data = new_data;
 	size = oth_size;
@@ -82,18 +82,14 @@ void DynamicArray::resize(size_t new_size) {
 		int* new_data = new int[capacity];
 		std::copy(data, data + size, new_data);
 		if (new_size > size) {
-			for (size_t i = size; i < new_size; ++i) {
-				new_data[i] = 0;
-			}
+			std::fill(new_data + size, new_data + new_size, 0);
 		}
 		delete[] data;
 		data = new_data;
 	}
 	else {
 		if (new_size > size) {
-			for (size_t i = size; i < new_size; ++i) {
-				data[i] = 0;
-			}
+			std::fill(data + size, data + new_size, 0);
 		}
 	}
 	size = new_size;
@@ -119,11 +115,11 @@ void DynamicArray::swap(DynamicArray& other) {
 	std::swap(data, other.data);
 }
 
-int* DynamicArray::begin() {
+int* DynamicArray::begin() const {
 	return data;
 }
 
-int* DynamicArray::end() {
+int* DynamicArray::end() const {
 	return data + size;
 }
 
