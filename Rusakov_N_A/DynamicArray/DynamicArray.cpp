@@ -62,9 +62,6 @@ int& DynamicArray::at(size_t i)const {
 }
 
 int& DynamicArray::operator[](size_t i) const {
-	if (i >= Size()) {
-		throw std::out_of_range("exception - Index more then size of array");
-	}
 	return *(data + i);
 }
 
@@ -82,13 +79,11 @@ int* DynamicArray::begin() const{
 }
 
 int* DynamicArray::end() const{
-	if (size == 0) return data;
 	return data + size;
 }
 
 void DynamicArray::clear() {
 	size = 0;
-	capacity = 0;
 }
 
 void DynamicArray::erase(size_t index) {
@@ -96,10 +91,9 @@ void DynamicArray::erase(size_t index) {
 		throw std::invalid_argument("exception - index more then size");
 	}
 	else {
-		for (int i = index; i < (size - 1); i++)
+		for (int i = index; i < (size - 1); i++){
 			data[i] = data[i + 1];
-
-		data[size - 1] = 0;
+		}
 		size--;
 	}
 }
@@ -108,13 +102,15 @@ void DynamicArray::resize(size_t new_size) {
 	if (new_size < size) {
 		size = new_size;
 	}
+	else if(new_size > size && new_size < capacity){
+		std::fill(data + size, data + new_size, 0);
+		size = new_size;
+	}
 	else if (new_size > size) {
 		int new_capacity = new_size * 2;
 		int* new_data = new int[new_capacity];
-		for (int i = 0; i < new_size; i++) {
-			if (i < size) new_data[i] = data[i];
-			else new_data[i] = 0;
-		}
+		std::copy(begin(), end(), new_data);
+		std::fill(new_data + size, new_data + new_size, 0);
 		delete[] data;
 		data = new_data;
 		size = new_size;
@@ -123,17 +119,7 @@ void DynamicArray::resize(size_t new_size) {
 }
 
 bool DynamicArray::operator==(const DynamicArray& other) const {
-	if (size != other.size) {
-		return false;
-	}
-	else {
-		if (std::equal(begin(), end(), other.begin(), other.end())) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
+	return (size == other.size && std::equal(begin(), end(), other.begin(), other.end()));
 }
 
 bool DynamicArray::operator!=(const DynamicArray& other) const {
@@ -143,7 +129,6 @@ bool DynamicArray::operator!=(const DynamicArray& other) const {
 DynamicArray& DynamicArray::operator=(const DynamicArray& other) {
 	if (capacity > other.capacity) {
 		size = other.size;
-		capacity = other.capacity;
 		std::copy(other.begin(), other.end(), data);
 	}
 	else{
@@ -157,22 +142,20 @@ DynamicArray& DynamicArray::operator=(const DynamicArray& other) {
 }
 
 void DynamicArray::assign(size_t new_size, int value) {
-	delete[] data;
-	size = new_size;
-	capacity = 2 * size;
-	data = new int[capacity];
-	for (int i = 0; i < size; i++)
-		data[i] = value;
+	if(capacity > new_size){
+		size = new_size;
+		std::fill(begin(), end(), value);
+	}else{
+		delete[] data;
+		size = new_size;
+		capacity = 2 * size;
+		data = new int[capacity];
+		std::fill(begin(), end(), value);
+	}
 }
 
 void DynamicArray::swap(DynamicArray& other) {
-	int* temp = data;
-	int size_tmp = size;
-	int capacity_tmp = capacity;
-	data = other.data;
-	size = other.size;
-	capacity = other.capacity;
-	other.data = temp;
-	other.capacity = capacity_tmp;
-	other.size = size_tmp;
+	std::swap(data, other.data);
+	std::swap(size, other.size);
+	std::swap(capacity, other.capacity);
 }

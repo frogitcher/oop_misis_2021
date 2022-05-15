@@ -91,8 +91,6 @@ TEST_CASE("Testing operator[]") {
 	CHECK(a[2] == 3);
 	CHECK(a[3] == 4);
 	CHECK(a[4] == 5);
-	CHECK_THROWS_WITH(a[5], "exception - Index more then size of array");
-	CHECK_THROWS_WITH(a[-1], "exception - Index more then size of array");
 }
 
 TEST_CASE("Testing void pop_back") {
