@@ -16,10 +16,7 @@ int& DynamicArray::at(size_t i) const {
 
 DynamicArray::DynamicArray(size_t length, int value)
     : size(length)
-    , capacity(length) {
-    if (length < 0){
-        throw std::invalid_argument("Size should be more or equal than 0!");
-    }
+    , capacity(length)
     data = new int[size];
     std::fill(data, data + length, value);
 }
@@ -27,9 +24,9 @@ DynamicArray::DynamicArray(size_t length, int value)
 DynamicArray::DynamicArray(const DynamicArray& other)
     :size(other.size)
     ,capacity(other.capacity) {
-    data = new int[size];
+    data = new int[capacity];
     for (int i = 0; i < size; i++){
-        data[i]=other.data[i];
+        std::copy(other.data, other.data + other.size, data);
     }
 }
 
@@ -66,18 +63,17 @@ void DynamicArray::push_back(int value) {
             capacity++;
         }
         int* new_data = new int[capacity*2];
-        std::copy(data, data + capacity, new_data);
+        std::copy(data, data + size, new_data);
         delete[] data;
         data = new_data;
         capacity *= 2;
-
+    }
     data[size] = value;
     size++;
-    }
 }
 
 void DynamicArray::pop_back() {
-    if (size <= 0){
+    if (size == 0){
         throw "Array have no elements!";
     }
     size--;
@@ -88,7 +84,7 @@ void DynamicArray::clear() {
 }
 
 void DynamicArray::erase(size_t index) {
-    if (index >= size || index < 0){
+    if (index >= size){
         throw "The index is not match for an array!";
     }
 
@@ -100,24 +96,26 @@ void DynamicArray::erase(size_t index) {
 
 void DynamicArray::Reallocate(size_t new_capacity) {
     int* new_data = new int[new_capacity];
-    if (new_capacity > size){
-		std::copy(data, data + size, new_data);
-	}
-	else{
-		std::copy(data, data + new_capacity, new_data);
-	}
+    std::copy(data, data + size, new_data);
     delete[] data;
     capacity = new_capacity;
     data = new_data;
 }
 
 void DynamicArray::resize (size_t new_size) {
-    Reallocate(new_size);
+    if (new_size > capacity){
+	Reallocate(new_size);
+    }
+    if (size < new_size || new_size <= capacity) {
+    	for(int i = size; i <= new_size; i++) {
+        	data[i] = 0;
+	}
+    }
     size = new_size;
 }
 
 void DynamicArray::insert(size_t index, int value) {
-    if (index < 0 || index > size) {
+    if (index > size) {
          throw "The index is not match for an array!";
     }
     resize(size + 1);
@@ -137,15 +135,9 @@ void DynamicArray::assign(size_t new_size, int value)
 
 
 void DynamicArray::swap(DynamicArray& other) {
-    int* data_copy = data;
-    data_copy = other.data;
-    other.data = data;
-    size_t size_copy = size;
-	size = other.size;
-	other.size = size_copy;
-	size_t capacity_copy = capacity;
-	capacity = other.capacity;
-	other.capacity = capacity_copy;
+    std::swap(size, other.size);
+    std::swap(capacity, other.capacity);
+    std::swap(data, other.data);
 }
 
 bool DynamicArray::operator==(const DynamicArray& other) const {
@@ -162,9 +154,7 @@ bool DynamicArray::operator!=(const DynamicArray& other) const {
 
 DynamicArray& DynamicArray::operator=(const DynamicArray& other) {
 	resize(other.size);
-	for (int i = 0; i < size; i++) {
-		data[i] = other.data[i];
-	}
+	std::copy(data, data + size, new_data);
 	return *this;
 }
 
@@ -173,7 +163,7 @@ int* DynamicArray::begin() const {
 }
 
 int* DynamicArray::end() const {
-    return data+size-1;
+    return data+size;
 }
 
 
