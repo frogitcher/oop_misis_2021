@@ -1,6 +1,6 @@
 #include "hello_world.h"
 #include <iostream>
 
-int main(){
+int main() {
     std::cout << HelloWorld();
 }
