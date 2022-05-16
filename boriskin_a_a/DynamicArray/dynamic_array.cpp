@@ -25,10 +25,7 @@ DynamicArray::DynamicArray(const DynamicArray& other)
   , _capacity (other._capacity)
 {
   _data = new int[_size];
-  for (int i=0; i<other._size; ++i)
-  {
-    _data[i] = other._data[i];
-  }
+  std::copy(other._data, other._data+other._size, _data);
 }
 
 DynamicArray::DynamicArray(const std::initializer_list<int>& list)
@@ -57,14 +54,7 @@ size_t DynamicArray::Capacity() const
 
 bool DynamicArray::Empty() const
 {
-  if (_size == 0)
-  { 
-    return true;
-  }
-  else
-  {
-    return false;
-  }
+  return _size == 0;
 }
 
 void DynamicArray::push_back(int value)
@@ -101,13 +91,9 @@ void DynamicArray::remapmemory(size_t new_size)
 {
   _capacity = new_size;
   int* new_data = new int[_capacity];
-  for (int i=0; i< _size; ++i)
-  {
-    new_data[i] =  _data[i];
-  }
+  std::copy(_data, _data + _size, new_data);
   delete[] _data;
   _data = new_data;
-;
 }
 
 void DynamicArray::resize(size_t new_size, int value )
@@ -182,10 +168,7 @@ int& DynamicArray::operator[](size_t i) const
 DynamicArray& DynamicArray::operator=(const DynamicArray& rhs)
 {
   resize(rhs._size);
-  for (int i=0; i<_size; ++i)
-  {
-    _data[i] = rhs._data[i];
-  }
+  std::copy(rhs._data, rhs._data + rhs._size, _data);
   return *this;
 }
 
