@@ -27,4 +27,3 @@ add_executable(test
         dynamicarray.cpp
         test.cpp
         )
-# add_subdirectory(tarasov_e_v)

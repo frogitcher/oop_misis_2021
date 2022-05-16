@@ -29,6 +29,9 @@ TEST_CASE("Testing dynamic array initialisation") {
         CHECK(c[i] == b[i]);
     }
 
+    CHECK(c.end() == c.GetData() + c.Size());
+    CHECK(c.end() == c.GetData() + 0);
+
     DynamicArray d = {5, 5, 5, 5, 5};
     CHECK(d.Size() == 5);
     CHECK(d.begin() == d.GetData());
