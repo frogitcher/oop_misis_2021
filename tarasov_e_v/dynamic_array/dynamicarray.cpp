@@ -97,6 +97,7 @@ void DynamicArray::reallocate(int64_t new_size) {
     if (new_size > capacity) new_capacity *= 2;
     int *new_data = new int[new_capacity];
     std::copy(begin(), end(), new_data);
+    delete[] data;
     data = new_data;
 }
 
@@ -108,6 +109,7 @@ int &DynamicArray::at(int64_t i) const {
 DynamicArray &DynamicArray::operator=(const DynamicArray &rhs) {
     size = rhs.size;
     capacity = rhs.capacity;
+    delete[] data;
     std::copy(rhs.data, rhs.data + rhs.size, data);
     return *this;
 }
