@@ -1,11 +1,11 @@
-﻿#include "rational.h"
+#include "rational.h"
 int gcd(int a, int b) {
 	if (b == 0) {
 		return a;
-	}		
+	}
 	else {
 		return gcd(b, a % b);
-	}		
+	}
 }
 void rational::normalize() {
 	if (denom == 0) {
@@ -28,18 +28,13 @@ rational& rational::reduce()
 	denom /= d;
 	return (*this);
 }
-
-rational rational::get_reduced()const {
-	int d = gcd(num, denom);
-	return rational(num / d, denom / d);
-}
 bool rational::operator< (const rational& r) const
 {
-	return (long long)this->num * r.denom < (long long)r.num* this->denom;
+	return num * r.denom < r.num* denom;
 }
 bool rational::operator> (const rational& r) const
 {
-	return (long long)this->num * r.denom > (long long)r.num * this->denom;
+	return num * r.denom > r.num * denom;
 }
 bool rational::operator<= (const rational& r) const
 {
@@ -51,67 +46,80 @@ bool rational::operator>= (const rational& r) const
 }
 bool rational::operator== (const rational& r) const
 {
-	return (long long)this->num * r.denom == (long long)r.num * this->denom;
+	return num * r.denom == r.num * denom;
 }
 bool rational::operator!= (const rational& r) const
 {
 	return !(*this == r);
 }
+rational rational::operator+ (const rational& r) const
+{
+	int new_num = this->num * r.denom + r.num * this->denom;
+	int new_denom = r.denom * this->denom;
+	return rational(new_num, new_denom);
+}
+rational rational::operator- (const rational& r) const
+{
+	int new_num = this->num * r.denom - r.num * this->denom;
+	int new_denom = r.denom * this->denom;
+	return rational(new_num, new_denom);
+}
+rational rational::operator* (const rational& r) const
+{
+	int new_num = this->num * r.num;
+	int new_denom = r.denom * this->denom;
+	return rational(new_num, new_denom);
+}
+rational rational::operator/ (const rational& r) const
+{
+	int new_num = this->num * r.denom;
+	int new_denom = this->denom * r.num;
+	return rational(new_num, new_denom);
+}
+rational& rational::operator+= (const rational& r)
+{
+	*this = *this + r;
+	return *this;
+}
+rational& rational::operator-= (const rational& r)
+{
+	*this = *this - r;
+	return *this;
+}
+rational& rational::operator*= (const rational& r)
+{
+	*this = *this * r;
+	return *this;
+}
+rational& rational::operator/= (const rational& r)
+{
+	*this = *this / r;
+	return *this;
+}
 
-rational rational::operator+ (const rational& r)
+rational& rational::operator++ ()
 {
-	long long new_num = this->num * r.denom + r.num * this->denom;
-	long long new_denom = r.denom * this->denom;
-	return rational(new_num, new_denom);
+	*this += rational(1, 1);
+	return *this;
 }
-rational rational::operator- (const rational& r)
+rational& rational::operator++ (int r)
 {
-	long long new_num = this->num * r.denom - r.num * this->denom;
-	long long new_denom = r.denom * this->denom;
-	return rational(new_num, new_denom);
-}
-rational rational::operator* (const rational& r)
-{
-	long long new_num = this->num * r.num;
-	long long new_denom = r.denom * this->denom;
-	return rational(new_num, new_denom);
-}
-rational rational::operator/ (const rational& r)
-{
-	long long new_num = this->num * r.denom;
-	long long new_denom = this->denom * r.num;
-	return rational(new_num, new_denom);
-}
-rational rational::operator+= (const rational& r)
-{
-	return *this + r;
-}
-rational rational::operator-= (const rational& r)
-{
-	return *this - r;
-}
-rational rational::operator*= (const rational& r)
-{
-	return *this * r;
-}
-rational rational::operator/= (const rational& r)
-{
-	return *this / r;
-}
-
-rational rational::operator++ ()
-{
-	return *this + rational(1, 1);
-}
-rational rational::operator++ (int r)
-{
-	return *this + rational(1, 1);
+	*this += rational(1, 1);
+	return *this;
 }
 rational rational::operator-- ()
 {
-	return *this - rational(1, 1);
+	*this -= rational(1, 1);
+	return *this;
 }
 rational rational::operator-- (int r)
 {
-	return *this - rational(1, 1);
+	*this -= rational(1, 1);
+	return *this;
+}
+rational& rational::operator= (const rational& r) 
+{
+	num = r.num;
+	denom = r.denom;
+	return *this;
 }
