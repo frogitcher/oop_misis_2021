@@ -29,11 +29,11 @@ class DynamicArray {
         void swap(DynamicArray& another);
         void insert(int64_t index, int value);
 
-        inline int* begin() {
+        inline int* begin() const{
             return data;
         }
 
-        inline int* end() {
+        inline int* end() const{
             return data + size;
         }
 
@@ -45,7 +45,7 @@ class DynamicArray {
         DynamicArray& operator=(const DynamicArray& rhs);
 
         bool operator==(const DynamicArray& rhs) const {
-            return std::equal<int*, int*>(data, data + size, rhs.data);
+            return (size == rhs.size && std::equal<int*, int*>(data, data + size, rhs.data));
         }
         inline bool operator!=(const DynamicArray& rhs) const {
             return !(*this == rhs);

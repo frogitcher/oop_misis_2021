@@ -2,24 +2,21 @@
 #include <stdexcept>
 
 DynamicArray::DynamicArray(int64_t _size, int value)
-    : size(_size)
-    , capacity(_size) {
-        data = new int[size];
-        std::fill(begin(), end(), value);
+        : size(_size), capacity(_size) {
+    data = new int[size];
+    std::fill(begin(), end(), value);
 }
 
-DynamicArray::DynamicArray(const DynamicArray& another)
-    : size(another.size)
-    , capacity(another.capacity) {
-        data = new int[capacity];
-        std::copy(another.data, another.data + another.size, data);
+DynamicArray::DynamicArray(const DynamicArray &another)
+        : size(another.size), capacity(another.capacity) {
+    data = new int[capacity];
+    std::copy(another.data, another.data + another.size, data);
 }
 
-DynamicArray::DynamicArray(const std::initializer_list<int>& list)
-    : size(list.size())
-    , capacity(list.size()) {
-        data = new int[capacity];
-        std::copy(list.begin(), list.end(), data);
+DynamicArray::DynamicArray(const std::initializer_list<int> &list)
+        : size(list.size()), capacity(list.size()) {
+    data = new int[capacity];
+    std::copy(list.begin(), list.end(), data);
 }
 
 int64_t DynamicArray::Size() const {
@@ -64,6 +61,9 @@ void DynamicArray::resize(int64_t new_size, int value) {
     if (new_size < 0) {
         throw std::length_error("The size of the array cannot be less than zero!");
     }
+    if (new_size == size) {
+        return;
+    }
     if (new_size == 0) {
         size = 0;
         return;
@@ -86,48 +86,48 @@ void DynamicArray::assign(int64_t new_size, int value) {
     size = new_size;
 }
 
-void DynamicArray::swap(DynamicArray& another) {
+void DynamicArray::swap(DynamicArray &another) {
     std::swap(size, another.size);
     std::swap(capacity, another.capacity);
     std::swap(data, another.data);
 }
 
 void DynamicArray::insert(int64_t index, int value) {
+    if (index > size) {
+        throw std::invalid_argument("Incorrect index");
+    }
     if (size == capacity) {
         if (capacity == 0) {
             capacity = 1;
+            resize(++capacity);
         }
-        reallocate(size);
+        reallocate(capacity);
     }
     ++size;
-    for (int64_t i = index + 1; i < size; i++) {
+    for (int64_t i = size - 1; i > index; --i) {
         data[i] = data[i - 1];
     }
     data[index] = value;
 }
 
-void DynamicArray::reallocate(int64_t new_size) {
-    int64_t new_capacity = capacity;
-    if (new_size > capacity) {
-        new_capacity *= 2;
-    }
-    int* new_data = new int[new_capacity];
-    std::copy(begin(), end(), new_data);
-    delete[] data;
+void DynamicArray::reallocate(int64_t new_cap) {
+    int *new_data = new int[new_cap];
+    std::copy(data, data + size, new_data);
     data = new_data;
 }
 
-int& DynamicArray::at(int64_t i) const {
-    if (i >= size) {
+int &DynamicArray::at(int64_t i) const {
+    if (i >= size || i < 0) {
         throw std::out_of_range("Out of range!");
     }
     return *(data + i);
 }
 
-DynamicArray& DynamicArray::operator=(const DynamicArray& rhs) {
+DynamicArray &DynamicArray::operator=(const DynamicArray &rhs) {
+    reallocate(rhs.capacity);
     size = rhs.size;
     capacity = rhs.capacity;
-    std::copy(rhs.data, rhs.data + rhs.size, data);
+    std::copy(rhs.data, rhs.data + size, data);
     return *this;
 }
 
