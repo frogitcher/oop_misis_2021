@@ -63,19 +63,18 @@ void DynamicArray::pop_back() {
 	size--;
 }
 void DynamicArray::clear() {
-	delete[]data;
 	size = 0;
 	data = new int[capacity];
 }
 void DynamicArray::erase(size_t i) {
-	//if (i >= size) throw std::out_of_range("Index out of range");
+	if (i >= size) throw std::out_of_range("Index out of range");
 
 	std::copy(data+i+1, data + size, data+i);
 	size--;
 }
 void DynamicArray::resize(size_t new_size) {
 	if (new_size > capacity) change_capacity(new_size*2);
-	else if (new_size > size) std::fill(data + size, data + new_size+1, 0);
+	else if (new_size > size) std::fill(data + size, data + new_size, 0);
 	size = new_size;
 }
 void DynamicArray::assign(size_t new_size, int value) {
