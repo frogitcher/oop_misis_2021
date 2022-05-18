@@ -1,6 +1,6 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 
-#include "dynamic_array.cpp"
+#include "dynamic_array.h"
 
 #include "doctest/doctest.h"
 
@@ -46,7 +46,7 @@ TEST_CASE("Testing DynamicArray operators")
   CHECK(arr == DynamicArray(3, 6));
   CHECK(arr != DynamicArray(7, 2));
 
-  for (int i = 0; i < arr.size(); ++i)
+  for (size_t i = 0; i < arr.size(); ++i)
     CHECK(&arr[i] == arr.begin() + i);
 }
 

@@ -1,8 +1,8 @@
-#include <iostream>
-
 #pragma once
 #ifndef RATIONAL_H
 #define RATIONAL_H
+
+#include <iostream>
 
 class Rational
 {
@@ -47,12 +47,15 @@ public:
   std::istream &readFrom(std::istream &istrm);
 
 private:
+  void _normalize();
+
+private:
   int numerator_{0};
   int denominator_{0};
-
   static const char separator{'/'};
-
-  void normalize();
 };
+
+std::ostream &operator<<(std::ostream &ostrm, const Rational &rhs);
+std::istream &operator>>(std::istream &istrm, Rational &rhs);
 
 #endif /* RATIONAL_H */

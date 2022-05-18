@@ -1,15 +1,15 @@
-#include <iostream>
-#include <initializer_list>
-
 #pragma once
 #ifndef DYNAMIC_ARRAY_H
 #define DYNAMIC_ARRAY_H
+
+#include <iostream>
+#include <initializer_list>
 
 class DynamicArray
 {
 public:
   DynamicArray();
-  DynamicArray(const size_t size, const int value);
+  DynamicArray(const size_t size, const int value = 0);
   DynamicArray(const DynamicArray &array);
   DynamicArray(const std::initializer_list<int> &init_list);
   ~DynamicArray();
@@ -22,7 +22,7 @@ public:
   size_t size() const;
   size_t capacity() const;
   bool empty() const;
-  void resize(const size_t new_size, const int value);
+  void resize(const size_t new_size, const int value = 0);
   void reserve(const size_t new_capacity);
   void shrink_to_fit();
 
@@ -42,9 +42,9 @@ public:
 private:
   void _relocate();
 
-  size_t capacity_ = 0;
-  size_t size_ = 0;
-
+private:
+  size_t capacity_{0};
+  size_t size_{0};
   int *data_;
 };
 

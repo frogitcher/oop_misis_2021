@@ -22,7 +22,7 @@ Rational::Rational(const int numerator, const int denominator)
   if (denominator_ == 0)
     throw std::invalid_argument("Zero division error");
 
-  normalize();
+  _normalize();
 }
 
 Rational::Rational(const Rational &rational)
@@ -177,12 +177,12 @@ bool Rational::operator>=(const Rational &rhs) const
   return !operator<(rhs);
 }
 
-inline std::ostream &operator<<(std::ostream &ostrm, const Rational &rhs)
+std::ostream &operator<<(std::ostream &ostrm, const Rational &rhs)
 {
   return rhs.writeTo(ostrm);
 }
 
-inline std::istream &operator>>(std::istream &istrm, Rational &rhs)
+std::istream &operator>>(std::istream &istrm, Rational &rhs)
 {
   return rhs.readFrom(istrm);
 }
@@ -217,7 +217,7 @@ int gcd(int a, int b)
   return b ? gcd(b, a % b) : a;
 }
 
-void Rational::normalize()
+void Rational::_normalize()
 {
   int g = gcd(numerator_, denominator_);
   numerator_ /= g;

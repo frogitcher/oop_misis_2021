@@ -7,7 +7,7 @@ DynamicArray::DynamicArray()
 {
 }
 
-DynamicArray::DynamicArray(const size_t size, const int value = 0)
+DynamicArray::DynamicArray(const size_t size, const int value)
     : capacity_(size),
       size_(size),
       data_(nullptr)
@@ -82,7 +82,7 @@ bool DynamicArray::empty() const
   return size_ == 0;
 }
 
-void DynamicArray::resize(const size_t new_size, const int value = 0)
+void DynamicArray::resize(const size_t new_size, const int value)
 {
   if (new_size < 0)
     throw std::invalid_argument("Invalid size value");
