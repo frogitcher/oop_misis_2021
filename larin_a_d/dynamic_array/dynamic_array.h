@@ -6,9 +6,8 @@
 class DynamicArray {
     public:
         DynamicArray(int64_t size = 0, int value = 0);
-        DynamicArray(const DynamicArray& other);
+        DynamicArray(const DynamicArray& another);
         DynamicArray(const std::initializer_list<int>& list);
-        ~DynamicArray();
 
         int64_t Size() const;
         int64_t Capacity() const;
@@ -27,14 +26,14 @@ class DynamicArray {
         void erase(int64_t index);
         void resize(int64_t new_size, int value = 0);
         void assign(int64_t new_size, int value = 0);
+        void swap(DynamicArray& another);
         void insert(int64_t index, int value);
-        void swap(DynamicArray& other);
 
-        inline int* begin() {
+        inline int* begin() const{
             return data;
         }
 
-        inline int* end() {
+        inline int* end() const{
             return data + size;
         }
 
@@ -46,7 +45,7 @@ class DynamicArray {
         DynamicArray& operator=(const DynamicArray& rhs);
 
         bool operator==(const DynamicArray& rhs) const {
-            return std::equal<int*, int*>(data, data + size, rhs.data);
+            return (size == rhs.size && std::equal<int*, int*>(data, data + size, rhs.data));
         }
         inline bool operator!=(const DynamicArray& rhs) const {
             return !(*this == rhs);
@@ -55,6 +54,7 @@ class DynamicArray {
         inline friend void Reallocate(DynamicArray& da, int64_t new_size) {
             da.reallocate(new_size);
         }
+        ~DynamicArray();
 
     private:
         int64_t size = 0;
