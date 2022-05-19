@@ -44,16 +44,13 @@ class DynamicArray {
 
         DynamicArray& operator=(const DynamicArray& rhs);
 
-        bool operator==(const DynamicArray& rhs) const {
+        inline bool operator==(const DynamicArray& rhs) const {
             return (size == rhs.size && std::equal<int*, int*>(data, data + size, rhs.data));
         }
         inline bool operator!=(const DynamicArray& rhs) const {
             return !(*this == rhs);
         }
 
-        inline friend void Reallocate(DynamicArray& da, int64_t new_size) {
-            da.reallocate(new_size);
-        }
         ~DynamicArray();
 
     private:
@@ -61,7 +58,5 @@ class DynamicArray {
         int64_t capacity = 0;
         int* data;
 
-        void reallocate(int64_t new_capacity);
+        void reallocate(int64_t new_size);
 };
-
-inline void Reallocate(DynamicArray& da, int64_t new_size);

@@ -35,7 +35,6 @@ TEST_CASE("Testing dynamic_array") {
     CHECK(arr2.Size() == old_size + 1);
     CHECK(arr2[arr2.Size() - 1] == -17);
     DynamicArray arr4_copy(arr4);
-    Reallocate(arr4, 50);
     CHECK(arr4_copy.Size() == arr4.Size());
     CHECK(arr4.Capacity() == arr4_copy.Capacity());
     for (int64_t i = 0; i < arr4.Size(); i++) {

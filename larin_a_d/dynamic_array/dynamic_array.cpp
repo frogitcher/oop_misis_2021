@@ -28,13 +28,7 @@ int64_t DynamicArray::Capacity() const {
 }
 
 void DynamicArray::push_back(int value) {
-    if (size == capacity) {
-        if (capacity == 0) {
-            capacity = 1;
-        }
-        reallocate(size);
-    }
-    data[size++] = value;
+    insert(size, value);
 }
 
 void DynamicArray::pop_back() {
@@ -97,13 +91,8 @@ void DynamicArray::insert(int64_t index, int value) {
         throw std::invalid_argument("Incorrect index");
     }
     if (size == capacity) {
-        if (capacity == 0) {
-            capacity = 1;
-            resize(++capacity);
-        }
-        reallocate(capacity);
+        resize(++capacity);
     }
-    ++size;
     for (int64_t i = size - 1; i > index; --i) {
         data[i] = data[i - 1];
     }
@@ -113,7 +102,9 @@ void DynamicArray::insert(int64_t index, int value) {
 void DynamicArray::reallocate(int64_t new_cap) {
     int *new_data = new int[new_cap];
     std::copy(data, data + size, new_data);
+    delete[] data;
     data = new_data;
+    capacity = new_cap;
 }
 
 int &DynamicArray::at(int64_t i) const {
@@ -126,7 +117,6 @@ int &DynamicArray::at(int64_t i) const {
 DynamicArray &DynamicArray::operator=(const DynamicArray &rhs) {
     reallocate(rhs.capacity);
     size = rhs.size;
-    capacity = rhs.capacity;
     std::copy(rhs.data, rhs.data + size, data);
     return *this;
 }
