@@ -29,8 +29,8 @@ public:
 	rational& operator/= (const rational& r);
 
 	rational& operator++ ();
-	rational operator-- ();
-	rational& operator++ (int r);
+	rational& operator-- ();
+	rational operator++ (int r);
 	rational operator-- (int r);
 
 	rational& operator= (const rational& rhs);
