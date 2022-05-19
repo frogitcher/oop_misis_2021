@@ -73,7 +73,7 @@ rational rational::operator* (const rational& rhs) const { // multiplication fun
 rational rational::operator/ (const rational& rhs) const { //division function
     if (rhs.num == 0)
         throw std::invalid_argument("Divider has to be unequal 0");
-    rational tmp (rhs.denum * num - (rhs.denum == 1 ? (rhs.denum * num % rhs.num * denum) : 0), rhs.num* denum);
+    rational tmp (rhs.denum * num, rhs.num * denum);
     tmp.normal();
     return tmp;
 }
