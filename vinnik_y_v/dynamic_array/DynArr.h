@@ -171,11 +171,14 @@ template<typename T>
 void DynArr<T>::Push_front(const T& value)
 {
 	if (size == capacity) {
-		T* new_data = Alloc(capacity ? capacity * 2 : 1);
+		int new_capacity = capacity ? capacity * 2 : 1;
+		T* new_data = Alloc(new_capacity);
+		capacity = new_capacity;
 		std::copy(data, data + size, new_data + 1);
 		DeleteData();
 		data = new_data;
 	}
+	std::copy(data, data + size, data + 1);
 	data[0] = value;
 	++size;
 }
@@ -188,7 +191,9 @@ void DynArr<T>::Push_front(const DynArr<T>& oth)
 	}
 	size_t new_size = size + oth.size;
 	if (new_size >= capacity) {
-		T* new_data = Alloc(new_size * 2);
+		int new_capacity = new_size * 2;
+		T* new_data = Alloc(new_capacity);
+		capacity = new_capacity;
 		std::copy(data, data + size, new_data + oth.size);
 		std::copy(oth.data, oth.data + oth.size, new_data);
 		DeleteData();
@@ -220,11 +225,8 @@ void DynArr<T>::Pop_front()
 		size = 0;
 		return;
 	}
-	T* new_data = Alloc(capacity);
-	std::copy(data + 1, data + size, new_data);
-	DeleteData();
+	std::copy(data + 1, data + size, data);
 	--size;
-	data = new_data;
 }
 
 template<typename T>
@@ -245,8 +247,10 @@ void DynArr<T>::Erase(size_t start_idx, int amount)
 
 	//Amount == 0 does not cause an exception, it just does senseless iterations
 
+	size_t start_idx_dub = start_idx;
 	for (int i = start_idx + amount; i < (int)size; ++i) {
-		*(data + start_idx) = *(data + i);
+		*(data + start_idx_dub) = *(data + i);
+		++start_idx_dub;
 	}
 	size -= amount;
 }
@@ -254,14 +258,18 @@ void DynArr<T>::Erase(size_t start_idx, int amount)
 template<typename T>
 void DynArr<T>::Insert(size_t idx, const T& value)
 {
-	if (idx >= size) {
+	if (idx > size) {
 		throw std::out_of_range("Cannot perform insertion - provided index is out of range");
 	}
-	Push_back(value);
+	else if (idx == size) {
+		Push_back(value);
+		return;
+	}
 	for (size_t i = size - 1; i > idx; i--) {
 		data[i] = data[i - 1];
 	}
 	data[idx] = value;
+	++size;
 }
 
 template<typename T>
@@ -285,6 +293,7 @@ void DynArr<T>::Assign(size_t new_size, const T& value)
 	if (new_size >= capacity) {
 		data = Alloc(new_size * 2);
 		capacity = new_size * 2;
+		DeleteData();
 	}
 	size = new_size;
 	std::fill(data, data + size, value);
@@ -418,7 +427,7 @@ inline int DynArr<T>::Count(const T& key) const
 template<typename T>
 DynArr<T>& DynArr<T>::operator=(const DynArr& oth)
 {
-	if (oth.size > size) {
+	if (oth.size > capacity) {
 		DeleteData();
 		capacity = oth.capacity;
 		data = Alloc(capacity);
