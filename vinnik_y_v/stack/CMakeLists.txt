@@ -4,7 +4,6 @@ project(project)
 
 add_executable(test 
     test.cpp
-    Stack.cpp
     Stack.h
     doctest.h
 )
