@@ -33,7 +33,10 @@ Rational::Rational(int _num, int _den)
 	if (GetDen() == 0)
 		throw std::invalid_argument("denominator can't contain zero value");
 	if (GetDen() < 0)
-		throw std::invalid_argument("denominator can't contain negative value");
+	{
+		SetDen(-GetDen());
+		SetNum(-GetNum());
+	}
 	simplify();
 }
 
@@ -41,21 +44,12 @@ Rational::Rational(const Rational& other)
 {
 	SetNum(other.GetNum());
 	SetDen(other.GetDen());
-	if (GetDen() == 0)
-		throw std::invalid_argument("denominator can't contain zero value");
-	if (GetDen() < 0)
-		throw std::invalid_argument("denominator can't contain negative value");
-	simplify();
 }
 
 Rational Rational::operator=(const Rational& rhs)
 {
 	SetNum(rhs.GetNum());
 	SetDen(rhs.GetDen());
-	if (GetDen() == 0)
-		throw std::invalid_argument("denominator can't contain zero value");
-	if (GetDen() < 0)
-		throw std::invalid_argument("denominator can't contain negative value");
 	return *this;
 }
 
@@ -120,7 +114,7 @@ Rational Rational::operator/=(const Rational& rhs)
 
 Rational Rational::operator-() const
 {
-	Rational ans(-1 * GetNum(), GetDen());
+	Rational ans(-GetNum(), GetDen());
 	return ans;
 }
 
@@ -199,8 +193,6 @@ void Rational::SetDen(int _den)
 {
 	if (_den == 0)
 		throw std::invalid_argument("denominator can't contain zero value");
-	if (_den < 0)
-		throw std::invalid_argument("denominator can't contain negative value");
 	den = _den;
 }
 
@@ -209,4 +201,9 @@ void Rational::simplify()
 	int g = gcd(std::abs(GetNum()), GetDen());
 	SetNum(GetNum() / g);
 	SetDen(GetDen() / g);
+	if (GetDen() < 0)
+	{
+		SetDen(-GetDen());
+		SetNum(-GetNum());
+	}
 }
