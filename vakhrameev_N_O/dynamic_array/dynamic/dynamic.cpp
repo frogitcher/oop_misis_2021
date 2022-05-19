@@ -113,7 +113,6 @@ void Dynamic_array::assign(size_t n, int value)
 }
 void Dynamic_array::clear()
 {
-    delete[] data;
     size = 0;
 }
 
