@@ -15,6 +15,7 @@ DynamicArray::DynamicArray (const DynamicArray& other)
      {
             int *_data=new int[capacity];
             std::copy(other.data,other.data+size,_data);
+            data=_data;
      }
 DynamicArray::DynamicArray(const std::initializer_list <int> list)
     : size(list.size())
@@ -45,18 +46,7 @@ int& DynamicArray::operator[](int64_t i) const
 }
 bool DynamicArray::operator==(const DynamicArray& other) const
 {
-    if (size!=other.size)
-    {
-        return 0;
-    }
-    for (int i=0;i<size;i++)
-    {
-        if (data[i]!= other[i])
-        {
-            return 0;
-        }
-    }
-    return 1;
+    return (size == other.size && std:: equal(data, data+size, other.data, other.data + other.size));
 }
 bool DynamicArray::operator!=(const DynamicArray& other) const
 {
@@ -70,7 +60,7 @@ DynamicArray& DynamicArray::operator=(const DynamicArray& other)
  }
 int& DynamicArray::at(int64_t i) const
 {
-    if(i>=size)
+    if(i>=size||i<0)
     {
         throw std::length_error("index out of range");
     }
@@ -95,7 +85,7 @@ void DynamicArray::clear()
 }
 void DynamicArray::erase(int64_t i)
 {
-    if (i>size)
+    if (i>size||i<0)
     {
         throw std::length_error("Index is out of range");
     }
@@ -114,10 +104,9 @@ void DynamicArray::resize(int64_t _size)
         return;
     }
     reallocate(_size);
-    if (size < _size){
-            for (int i = size; i < _size; i++){
-            data[i] = 0;
-            }
+    if (size < _size)
+    {
+        std::fill(begin()+size,begin()+_size,0);
     }
     size = _size;
 }
@@ -140,11 +129,8 @@ void DynamicArray::insert(int64_t i,int value)
     {
         throw std::length_error("index doesn't match the array's size");
     }
-    ++size;
-    for (int j = size - 1; j > i; j--)
-    {
-        data[j]=data[j-1];
-    }
+    resize(++size);
+    std::copy_backward(begin()+i,end(),data);
     data[i]=value;
 }
 void DynamicArray::swap(DynamicArray& other)
@@ -155,17 +141,8 @@ void DynamicArray::swap(DynamicArray& other)
 }
 void DynamicArray::assign(int64_t _size, int value)
 {
-    if (_size<0)
-    {
-        throw std::length_error("size must be > 0");
-    }
-    if (_size==0)
-    {
-        size = 0;
-        return;
-    }
+    resize(_size);
     std::fill(begin(),begin()+_size, value);
-    size=_size;
 }
 int* DynamicArray::begin()
 {
