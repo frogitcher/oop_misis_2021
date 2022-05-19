@@ -102,20 +102,22 @@ rational& rational::operator++ ()
 	*this += rational(1, 1);
 	return *this;
 }
-rational& rational::operator++ (int r)
+rational rational::operator++ (int r)
 {
+	rational rat = *this;
 	*this += rational(1, 1);
-	return *this;
+	return rat;
 }
-rational rational::operator-- ()
+rational& rational::operator-- ()
 {
 	*this -= rational(1, 1);
 	return *this;
 }
 rational rational::operator-- (int r)
 {
+	rational rat = *this;
 	*this -= rational(1, 1);
-	return *this;
+	return rat;
 }
 rational& rational::operator= (const rational& r) 
 {
