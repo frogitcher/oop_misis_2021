@@ -61,8 +61,8 @@ void DynamicArray::resize(int64_t new_size, int value) {
     if (new_size == 0) {
         size = 0;
         return;
-    }/*
-    if (new_size > capacity){
+    }/* 
+    if (new_size > capacity){ // Не работает
         reallocate(new_size);
     }
     */
