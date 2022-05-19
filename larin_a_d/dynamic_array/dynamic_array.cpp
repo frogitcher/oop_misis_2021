@@ -61,7 +61,11 @@ void DynamicArray::resize(int64_t new_size, int value) {
     if (new_size == 0) {
         size = 0;
         return;
+    }/*
+    if (new_size > capacity){
+        reallocate(new_size);
     }
+    */
     reallocate(new_size);
     std::fill(begin() + ((size <= new_size) ? size : 0), begin() + new_size, value);
     size = new_size;
@@ -75,7 +79,9 @@ void DynamicArray::assign(int64_t new_size, int value) {
         size = 0;
         return;
     }
-    reallocate(new_size);
+    if (new_size > capacity){
+        reallocate(new_size);
+    }
     std::fill(begin(), begin() + new_size, value);
     size = new_size;
 }
@@ -115,7 +121,9 @@ int &DynamicArray::at(int64_t i) const {
 }
 
 DynamicArray &DynamicArray::operator=(const DynamicArray &rhs) {
-    reallocate(rhs.capacity);
+    if (rhs.size > capacity){
+        reallocate(rhs.size);
+    }
     size = rhs.size;
     std::copy(rhs.data, rhs.data + size, data);
     return *this;
