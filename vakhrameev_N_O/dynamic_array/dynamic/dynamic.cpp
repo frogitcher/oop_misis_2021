@@ -175,17 +175,7 @@ Dynamic_array& Dynamic_array::operator=(const Dynamic_array& other)
 
 bool Dynamic_array::operator!=(const Dynamic_array& other) const
 {
-    std::string data1 = "";
-    std::string data2 = "";
-    for (int i = 0;i < size;i++)
-    {
-        data1 += std::to_string(data[i]);
-    }
-    for (int i = 0;i < other.size;i++)
-    {
-        data2 += std::to_string(other.data[i]);
-    }
-    return data1 != data2;
+    return !(Dynamic_array(*this)==other);
 }
 
 bool Dynamic_array::operator>=(const Dynamic_array& other) const
