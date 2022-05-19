@@ -5,19 +5,19 @@
 #include <mutex>
 #include <iostream>
 
-TEST_CASE("Test comparison operations") 
+TEST_CASE("Test comparison operations")
 {
     Rational a(6, 3), b(1, 1), c(9, 7), d(12, 6);
     CHECK(a == d);
-    CHECK((a == b) == false);
-    CHECK((a != d) == false);
+    CHECK(!(a == b));
+    CHECK(!(a != d));
     CHECK(a != b);
     CHECK(a > b);
     CHECK(a >= d);
     CHECK(a >= c);
-    CHECK((c >= d) == false);
+    CHECK(!(c >= d));
     CHECK(a <= d);
-    CHECK(b < a); 
+    CHECK(b < a);
 }
 
 TEST_CASE("Test math operations")
@@ -66,7 +66,7 @@ TEST_CASE("Test minus and one_value_announcement and assignment")
 TEST_CASE("Testing denominator")
 {
     Rational b(3, 2);
-    CHECK_THROWS_WITH(Rational(5, 0),"denominator can't contain zero value");
-    CHECK_THROWS_WITH(Rational(5, -1), "denominator can't contain negative value");
+    CHECK_THROWS_WITH(Rational(5, 0), "denominator can't contain zero value");
+    CHECK(Rational(5, -1) == Rational(-5, 1));
     CHECK_THROWS_WITH((b /= Rational(0, 5)), "denominator can't contain zero value");
 }
