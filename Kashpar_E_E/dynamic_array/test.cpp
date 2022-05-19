@@ -73,11 +73,15 @@ TEST_CASE("testing methods") {
     CHECK_THROWS_WITH(a.at(3), "DynamicArray index out of range");
 
     a.assign(5, 100);
-    CHECK(a == DynamicArray{0, 1, 2, 100, 100});
+    CHECK(a == DynamicArray{100, 100, 100, 100, 100});
     CHECK_THROWS_WITH(a.at(5), "DynamicArray index out of range");
     a.assign(3, 100);
-    CHECK(a == DynamicArray{0, 1, 2});
+    CHECK(a == DynamicArray{100, 100, 100});
     CHECK_THROWS_WITH(a.at(3), "DynamicArray index out of range");
+    a.resize(0);
+    a.push_back(0);
+    a.push_back(1);
+    a.push_back(2);
     DynamicArray c{2, 1, 0};
 
     a.swap(c);

@@ -128,7 +128,7 @@ void DynamicArray::assign(size_t new_size, int value) {
         data = new_data;
         capacity = new_size;
     }
-    for (int i = size; i < new_size; i++) {
+    for (int i = 0; i < new_size; i++) {
         data[i] = value;
     }
     size = new_size;
