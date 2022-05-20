@@ -18,26 +18,26 @@ Rational::Rational(const Rational &other) : num(other.GetNum()), denum(other.Get
 //присвоение
 
 Rational &Rational::operator=(const Rational &rhs) {
-    num = rhs.GetNum();
-    denum = rhs.GetDenum();
+    num = rhs.num;
+    denum = rhs.denum;
     return *this;
 }
 
 //арифметические действия
 
-Rational Rational::operator+(const Rational &rhs) {
+Rational Rational::operator+(const Rational &rhs) const {
     return Rational(*this) += rhs;
 }
 
-Rational Rational::operator-(const Rational &rhs) {
+Rational Rational::operator-(const Rational &rhs) const {
     return Rational(*this) -= rhs;
 }
 
-Rational Rational::operator*(const Rational &rhs) {
+Rational Rational::operator*(const Rational &rhs) const {
     return Rational(*this) *= rhs;
 }
 
-Rational Rational::operator/(const Rational &rhs) {
+Rational Rational::operator/(const Rational &rhs) const {
     return Rational(*this) /= rhs;
 }
 
@@ -46,32 +46,23 @@ Rational Rational::operator/(const Rational &rhs) {
 Rational &Rational::operator+=(const Rational &rhs) {
     int common = std::lcm(GetDenum(), rhs.GetDenum());
 
-    int num_1 = GetNum() * (common / GetDenum());
-    int num_2 = rhs.GetNum() * (common / rhs.GetDenum());
-
-    Rational result = Rational(num_1 + num_2, common);
-    result.Normalize();
-    *this = result;
-
+    num = num * (common / denum) + rhs.num * (common / rhs.denum);
+    denum = common;
+    Normalize();
     return *this;
 }
 
 Rational &Rational::operator-=(const Rational &rhs) {
     int common = std::lcm(GetDenum(), rhs.GetDenum());
 
-    int num_1 = GetNum() * (common / GetDenum());
-    int num_2 = rhs.GetNum() * (common / rhs.GetDenum());
-
-    Rational result = Rational(num_1 - num_2, common);
-    result.Normalize();
-    *this = result;
-
+    num = num * (common / denum) - rhs.num * (common / rhs.denum);
+    denum = common;
+    Normalize();
     return *this;
 }
 
 Rational &Rational::operator*=(const Rational &rhs) {
-    Rational result = Rational(GetNum() * rhs.GetNum(), GetDenum() * rhs.GetDenum());
-    result.Normalize();
+    Rational result = Rational(num * rhs.GetNum(), denum * rhs.GetDenum());
     *this = result;
 
     return *this;
@@ -79,7 +70,6 @@ Rational &Rational::operator*=(const Rational &rhs) {
 
 Rational &Rational::operator/=(const Rational &rhs) {
     Rational result = Rational(GetNum() * rhs.GetDenum(), GetDenum() * rhs.GetNum());
-    result.Normalize();
     *this = result;
 
     return *this;
@@ -89,11 +79,11 @@ Rational &Rational::operator/=(const Rational &rhs) {
 
 Rational Rational::operator-() {
     num *= -1;
-    return *this;
+    return Rational(*this);
 }
 
 Rational Rational::operator+() {
-    return *this;
+    return Rational(*this);
 }
 
 //инкремент, декремент
@@ -124,7 +114,7 @@ Rational &Rational::operator--() {
 //сравнение
 
 bool Rational::operator<(const Rational &rhs) const {
-    return num * rhs.denum < rhs.num * denum;
+    return !(*this >= rhs);
 }
 
 bool Rational::operator<=(const Rational &rhs) const {
@@ -132,7 +122,7 @@ bool Rational::operator<=(const Rational &rhs) const {
 }
 
 bool Rational::operator>(const Rational &rhs) const {
-    return num * rhs.denum > rhs.num * denum;
+    return !(*this <= rhs);
 }
 
 bool Rational::operator>=(const Rational &rhs) const {
@@ -140,7 +130,7 @@ bool Rational::operator>=(const Rational &rhs) const {
 }
 
 bool Rational::operator==(const Rational &rhs) const {
-    return (GetNum() == rhs.GetNum()) && (GetDenum() == rhs.GetDenum());
+    return (num == rhs.GetNum()) && (denum == rhs.GetDenum());
 }
 
 bool Rational::operator!=(const Rational &rhs) const {
