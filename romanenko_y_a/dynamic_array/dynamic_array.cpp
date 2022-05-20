@@ -64,7 +64,6 @@ void DynamicArray::pop_back() {
 }
 void DynamicArray::clear() {
 	size = 0;
-	data = new int[capacity];
 }
 void DynamicArray::erase(size_t i) {
 	if (i >= size) throw std::out_of_range("Index out of range");
