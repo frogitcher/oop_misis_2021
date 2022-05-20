@@ -55,7 +55,7 @@ void DynamicArray::reallocate(int64_t new_capacity) {
 
 void DynamicArray::push_back(int value) {
 	if (size == capacity) {
-		 capacity*=2;
+		 capacity = capacity*2 +1;
 		reallocate(capacity);
 	}
 	data[size++] = value;
@@ -93,10 +93,13 @@ void DynamicArray::resize(int64_t new_size) {
 		size = new_size;
 	}
 	else {
-		reallocate(new_size);
-		std::fill(begin() + ((size <= new_size) ? size : 0), begin() + new_size, 0);
+		if (new_size > capacity) {
+			reallocate(new_size);
+		}
+		std::fill(begin() + size, begin() + new_size, 0);
 		size = new_size;
 	}
+	
 }
 
 void DynamicArray::assign(int64_t new_size, int value) {
@@ -121,12 +124,10 @@ int* DynamicArray::begin() const{
 }
 
 void DynamicArray::swap(DynamicArray& other) {
-	for (int i = 0; i < size; i++) {
-		std::swap(data, other.data);
-	}
+	std::swap(data, other.data);
 	std::swap(size, other.size);
 	std::swap(capacity, other.capacity);
-
+	
 
 }
 
@@ -157,13 +158,11 @@ DynamicArray& DynamicArray:: operator = (const DynamicArray& other){
 	if (other.size > capacity) {
 		reallocate(other.capacity);
 	}
-
 	size = other.size;
 	for (int i = 0; i < other.size; i++) {
 		data[i] = other.data[i];
 	}
 	return *this;
-
 }
 
 
