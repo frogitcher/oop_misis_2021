@@ -29,9 +29,6 @@ public:
 
 	Rational operator-() const;
 
-	Rational& operator++();
-	Rational operator++(int a);
-
 	bool operator==(const Rational& rhs) const;
 	bool operator!=(const Rational& rhs) const;
 	bool operator>=(const Rational& rhs) const;

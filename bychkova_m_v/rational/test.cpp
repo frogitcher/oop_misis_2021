@@ -15,6 +15,7 @@ TEST_CASE("arithmetic tests") {
     Rational b(1, 5);
     a = b;
     CHECK(a == b);
+
     CHECK(Rational(2, 8) + Rational(3, 12) == Rational(1, 2));
 	CHECK(Rational(2, 3) - Rational(1) == Rational(-1, 3));
 	CHECK(Rational(1, 5) * Rational(0, 3) == Rational(0));
