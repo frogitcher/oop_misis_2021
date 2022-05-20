@@ -2,7 +2,7 @@
 
 #include "rational.h"
 
-#include "doctest/doctest.h"
+#include "doctest.h"
 
 TEST_CASE("Testing Rational constructors")
 {

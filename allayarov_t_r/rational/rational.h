@@ -51,7 +51,7 @@ private:
 
 private:
   int numerator_{0};
-  int denominator_{0};
+  int denominator_{1};
   static const char separator{'/'};
 };
 

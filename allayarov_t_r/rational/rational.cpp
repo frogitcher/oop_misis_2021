@@ -203,8 +203,12 @@ std::istream &Rational::readFrom(std::istream &istrm)
   {
     if (Rational::separator == separator)
     {
+      if (denominator_ == 0)
+        istrm.setstate(std::ios_base::failbit);
+
       numerator_ = numerator;
       denominator_ = denominator;
+      _normalize();
     }
     else
       istrm.setstate(std::ios_base::failbit);
