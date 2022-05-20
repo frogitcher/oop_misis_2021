@@ -4,6 +4,7 @@ class Rational {
 
 public:
 
+
 	int GetNumerator() const;
 	int GetDenominator() const;
 

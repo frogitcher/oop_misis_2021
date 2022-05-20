@@ -30,6 +30,7 @@ void Rational::Normalize() {
 	}
 }
 
+
 Rational::Rational(int _num, int _den) {
 	num = _num;
 	den = _den;
