@@ -7,9 +7,6 @@
 
 
 int& DynamicArray::operator[](int64_t i){
-     if (i>= size || i<0){
-        throw "Index out of range";
-    }
     return *(data+i);
 }
 int& DynamicArray::at(int64_t i) const{
@@ -33,8 +30,6 @@ DynamicArray::DynamicArray(const std::initializer_list <int> &list):size(list.si
 }
 
 DynamicArray::DynamicArray(int64_t _size,int value):size(_size), capacity(_size){
-
-
     data = new int[capacity];
     std::fill(data,data+_size,value);
 }
@@ -53,10 +48,7 @@ int64_t DynamicArray:: Capacity() const{
 
 
 bool DynamicArray:: Empty() const{
-    if (size==0){
-        return true;
-    }
-    return false;
+    return (size==0);
 }
 
 void DynamicArray:: Reallocate(int64_t new_capacity){
@@ -110,9 +102,9 @@ int* DynamicArray::end(){
 }
 
 void DynamicArray::swap(DynamicArray& other){
-    DynamicArray lambda = *this;
-    *this = other;
-    other = lambda;
+    std::swap(data,other.data);
+    std::swap(size,other.size);
+    std::swap(capacity,other.capacity);
 }
 
 void DynamicArray::assign(int64_t new_size, int value){
@@ -152,7 +144,10 @@ void DynamicArray::insert(int64_t index, int value){
         throw "Array out of range";
     }
     resize(size+1);
-    std::copy(data+index,data+size-1,data+index+1);
+    for (int i=size-1;i>index;i--){
+        data[i] = data[i-1];
+    }
+    //std::copy(data+index,data+size-1,data+index+1);
     data[index] = value;
 }
 void DynamicArray::push_back(int value){
