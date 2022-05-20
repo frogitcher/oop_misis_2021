@@ -2,7 +2,7 @@
 
 #include "dynamic_array.h"
 
-#include "doctest/doctest.h"
+#include "doctest.h"
 
 TEST_CASE("Testing DynamicArray constructors")
 {

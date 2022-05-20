@@ -14,7 +14,7 @@ public:
   DynamicArray(const std::initializer_list<int> &init_list);
   ~DynamicArray();
 
-  int &operator[](const size_t idx);
+  int &operator[](const size_t idx) const;
   bool operator==(const DynamicArray &rhs) const;
   bool operator!=(const DynamicArray &rhs) const;
   DynamicArray &operator=(const DynamicArray &rhs);
@@ -35,12 +35,9 @@ public:
   void assign(const size_t size, const int value);
   void assign(const std::initializer_list<int> &init_list);
 
-  int &at(const size_t idx);
-  int *begin();
-  int *end();
-
-private:
-  void _relocate();
+  int &at(const size_t idx) const;
+  int *begin() const;
+  int *end() const;
 
 private:
   size_t capacity_{0};
