@@ -178,8 +178,10 @@ void DynArr<T>::Push_front(const T& value)
 		DeleteData();
 		data = new_data;
 	}
-	std::copy(data, data + size, data + 1);
-	data[0] = value;
+        else{
+	        std::copy(data, data + size, data + 1);
+	} 
+        data[0] = value;
 	++size;
 }
 
@@ -291,9 +293,10 @@ template<typename T>
 void DynArr<T>::Assign(size_t new_size, const T& value)
 {
 	if (new_size >= capacity) {
-		data = Alloc(new_size * 2);
+		T* new_data = Alloc(new_size * 2);
 		capacity = new_size * 2;
 		DeleteData();
+                data = new_data;
 	}
 	size = new_size;
 	std::fill(data, data + size, value);
