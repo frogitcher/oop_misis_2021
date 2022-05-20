@@ -56,25 +56,21 @@ rational::rational(const rational& rhs) {
 rational rational::operator+ (const rational& rhs) const { //plus function
     _int64 n = lcm(rhs.denum, denum);
     rational tmp (rhs.num * (n / rhs.denum) + num * (n / denum), n);
-    tmp.normal();
     return tmp;
 }
 rational rational::operator- (const rational& rhs) const { //minus function
     _int64 n = lcm(rhs.denum, denum);
     rational tmp (num * (n / denum) - rhs.num * (n / rhs.denum), n);
-    tmp.normal();
     return tmp;
 }
 rational rational::operator* (const rational& rhs) const { // multiplication function
     rational tmp (rhs.num * num, rhs.denum * denum);
-    tmp.normal();
     return tmp;
 }
 rational rational::operator/ (const rational& rhs) const { //division function
     if (rhs.num == 0)
         throw std::invalid_argument("Divider has to be unequal 0");
     rational tmp (rhs.denum * num, rhs.num * denum);
-    tmp.normal();
     return tmp;
 }
 
