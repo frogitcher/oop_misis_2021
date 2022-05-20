@@ -37,10 +37,7 @@ Rational::Rational(int _num, int _den) {
 		if (_den == 0) {
 			throw std::invalid_argument("Denominator must not be equal 0");
 		}
-		if (_den<0 || gcd(std::abs(_num), std::abs(_den)) > 1) {
-			Normalize();
-		}
-
+        Normalize();
 }
 
 int Rational::GetNumerator() const{
@@ -116,7 +113,16 @@ Rational Rational::operator-()const{
 	return result;
 }
 
+Rational& Rational::operator++(){
+    num+=den;
+    return *this;
+}
 
+Rational Rational::operator++(int a) {
+    Rational result(*this);
+    ++(*this);
+    return result;
+}
 
 bool Rational::operator==(const Rational& rhs) const{
 	return num*rhs.GetDenominator() == den*rhs.GetNumerator();
