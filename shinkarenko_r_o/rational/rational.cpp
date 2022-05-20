@@ -24,8 +24,8 @@ void Rational::Normalize()
 		num *= -1;
 		den *= -1;
 	}
-	num /= gcd(t, den);
-	den /= gcd(t, den);
+	num /= t;
+	den /= t;
 	
 }
 
@@ -54,7 +54,6 @@ Rational& Rational::operator=(const Rational& rhs)
 {
 	num = rhs.num;
 	den = rhs.den;
-	Normalize();
 	return *this;
 }
 
