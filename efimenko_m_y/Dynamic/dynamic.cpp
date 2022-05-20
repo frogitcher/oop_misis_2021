@@ -11,7 +11,7 @@ DynamicArray::DynamicArray(int64_t _size, int value)
 }
 DynamicArray::DynamicArray(const DynamicArray& other)
 	:size(other.size)
-	, capacity(other.size) {
+	, capacity(other.capacity) {
 	data = new int[capacity];
 	std::copy(other.data, other.data + other.size, data);
 }
@@ -55,7 +55,7 @@ void DynamicArray::reallocate(int64_t new_capacity) {
 
 void DynamicArray::push_back(int value) {
 	if (size == capacity) {
-		if (capacity == 0) capacity++;
+		 capacity*=2;
 		reallocate(capacity);
 	}
 	data[size++] = value;
@@ -89,31 +89,40 @@ void DynamicArray::resize(int64_t new_size) {
 	if (new_size == 0) {
 		size = 0; return;
 	}
-	reallocate(new_size);
-	std::fill(begin() + ((size <= new_size) ? size : 0),begin() + new_size, 0);
-	size = new_size;
+	if (size > new_size) {
+		size = new_size;
+	}
+	else {
+		reallocate(new_size);
+		std::fill(begin() + ((size <= new_size) ? size : 0), begin() + new_size, 0);
+		size = new_size;
+	}
 }
 
 void DynamicArray::assign(int64_t new_size, int value) {
 	if (new_size < 0) {
 		throw std::invalid_argument("The size can't be below 0");
 	}
-	*this = DynamicArray(new_size, value);
+	else if (new_size > capacity) {
+		*this = DynamicArray(new_size, value);
+	}
+	else {
+		size = new_size;
+		std::fill(data, data + size, value);
+	}
 }
 
-int* DynamicArray::end() {
-	return data + size - 1;
+int* DynamicArray::end() const {
+	return data + size;
 }
 
-int* DynamicArray::begin() {
+int* DynamicArray::begin() const{
 	return data;
 }
 
 void DynamicArray::swap(DynamicArray& other) {
 	for (int i = 0; i < size; i++) {
-		int t = data[i];
-		data[i] = other.data[i];
-		other.data[i] = t;
+		std::swap(data, other.data);
 	}
 	std::swap(size, other.size);
 	std::swap(capacity, other.capacity);
@@ -125,13 +134,13 @@ void DynamicArray::insert(int64_t index, int value) {
 	if (index < 0 || index >= size) {
 		throw std::out_of_range("Out of range");
 	}
-	resize(size + 1);
+	resize(++size);
+	
 	for (int i = size - 1; i > index; --i) {
 		data[i] = data[i - 1];
 	}
 	data[index] = value;
 }
-
 
 bool DynamicArray:: operator == (const DynamicArray& rhs) const {
 	if (size != rhs.size) return false;
@@ -140,12 +149,16 @@ bool DynamicArray:: operator == (const DynamicArray& rhs) const {
 	}
 	return true;
 }
+
 bool DynamicArray::operator!=(const DynamicArray& rhs) const {
 	return!(*this == rhs);
 }
 DynamicArray& DynamicArray:: operator = (const DynamicArray& other){
+	if (other.size > capacity) {
+		reallocate(other.capacity);
+	}
+
 	size = other.size;
-	capacity = other.capacity;
 	for (int i = 0; i < other.size; i++) {
 		data[i] = other.data[i];
 	}

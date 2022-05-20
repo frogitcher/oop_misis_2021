@@ -24,8 +24,8 @@ public:
 	void insert(int64_t index, int value);
 	void resize(int64_t new_size);
 	void assign(int64_t new_size, int value);
-	int* begin();
-	int* end();
+	int* begin() const;
+	int* end()  const;
 	void swap(DynamicArray& other);
 	bool operator ==(const DynamicArray& other) const;
 	bool operator !=(const DynamicArray& other) const;

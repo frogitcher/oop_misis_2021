@@ -186,7 +186,7 @@ TEST_CASE("testing begin & end") {
 	DynamicArray first{ 110,21, 15, 16, 1, 7 };
 
 	CHECK(*(first.begin()) == 110);
-	CHECK(*(first.end()) == 7);
+	CHECK(*(first.end() -1) == 7);
 }
 
 TEST_CASE("testing swap") {
