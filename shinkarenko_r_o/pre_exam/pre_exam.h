@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include "pre_exam.h"
+#include "pre_exam.cpp"
 
 class Math_vector {
 public:
@@ -17,6 +17,7 @@ public:
 	Math_vector operator=(const& Math_vector t);
 	double Scalar_Multiplying(Math_vector t1, Math_vector t2);
 	Math_vector operator-(const& Math_vector t);
+	dobule Normal(const& Math_vector t);
 private:
 	int size;
 	coords = std::vector<double>;

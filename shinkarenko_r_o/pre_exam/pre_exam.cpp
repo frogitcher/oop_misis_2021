@@ -79,5 +79,6 @@ Math_vector& operator-(const& Math_vector vector_2) {
 		for (int i = 0; i < size; ++i) {
 			coords[i] -= Get_Coord(vector_2)[i];
 		}
-	return *this;
+		return *this;
+	}
 }
