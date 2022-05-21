@@ -49,7 +49,7 @@ void stack::realloc(int64_t new_cap) {
 
 stack &stack::operator=(const stack &rhs) {
     if (rhs.size > capacity){
-        reallocate(rhs.size);
+        realloc(rhs.size);
     }
     size = rhs.size;
     std::copy(rhs.data, rhs.data + size, data);
