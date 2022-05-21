@@ -1,0 +1,66 @@
+class Set
+{
+private:
+    unsigned int* mas;
+    int size;
+public:
+    Set()
+    {
+        mas = new unsigned int[1];
+        size = 1;
+    }
+    Set(int size)
+    {
+        mas = new unsigned int[size];
+        this->size = size;
+    }
+    ~Set()
+    {
+        cout << "I`m destructed" << endl;
+        size = 0;
+        mas = new unsigned int[0];
+    }
+
+    bool Empty()
+    {
+        return size > 0 ? true : false;
+    }
+
+
+    int Size()
+    {
+        return size;
+    }
+
+    bool Insert(int value)
+    {
+        for (int i = 0; i < size; i++)
+        {
+            if (mas[i] == value)
+            {
+                return false;
+            }
+        }
+        const unsigned int* local_mass = mas;
+        size++;
+        mas = new unsigned int[size];
+
+        for (int i = 0; i < size - 1; i++)
+        {
+            mas[i] = local_mass[i];
+        }
+        mas[size - 1] = value;
+
+        return true;
+    }
+
+    int Find(int key)
+    {
+        if (key >= size || key < 0)
+        {
+            return -1;
+        }
+
+        return mas[key];
+    }
+};
