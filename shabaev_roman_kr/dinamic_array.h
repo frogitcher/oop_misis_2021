@@ -13,6 +13,9 @@ public:
     dinamic_array();
     dinamic_array(const dinamic_array& other);
     dinamic_array(dinamic_array&& other) noexcept;
+    void operator =(const dinamic_array&other);
+    void operator =(dinamic_array&&other);
+
     void push_back( int value);
     void pop_back();
     int back();
@@ -69,6 +72,21 @@ dinamic_array::dinamic_array(const dinamic_array &other):dinamic_array() {
     relocate(other.size);
     size=other.size;
     for(int i=0; i<other.size; i++){
+        *(data+i)=*(other.data+i);
+    }
+
+}
+
+void dinamic_array::operator=(dinamic_array &&other) {
+    data=other.data;
+    size=other.size;
+    capacity=other.capacity;
+}
+
+void dinamic_array::operator=(const dinamic_array &other) {
+    relocate(other.size);
+    size=other.size;
+    for(int i=0; i<size; i++){
         *(data+i)=*(other.data+i);
     }
 
