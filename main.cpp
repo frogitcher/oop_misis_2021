@@ -8,8 +8,8 @@ Vector::Vector(Vector &vector) {
     data = vector.get_data();
 }
 
-Vector::Vector(double[] _data) {
-    data = _data;
+Vector::Vector(int size) {
+    data = new double[size];
 }
 
 Vector Vector::operator+(double value) {

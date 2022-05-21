@@ -8,7 +8,7 @@ public:
 
     Vector(Vector &vector);
 
-    Vector(double[] _data);
+    Vector(int size);
 
     ~Vector() = default;
 
