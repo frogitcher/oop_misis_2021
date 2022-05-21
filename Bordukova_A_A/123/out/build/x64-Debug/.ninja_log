@@ -1,0 +1,27 @@
+# ninja log v5
+48	619	6748258329245906	doctest/src/doctest-stamp/doctest-mkdir	6cd2389f0fbcded4
+48	619	6748258329245906	D:/Программы/С++ projects/123/out/build/x64-Debug/doctest/src/doctest-stamp/doctest-mkdir	6cd2389f0fbcded4
+60	643	6748258330027277	doctest/src/doctest-stamp/doctest-mkdir	6cd2389f0fbcded4
+60	643	6748258330027277	D:/Программы/С++ projects/123/out/build/x64-Debug/doctest/src/doctest-stamp/doctest-mkdir	6cd2389f0fbcded4
+1	842	6748258331590255	CMakeFiles/test.dir/123.cpp.obj	230c6c0ed514dc5e
+1	836	6748258331902866	CMakeFiles/test.dir/123.cpp.obj	230c6c0ed514dc5e
+2	604	6748258415365275	CMakeFiles/test.dir/123.cpp.obj	230c6c0ed514dc5e
+42	14859	6748258557972507	doctest/src/doctest-stamp/doctest-download	dd6fd3d4423250e
+42	14859	6748258557972507	D:/Программы/С++ projects/123/out/build/x64-Debug/doctest/src/doctest-stamp/doctest-download	dd6fd3d4423250e
+1	876	6748258654271028	CMakeFiles/test.dir/123.cpp.obj	230c6c0ed514dc5e
+41	1172	0	doctest/src/doctest-stamp/doctest-update	efd02e65c21c1976
+41	1172	0	D:/Программы/С++ projects/123/out/build/x64-Debug/doctest/src/doctest-stamp/doctest-update	efd02e65c21c1976
+1172	1295	6748258658491056	doctest/src/doctest-stamp/doctest-patch	d1182b48fb01b15b
+1172	1295	6748258658491056	D:/Программы/С++ projects/123/out/build/x64-Debug/doctest/src/doctest-stamp/doctest-patch	d1182b48fb01b15b
+1295	1425	6748258659897913	doctest/src/doctest-stamp/doctest-configure	38dc2b616f01168a
+1295	1425	6748258659897913	D:/Программы/С++ projects/123/out/build/x64-Debug/doctest/src/doctest-stamp/doctest-configure	38dc2b616f01168a
+1425	1555	6748258661148136	doctest/src/doctest-stamp/doctest-build	1dc57889dbdd23b9
+1425	1555	6748258661148136	D:/Программы/С++ projects/123/out/build/x64-Debug/doctest/src/doctest-stamp/doctest-build	1dc57889dbdd23b9
+1555	1686	6748258662398782	doctest/src/doctest-stamp/doctest-install	4643c146cc573e35
+1555	1686	6748258662398782	D:/Программы/С++ projects/123/out/build/x64-Debug/doctest/src/doctest-stamp/doctest-install	4643c146cc573e35
+1686	1878	6748258664430353	CMakeFiles/doctest-complete	19cc63bb079b416f
+1686	1878	6748258664430353	doctest/src/doctest-stamp/doctest-done	19cc63bb079b416f
+1686	1878	6748258664430353	D:/Программы/С++ projects/123/out/build/x64-Debug/CMakeFiles/doctest-complete	19cc63bb079b416f
+1686	1878	6748258664430353	D:/Программы/С++ projects/123/out/build/x64-Debug/doctest/src/doctest-stamp/doctest-done	19cc63bb079b416f
+24	1971	6748258665055806	CMakeFiles/test.dir/test.cpp.obj	d06178a178b37db7
+1971	3404	6748258678497144	test.exe	bbc4c65fa43cd64e

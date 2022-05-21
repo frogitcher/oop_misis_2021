@@ -1,0 +1,13 @@
+# Target labels
+ doctest
+# Source files and their labels
+D:/Программы/С++ projects/123/out/build/x64-Debug/CMakeFiles/doctest
+D:/Программы/С++ projects/123/out/build/x64-Debug/CMakeFiles/doctest.rule
+D:/Программы/С++ projects/123/out/build/x64-Debug/CMakeFiles/doctest-complete.rule
+D:/Программы/С++ projects/123/out/build/x64-Debug/doctest/src/doctest-stamp/doctest-build.rule
+D:/Программы/С++ projects/123/out/build/x64-Debug/doctest/src/doctest-stamp/doctest-configure.rule
+D:/Программы/С++ projects/123/out/build/x64-Debug/doctest/src/doctest-stamp/doctest-download.rule
+D:/Программы/С++ projects/123/out/build/x64-Debug/doctest/src/doctest-stamp/doctest-install.rule
+D:/Программы/С++ projects/123/out/build/x64-Debug/doctest/src/doctest-stamp/doctest-mkdir.rule
+D:/Программы/С++ projects/123/out/build/x64-Debug/doctest/src/doctest-stamp/doctest-patch.rule
+D:/Программы/С++ projects/123/out/build/x64-Debug/doctest/src/doctest-stamp/doctest-update.rule
