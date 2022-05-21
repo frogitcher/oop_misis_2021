@@ -33,7 +33,7 @@ dinamic_array::dinamic_array(dinamic_array &&other) noexcept {
 void dinamic_array::push_back(int value) {
     add_smt(size+1);
     size++;
-    *(data+size)=value;
+    *(data+size-1)=value;
 }
 
 void dinamic_array::pop_back() {
@@ -42,14 +42,14 @@ void dinamic_array::pop_back() {
 
 int dinamic_array::back() {
 
-    return *(data+size);
+    return *(data+size-1);
 }
 
 void dinamic_array::relocate(int new_size) {
     auto it=new int[new_size];
     capacity=new_size;
     for(int i=0; i<size; i++){
-        *(data+i)=*(it+i);
+        *(it+i)=*(data+i);
     }
     std::swap(data, it);
     delete[] it;
