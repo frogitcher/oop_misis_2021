@@ -2,8 +2,7 @@
 #include <stdexcept>
 #include <algorithm>
 #include <math.h>
-#include <iostream>
-using namespace std;
+
 Rational::Rational(): num(0), den(1)
 {
 }
