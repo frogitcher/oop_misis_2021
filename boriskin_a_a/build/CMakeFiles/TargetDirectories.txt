@@ -1,0 +1,7 @@
+C:/Users/sasha/OneDrive/Рабочий стол/oop_misis/oop_misis_2022/boriskin_a_a/build/CMakeFiles/doctest.dir
+C:/Users/sasha/OneDrive/Рабочий стол/oop_misis/oop_misis_2022/boriskin_a_a/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/sasha/OneDrive/Рабочий стол/oop_misis/oop_misis_2022/boriskin_a_a/build/CMakeFiles/ZERO_CHECK.dir
+C:/Users/sasha/OneDrive/Рабочий стол/oop_misis/oop_misis_2022/boriskin_a_a/build/Rational/CMakeFiles/testRational.dir
+C:/Users/sasha/OneDrive/Рабочий стол/oop_misis/oop_misis_2022/boriskin_a_a/build/hello_world/CMakeFiles/main.dir
+C:/Users/sasha/OneDrive/Рабочий стол/oop_misis/oop_misis_2022/boriskin_a_a/build/hello_world/CMakeFiles/test.dir
+C:/Users/sasha/OneDrive/Рабочий стол/oop_misis/oop_misis_2022/boriskin_a_a/build/DyanmicArray/CMakeFiles/test_dyn_array.dir

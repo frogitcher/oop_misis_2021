@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\sasha\OneDrive\Рабочий стол\oop_misis\oop_misis_2022\boriskin_a_a\hello_world\test.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\sasha\OneDrive\Рабочий стол\oop_misis\oop_misis_2022\boriskin_a_a\hello_world\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{5AEA642E-D15E-33CE-AF85-A2873EEE3582}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

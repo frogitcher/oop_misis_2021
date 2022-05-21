@@ -1,0 +1,10 @@
+^C:\USERS\SASHA\ONEDRIVE\РАБОЧИЙ СТОЛ\OOP_MISIS\OOP_MISIS_2022\BORISKIN_A_A\BUILD\CMAKEFILES\E0400E048DF648AEA3646B255B29E389\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" "-SC:/Users/sasha/OneDrive/Рабочий стол/oop_misis/oop_misis_2022/boriskin_a_a" "-BC:/Users/sasha/OneDrive/Рабочий стол/oop_misis/oop_misis_2022/boriskin_a_a/build" --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file "C:/Users/sasha/OneDrive/Рабочий стол/oop_misis/oop_misis_2022/boriskin_a_a/build/project.sln"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

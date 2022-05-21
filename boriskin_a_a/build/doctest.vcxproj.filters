@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\sasha\OneDrive\Рабочий стол\oop_misis\oop_misis_2022\boriskin_a_a\build\CMakeFiles\397cdcd37b6204e1b105a41082ce8f9c\doctest-mkdir.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\sasha\OneDrive\Рабочий стол\oop_misis\oop_misis_2022\boriskin_a_a\build\CMakeFiles\397cdcd37b6204e1b105a41082ce8f9c\doctest-download.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\sasha\OneDrive\Рабочий стол\oop_misis\oop_misis_2022\boriskin_a_a\build\CMakeFiles\397cdcd37b6204e1b105a41082ce8f9c\doctest-update.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\sasha\OneDrive\Рабочий стол\oop_misis\oop_misis_2022\boriskin_a_a\build\CMakeFiles\397cdcd37b6204e1b105a41082ce8f9c\doctest-patch.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\sasha\OneDrive\Рабочий стол\oop_misis\oop_misis_2022\boriskin_a_a\build\CMakeFiles\397cdcd37b6204e1b105a41082ce8f9c\doctest-configure.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\sasha\OneDrive\Рабочий стол\oop_misis\oop_misis_2022\boriskin_a_a\build\CMakeFiles\397cdcd37b6204e1b105a41082ce8f9c\doctest-build.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\sasha\OneDrive\Рабочий стол\oop_misis\oop_misis_2022\boriskin_a_a\build\CMakeFiles\397cdcd37b6204e1b105a41082ce8f9c\doctest-install.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\sasha\OneDrive\Рабочий стол\oop_misis\oop_misis_2022\boriskin_a_a\build\CMakeFiles\0a7187b6c5a0925c309b745f79ed1f2f\doctest-complete.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\sasha\OneDrive\Рабочий стол\oop_misis\oop_misis_2022\boriskin_a_a\build\CMakeFiles\e0400e048df648aea3646b255b29e389\doctest.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\sasha\OneDrive\Рабочий стол\oop_misis\oop_misis_2022\boriskin_a_a\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Users\sasha\OneDrive\Рабочий стол\oop_misis\oop_misis_2022\boriskin_a_a\build\CMakeFiles\doctest" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{23BE15A5-BB09-32CF-A58F-5B6C2599C816}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

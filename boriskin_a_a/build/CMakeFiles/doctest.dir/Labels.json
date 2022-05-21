@@ -1,0 +1,43 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "C:/Users/sasha/OneDrive/Рабочий стол/oop_misis/oop_misis_2022/boriskin_a_a/build/CMakeFiles/doctest"
+		},
+		{
+			"file" : "C:/Users/sasha/OneDrive/Рабочий стол/oop_misis/oop_misis_2022/boriskin_a_a/build/CMakeFiles/e0400e048df648aea3646b255b29e389/doctest.rule"
+		},
+		{
+			"file" : "C:/Users/sasha/OneDrive/Рабочий стол/oop_misis/oop_misis_2022/boriskin_a_a/build/CMakeFiles/0a7187b6c5a0925c309b745f79ed1f2f/doctest-complete.rule"
+		},
+		{
+			"file" : "C:/Users/sasha/OneDrive/Рабочий стол/oop_misis/oop_misis_2022/boriskin_a_a/build/CMakeFiles/397cdcd37b6204e1b105a41082ce8f9c/doctest-install.rule"
+		},
+		{
+			"file" : "C:/Users/sasha/OneDrive/Рабочий стол/oop_misis/oop_misis_2022/boriskin_a_a/build/CMakeFiles/397cdcd37b6204e1b105a41082ce8f9c/doctest-mkdir.rule"
+		},
+		{
+			"file" : "C:/Users/sasha/OneDrive/Рабочий стол/oop_misis/oop_misis_2022/boriskin_a_a/build/CMakeFiles/397cdcd37b6204e1b105a41082ce8f9c/doctest-download.rule"
+		},
+		{
+			"file" : "C:/Users/sasha/OneDrive/Рабочий стол/oop_misis/oop_misis_2022/boriskin_a_a/build/CMakeFiles/397cdcd37b6204e1b105a41082ce8f9c/doctest-update.rule"
+		},
+		{
+			"file" : "C:/Users/sasha/OneDrive/Рабочий стол/oop_misis/oop_misis_2022/boriskin_a_a/build/CMakeFiles/397cdcd37b6204e1b105a41082ce8f9c/doctest-patch.rule"
+		},
+		{
+			"file" : "C:/Users/sasha/OneDrive/Рабочий стол/oop_misis/oop_misis_2022/boriskin_a_a/build/CMakeFiles/397cdcd37b6204e1b105a41082ce8f9c/doctest-configure.rule"
+		},
+		{
+			"file" : "C:/Users/sasha/OneDrive/Рабочий стол/oop_misis/oop_misis_2022/boriskin_a_a/build/CMakeFiles/397cdcd37b6204e1b105a41082ce8f9c/doctest-build.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"doctest"
+		],
+		"name" : "doctest"
+	}
+}

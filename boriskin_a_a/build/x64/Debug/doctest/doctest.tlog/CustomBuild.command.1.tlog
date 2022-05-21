@@ -1,0 +1,146 @@
+^C:\USERS\SASHA\ONEDRIVE\РАБОЧИЙ СТОЛ\OOP_MISIS\OOP_MISIS_2022\BORISKIN_A_A\BUILD\CMAKEFILES\397CDCD37B6204E1B105A41082CE8F9C\DOCTEST-MKDIR.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory "C:/Users/sasha/OneDrive/Рабочий стол/oop_misis/oop_misis_2022/boriskin_a_a/build/doctest/src/doctest"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory "C:/Users/sasha/OneDrive/Рабочий стол/oop_misis/oop_misis_2022/boriskin_a_a/build/doctest/src/doctest-build"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory "C:/Users/sasha/OneDrive/Рабочий стол/oop_misis/oop_misis_2022/boriskin_a_a/build/doctest"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory "C:/Users/sasha/OneDrive/Рабочий стол/oop_misis/oop_misis_2022/boriskin_a_a/build/doctest/tmp"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory "C:/Users/sasha/OneDrive/Рабочий стол/oop_misis/oop_misis_2022/boriskin_a_a/build/doctest/src/doctest-stamp/Debug"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory "C:/Users/sasha/OneDrive/Рабочий стол/oop_misis/oop_misis_2022/boriskin_a_a/build/doctest/src"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory "C:/Users/sasha/OneDrive/Рабочий стол/oop_misis/oop_misis_2022/boriskin_a_a/build/doctest/src/doctest-stamp"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/Users/sasha/OneDrive/Рабочий стол/oop_misis/oop_misis_2022/boriskin_a_a/build/doctest/src/doctest-stamp/Debug/doctest-mkdir"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\SASHA\ONEDRIVE\РАБОЧИЙ СТОЛ\OOP_MISIS\OOP_MISIS_2022\BORISKIN_A_A\BUILD\CMAKEFILES\397CDCD37B6204E1B105A41082CE8F9C\DOCTEST-DOWNLOAD.RULE
+setlocal
+cd "C:\Users\sasha\OneDrive\Рабочий стол\oop_misis\oop_misis_2022\boriskin_a_a\build\doctest\src"
+if %errorlevel% neq 0 goto :cmEnd
+C:
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -Dconfig=Debug -P "C:/Users/sasha/OneDrive/Рабочий стол/oop_misis/oop_misis_2022/boriskin_a_a/build/doctest/src/doctest-stamp/doctest-download-Debug.cmake"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/Users/sasha/OneDrive/Рабочий стол/oop_misis/oop_misis_2022/boriskin_a_a/build/doctest/src/doctest-stamp/Debug/doctest-download"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\SASHA\ONEDRIVE\РАБОЧИЙ СТОЛ\OOP_MISIS\OOP_MISIS_2022\BORISKIN_A_A\BUILD\CMAKEFILES\397CDCD37B6204E1B105A41082CE8F9C\DOCTEST-UPDATE.RULE
+setlocal
+cd "C:\Users\sasha\OneDrive\Рабочий стол\oop_misis\oop_misis_2022\boriskin_a_a\build\doctest\src\doctest"
+if %errorlevel% neq 0 goto :cmEnd
+C:
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\Git\cmd\git.exe" pull
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\SASHA\ONEDRIVE\РАБОЧИЙ СТОЛ\OOP_MISIS\OOP_MISIS_2022\BORISKIN_A_A\BUILD\CMAKEFILES\397CDCD37B6204E1B105A41082CE8F9C\DOCTEST-PATCH.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/Users/sasha/OneDrive/Рабочий стол/oop_misis/oop_misis_2022/boriskin_a_a/build/doctest/src/doctest-stamp/Debug/doctest-patch"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\SASHA\ONEDRIVE\РАБОЧИЙ СТОЛ\OOP_MISIS\OOP_MISIS_2022\BORISKIN_A_A\BUILD\CMAKEFILES\397CDCD37B6204E1B105A41082CE8F9C\DOCTEST-CONFIGURE.RULE
+setlocal
+cd "C:\Users\sasha\OneDrive\Рабочий стол\oop_misis\oop_misis_2022\boriskin_a_a\build\doctest\src\doctest-build"
+if %errorlevel% neq 0 goto :cmEnd
+C:
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/Users/sasha/OneDrive/Рабочий стол/oop_misis/oop_misis_2022/boriskin_a_a/build/doctest/src/doctest-stamp/Debug/doctest-configure"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\SASHA\ONEDRIVE\РАБОЧИЙ СТОЛ\OOP_MISIS\OOP_MISIS_2022\BORISKIN_A_A\BUILD\CMAKEFILES\397CDCD37B6204E1B105A41082CE8F9C\DOCTEST-BUILD.RULE
+setlocal
+cd "C:\Users\sasha\OneDrive\Рабочий стол\oop_misis\oop_misis_2022\boriskin_a_a\build\doctest\src\doctest-build"
+if %errorlevel% neq 0 goto :cmEnd
+C:
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/Users/sasha/OneDrive/Рабочий стол/oop_misis/oop_misis_2022/boriskin_a_a/build/doctest/src/doctest-stamp/Debug/doctest-build"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\SASHA\ONEDRIVE\РАБОЧИЙ СТОЛ\OOP_MISIS\OOP_MISIS_2022\BORISKIN_A_A\BUILD\CMAKEFILES\397CDCD37B6204E1B105A41082CE8F9C\DOCTEST-INSTALL.RULE
+setlocal
+cd "C:\Users\sasha\OneDrive\Рабочий стол\oop_misis\oop_misis_2022\boriskin_a_a\build\doctest\src\doctest-build"
+if %errorlevel% neq 0 goto :cmEnd
+C:
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/Users/sasha/OneDrive/Рабочий стол/oop_misis/oop_misis_2022/boriskin_a_a/build/doctest/src/doctest-stamp/Debug/doctest-install"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\SASHA\ONEDRIVE\РАБОЧИЙ СТОЛ\OOP_MISIS\OOP_MISIS_2022\BORISKIN_A_A\BUILD\CMAKEFILES\0A7187B6C5A0925C309B745F79ED1F2F\DOCTEST-COMPLETE.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory "C:/Users/sasha/OneDrive/Рабочий стол/oop_misis/oop_misis_2022/boriskin_a_a/build/CMakeFiles/Debug"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/Users/sasha/OneDrive/Рабочий стол/oop_misis/oop_misis_2022/boriskin_a_a/build/CMakeFiles/Debug/doctest-complete"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch "C:/Users/sasha/OneDrive/Рабочий стол/oop_misis/oop_misis_2022/boriskin_a_a/build/doctest/src/doctest-stamp/Debug/doctest-done"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\SASHA\ONEDRIVE\РАБОЧИЙ СТОЛ\OOP_MISIS\OOP_MISIS_2022\BORISKIN_A_A\BUILD\CMAKEFILES\E0400E048DF648AEA3646B255B29E389\DOCTEST.RULE
+setlocal
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\SASHA\ONEDRIVE\РАБОЧИЙ СТОЛ\OOP_MISIS\OOP_MISIS_2022\BORISKIN_A_A\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" "-SC:/Users/sasha/OneDrive/Рабочий стол/oop_misis/oop_misis_2022/boriskin_a_a" "-BC:/Users/sasha/OneDrive/Рабочий стол/oop_misis/oop_misis_2022/boriskin_a_a/build" --check-stamp-file "C:/Users/sasha/OneDrive/Рабочий стол/oop_misis/oop_misis_2022/boriskin_a_a/build/CMakeFiles/generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

@@ -1,0 +1,11 @@
+﻿  Creating directories for 'doctest'
+  Performing download step (git clone) for 'doctest'
+  -- doctest download command succeeded.  See also C:/Users/sasha/OneDrive/╨а╨░╨▒╨╛╤З╨╕╨╣ ╤Б╤В╨╛╨╗/oop_misis/oop_misis_2022/boriskin_a_a/build/doctest/src/doctest-stamp/doctest-download-*.log
+  Performing update step for 'doctest'
+  Already up to date.
+  No patch step for 'doctest'
+  No configure step for 'doctest'
+  No build step for 'doctest'
+  No install step for 'doctest'
+  Completed 'doctest'
+  Building Custom Rule C:/Users/sasha/OneDrive/����稩 �⮫/oop_misis/oop_misis_2022/boriskin_a_a/CMakeLists.txt

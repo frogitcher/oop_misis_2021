@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\sasha\OneDrive\Рабочий стол\oop_misis\oop_misis_2022\boriskin_a_a\hello_world\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\sasha\OneDrive\Рабочий стол\oop_misis\oop_misis_2022\boriskin_a_a\hello_world\hello_world.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\sasha\OneDrive\Рабочий стол\oop_misis\oop_misis_2022\boriskin_a_a\hello_world\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{6B70F2E0-9C06-39C0-8410-5250C3D3F0F9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{5AEA642E-D15E-33CE-AF85-A2873EEE3582}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
