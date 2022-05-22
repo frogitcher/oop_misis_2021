@@ -35,19 +35,15 @@ DynamicArray::DynamicArray(const DynamicArray& other)
 }
 void DynamicArray::push_back(int _value) {
 	if (size == capacity) {
-		int_t new_capacity = capacity == 0 ? 1 : capacity * 2;
-		int* new_data = new int[new_capacity];
-		std::copy(data, (data + size), new_data);
-		delete[] data;
-		data = new_data;
-		capacity = new_capacity;
+		if (capacity == 0){
+			capacity = 1;
+		}
+		rellocate(size);
 	}
-	
-	size += 1;
-	data[size - 1] = _value;
-}	
-void DynamicArray::erase(int_t index)
-{
+	data[size++] = value;
+}
+		
+void DynamicArray::erase(int_t index){
 	if (index >= size) {
 		throw std::out_of_range("Index out of range");
 	}
@@ -56,8 +52,7 @@ void DynamicArray::erase(int_t index)
 	}
 	size--;
 }
-void DynamicArray::insert(int_t index, int num)
-{
+void DynamicArray::insert(int_t index, int num){
 	push_back(0);
 	if (index > size - 1) {
 		throw std::out_of_range("Index out of range!");
@@ -67,8 +62,7 @@ void DynamicArray::insert(int_t index, int num)
 	}
 	data[index] = num;
 }
-void DynamicArray::assign(int_t new_size, int value)
-{
+void DynamicArray::assign(int_t new_size, int value){
 	if (new_size >= capacity) {
 		int new_capacity = 1;
 		while (new_capacity < new_size) {
@@ -120,13 +114,11 @@ bool DynamicArray::operator==(const DynamicArray& other) const
 		return false;
 	}
 }
-bool DynamicArray::operator!= (const DynamicArray& other) const
-{
+bool DynamicArray::operator!= (const DynamicArray& other) const{
 	return !(*this == other);
 }
 
-bool DynamicArray::operator>(const DynamicArray& other) const
-{
+bool DynamicArray::operator>(const DynamicArray& other) const{
 	for (int i = 0; i < std::min(Size(), other.Size()); ++i) {
 		if (data[i] != other.data[i]) {
 			return data[i] > other.data[i];
@@ -134,12 +126,10 @@ bool DynamicArray::operator>(const DynamicArray& other) const
 	}
 	return Size() > other.Size();
 }
-bool DynamicArray::operator<(const DynamicArray& other) const
-{
+bool DynamicArray::operator<(const DynamicArray& other) const{
 	return (other>=*this);
 }
-bool DynamicArray::operator<=(const DynamicArray& other) const
-{
+bool DynamicArray::operator<=(const DynamicArray& other) const{
 	return !(*this > other);
 }
 bool DynamicArray::operator>= (const DynamicArray& other) const {
