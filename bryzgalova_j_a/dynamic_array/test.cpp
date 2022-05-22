@@ -72,6 +72,10 @@ TEST_CASE("Testing dynamic_array_03") {
     a_copy2.swap(a_copy);
     CHECK(a_copy2 == a);
 }
+TEST_CASE("Clear"{
+    a.clear();
+    CHECK(a.Empty());
+}
 
 TEST_CASE("Testing dynamic_array_04") {
     CHECK_THROWS_WITH(DynamicArray(2).at(2), "Index out of range!");
