@@ -7,32 +7,35 @@ public:
 
     Rational(int _num);
     Rational(int _num, int _den);
-    Rational(Rational& other);
+    Rational(const Rational& other);
 
-    int GetNumerator();
-    int GetDenominator();
+    int GetNumerator() const;
+    int GetDenominator() const;
 
-    Rational& operator=(Rational& rhs);
+    Rational& operator=(const Rational& rhs);
 
-    Rational operator+(Rational& rhs);
-    Rational operator-(Rational& rhs);
-    Rational operator*(Rational& rhs);
-    Rational operator/(Rational& rhs);
+    Rational operator+(const Rational& rhs) const;
+    Rational operator-(const Rational& rhs) const;
+    Rational operator*(const Rational& rhs) const;
+    Rational operator/(const Rational& rhs) const;
 
-    Rational& operator+=(Rational& rhs);
-    Rational& operator-=(Rational& rhs);
-    Rational& operator*=(Rational& rhs);
-    Rational& operator/=(Rational& rhs);
+    Rational& operator+=(const Rational& rhs);
+    Rational& operator-=(const Rational& rhs);
+    Rational& operator*=(const Rational& rhs);
+    Rational& operator/=(const Rational& rhs);
 
-    bool operator<(Rational& rhs) const;
-    bool operator<=(Rational& rhs) const;
-    bool operator>(Rational& rhs) const;
-    bool operator>=(Rational& rhs) const;
+    bool operator<(const Rational& rhs) const;
+    bool operator<=(const Rational& rhs) const;
+    bool operator>(const Rational& rhs) const;
+    bool operator>=(const Rational& rhs) const;
 
-    bool operator==(Rational& rhs) const;
-    bool operator!=(Rational& rhs) const;
+    bool operator==(const Rational& rhs) const;
+    bool operator!=(const Rational& rhs) const;
 
-    Rational operator+();
+    Rational operator+() const;
+    Rational operator-() const;
+    Rational& operator++();
+	Rational operator++(int);
 
 private:
     int num, den;
