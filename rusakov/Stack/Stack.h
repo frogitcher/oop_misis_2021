@@ -77,6 +77,10 @@ void Stack<T>::pop() {
     Node* next = head->next;
     delete head; 
     head = next;
+    if(size == 1) {
+        delete tail;
+        tail = nullptr;
+    }
     size--;
 }
 
@@ -164,6 +168,7 @@ Stack<T>& Stack<T>::operator=(const Stack<T>& other) {
             previous = previous->next;
             current = current->next;
         }
+        clear();
         tail = previous;
         size = other.size;
     }
