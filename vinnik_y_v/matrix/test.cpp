@@ -1,6 +1,7 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 
-#include "Matrix.h"
+#include "FlatMatrix.h"
+#include "TableMatrix.h"
 #include "doctest.h"
 
 #include <iostream>
@@ -60,56 +61,67 @@ TEST_CASE("Testing arithmetic operators") {
 	FlatMatrix<int> m1({
 		{0, 1},
 		{5, 7},
-	});
+		});
 
 	FlatMatrix<int> m2({
 		{0, -1},
 		{2, -12}
-	});
+		});
 
 	FlatMatrix<int> m3 = m1 * m2;
 	CHECK(m3 == FlatMatrix<int>({
 		{ 2, -12 },
 		{ 14, -89 }
-	}));
+		}));
 
 	FlatMatrix<int> m4 = m2 * m1;
 	CHECK(m4 == FlatMatrix<int>({
 		{ -5, -7 },
 		{ -60, -82 }
-	}));
+		}));
 
 	TableMatrix<int> m5({
 		{1},
 		{8}
-	});
+		});
 
 	m5 *= 2;
 	CHECK(m5 == TableMatrix<int>({
 		{2},
 		{16}
-	}));
+		}));
 	m5 /= 2;
 	CHECK(m5 == TableMatrix<int>({
 		{1},
 		{8}
-	}));
+		}));
 
 	CHECK_THROWS_WITH(m5 /= 0, "Cannot divide matrix by 0");
 	FlatMatrix<int> m6({
 		{0, 1},
 		{5, 7},
-	});
+		});
 
-	FlatMatrix<int> m7({
+	TableMatrix<int> m7({
 		{0, -1},
-	});
+		});
 	CHECK_THROWS_WITH(m6 * m7, "Cannot perform multiplication with given matrix");
 
 	CHECK(m6 + m1 == FlatMatrix<int>({
 		{0, 2},
 		{10, 14}
-	}));
+		}));
+
+	TableMatrix<int> res = m5 * m7;
+	CHECK(res == TableMatrix<int>{
+		{0, -1},
+		{0, -8}
+	});
+
+	TableMatrix<int> res2 = m7 * m5;
+	CHECK(res2 == TableMatrix<int>{
+		{-8}
+	});
 }
 
 TEST_CASE("Testing other functionality") {
@@ -117,19 +129,19 @@ TEST_CASE("Testing other functionality") {
 		{0.f, 2.1f, 4.2f},
 		{5.4f, 3.1f, 1.1f},
 		{0.f, 1.1f, 0.1f}
-	});
+		});
 
 	m.Transponse();
 	CHECK(m == FlatMatrix<double>({
 		{0.f, 5.4f, 0.f},
 		{2.1f, 3.1f, 1.1f},
 		{4.2f, 1.1f, 0.1f}
-	}));
+		}));
 
 	TableMatrix<double> m1({
 		{0, 0},
 		{0, 0},
-	});
+		});
 
 	TableMatrix<double> m2(2, 2);
 	CHECK(m1 == m2);
