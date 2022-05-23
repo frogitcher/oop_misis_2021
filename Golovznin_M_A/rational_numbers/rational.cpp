@@ -78,8 +78,7 @@ Rational &Rational::operator/=(const Rational &rhs) {
 //знак
 
 Rational Rational::operator-() {
-    num *= -1;
-    return Rational(*this);
+    return Rational(-num, denum);
 }
 
 Rational Rational::operator+() {
