@@ -4,8 +4,8 @@ project(project)
 
 add_executable(
         main
-        main.cpp
-        hello_world.h
+        dyn_array.cpp
+        dyn_array.h
 )
 
 add_executable(
