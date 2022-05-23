@@ -12,7 +12,6 @@ public:
         Node* next = nullptr;
         T value;
         explicit Node(const Node* from);
-        Node(Node* _next, T _value);
     };
 
     Stack() = default;
@@ -45,16 +44,6 @@ private:
     Node* head = nullptr;
     Node* tail = nullptr;
 };
-
-template<typename T>
-inline Stack<T>::Node::Node(const Node * from)
-{
-    value = from->value;
-    if (from->next == nullptr) {
-        return;
-    }
-    next = new Node(from->next);
-}
 
 template<typename T>
 Stack<T>::Node::Node(Node* _next, T _value) : next(_next), value(_value)
@@ -105,8 +94,7 @@ void Stack<T>::Push(const T& value) {
         tail = head;
     }
     else {
-        tail->next = new Node{ nullptr, value };
-        tail = tail->next;
+        head = new Node{ head, value };
     }
     ++size;
 }
@@ -123,12 +111,9 @@ void Stack<T>::Pop() {
         --size;
         return;
     }
-    Node* curNode = head;
-    while (curNode->next != tail) {
-        curNode = curNode->next;
-    }
-    delete tail;
-    tail = curNode;
+    Node* newHead = head->next;
+    delete head;
+    head = newHead;
     --size;
 }
 
@@ -137,7 +122,7 @@ T& Stack<T>::Get() const {
     if (size == 0) {
         throw std::out_of_range("Cannot get element from an empty stack");
     }
-    return tail->value;
+    return head->value;
 }
 
 template<typename T>
@@ -163,11 +148,12 @@ void Stack<T>::Merge(Stack<T>& st) {
         return;
     }
 
-    Node* curNode = st.head;
-    while (curNode != nullptr) {
-        Push(curNode->value);
-        curNode = curNode->next;
-    }
+    tail->next = st.head;
+    tail = st.tail;
+    st.head = nullptr;
+    st.tail = nullptr;
+    size += st.size;
+    st.size = 0;
 }
 
 template<typename T>
@@ -230,6 +216,7 @@ bool Stack<T>::operator==(const std::initializer_list<T>& list) const
         if (curNode->value != elem) {
             return false;
         }
+        curNode = curNode->next;
     }
     return true;
 }
@@ -249,11 +236,10 @@ bool Stack<T>::operator!=(const std::initializer_list<T>& list) const
 template<typename T>
 void Stack<T>::CopyFromOth(const Stack<T>& oth)
 {
-    Clear();
     if (oth.size == 0) {
         return;
     }
-    Node* curNode = oth.head;
+    Node* curNode = oth.tail;
     while (curNode != nullptr) {
         Push(curNode->value);
         curNode = curNode->next;
