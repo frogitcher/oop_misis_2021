@@ -1,7 +1,9 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "doctest.h"
 #include "Stack.h"
-#include "Stack.cpp"
+#include <iostream>
+#include "Stack.h"
+#include <initializer_list>
 
 TEST_CASE_TEMPLATE("Test template initialization", type, int, long, long long, char, unsigned int) {
 	Stack<type> st;
