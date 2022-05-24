@@ -5,7 +5,7 @@ public:
 	rational() = default;
 	rational(int _num);
 	rational(int _num, int _den);
-	rational(const rational& r);
+	rational(const rational& other);
 	~rational() = default;
 
 	rational& operator=(const rational& rhs);
