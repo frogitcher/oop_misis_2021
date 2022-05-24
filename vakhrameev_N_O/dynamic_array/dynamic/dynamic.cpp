@@ -113,6 +113,7 @@ void Dynamic_array::assign(size_t n, int value)
 }
 void Dynamic_array::clear()
 {
+    delete[] data;
     size = 0;
 }
 
@@ -179,62 +180,52 @@ bool Dynamic_array::operator!=(const Dynamic_array& other) const
 
 bool Dynamic_array::operator>=(const Dynamic_array& other) const
 {
-    std::string data1 = "";
-    std::string data2 = "";
-    for (int i = 0;i < size;i++)
+    for (int i = 0;i < std::min(other.size, size);i++)
     {
-        data1 += std::to_string(data[i]);
+        if (data[i] == other.data[i])
+        {
+            continue;
+        }
+        if (data[i] >= other.data[i])
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
-    for (int i = 0;i < other.size;i++)
-    {
-        data2 += std::to_string(other.data[i]);
-    }
-    return data1 >= data2;
+    return size >= other.size;
 }
 
 bool Dynamic_array::operator<=(const Dynamic_array& other) const
 {
-    std::string data1 = "";
-    std::string data2 = "";
-    for (int i = 0;i < size;i++)
+    for (int i = 0;i < std::min(other.size, size);i++)
     {
-        data1 += std::to_string(data[i]);
+        if (data[i] == other.data[i])
+        {
+            continue;
+        }
+        if (data[i] <= other.data[i])
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
-    for (int i = 0;i < other.size;i++)
-    {
-        data2 += std::to_string(other.data[i]);
-    }
-    return data1 <= data2;
+    return size <= other.size;
 }
 
 bool Dynamic_array::operator>(const Dynamic_array& other) const
 {
-    std::string data1 = "";
-    std::string data2 = "";
-    for (int i = 0;i < size;i++)
-    {
-        data1 += std::to_string(data[i]);
-    }
-    for (int i = 0;i < other.size;i++)
-    {
-        data2 += std::to_string(other.data[i]);
-    }
-    return data1 > data2;
+    return !(Dynamic_array(*this) <= other);
 }
 
 bool Dynamic_array::operator<(const Dynamic_array& other) const
 {
-    std::string data1 = "";
-    std::string data2 = "";
-    for (int i = 0;i < size;i++)
-    {
-        data1 += std::to_string(data[i]);
-    }
-    for (int i = 0;i < other.size;i++)
-    {
-        data2 += std::to_string(other.data[i]);
-    }
-    return data1 < data2;
+    return !(Dynamic_array(*this) >= other);
 }
 std::ostream& operator<<(std::ostream &os,Dynamic_array &other)
 {
