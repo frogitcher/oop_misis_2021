@@ -20,8 +20,8 @@ class DynamicArray {
 	void clear();
 	void erase(int64_t index);
 	void resize(int64_t newsize);
-	int* begin();
-	int* end();
+	int* begin() const;
+	int* end() const;
 	void swap(DynamicArray& other);
 	void assign(int64_t new_size, int value);
 	bool operator==(const DynamicArray& other) const;

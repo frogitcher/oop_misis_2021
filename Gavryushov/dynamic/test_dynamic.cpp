@@ -26,8 +26,8 @@ TEST_CASE("Everything")
        CHECK(c[i-1]==d[i-1]);
        CHECK(&c[i-1]==(c.begin()+i-1));
    }
-   CHECK_THROWS_WITH(d[4],"Index out of range");
-   CHECK_THROWS_WITH(d[-1],"Index out of range");
+   CHECK_THROWS_WITH(d.at(4),"Index out of range");
+   CHECK_THROWS_WITH(d.at(-1),"Index out of range");
    CHECK(d.Capacity()==c.Capacity());
    d.push_back(5);
    CHECK(d.Capacity()>=d.Size());

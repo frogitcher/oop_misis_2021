@@ -93,11 +93,11 @@ void DynamicArray::resize(int64_t new_size){
     size = new_size;
 }
 
-int* DynamicArray::begin(){
+int* DynamicArray::begin() const{
     return data;
 }
 
-int* DynamicArray::end(){
+int* DynamicArray::end() const{
     return data+size;
 }
 
@@ -144,10 +144,7 @@ void DynamicArray::insert(int64_t index, int value){
         throw "Array out of range";
     }
     resize(size+1);
-    for (int i=size-1;i>index;i--){
-        data[i] = data[i-1];
-    }
-    //std::copy(data+index,data+size-1,data+index+1);
+    std::copy_backward(data+index,data+size-1,data+index+1);
     data[index] = value;
 }
 void DynamicArray::push_back(int value){
