@@ -6,9 +6,10 @@ class Dynamic {
 private:
 	size_t capacity = 0;
 	size_t size = 0;
-	int* data;
+	int* data = new int[0];
 public:
-	Dynamic(size_t _size=0, int value = 0);
+	Dynamic()=default;
+	Dynamic(size_t _size, int value = 0);
 	Dynamic(const Dynamic& other);
 	Dynamic(const std::initializer_list <int>& list);
 	~Dynamic();
@@ -33,10 +34,6 @@ public:
 
 	bool operator ==(const Dynamic& other) const;
 	bool operator !=(const Dynamic& other) const;
-	bool operator <=(const Dynamic& other) const;
-	bool operator >=(const Dynamic& other) const;
-	bool operator <(const Dynamic& other) const;
-	bool operator >(const Dynamic& other) const;
 
 	Dynamic& operator=(const Dynamic& other);
 
