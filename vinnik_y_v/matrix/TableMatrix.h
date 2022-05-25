@@ -233,7 +233,7 @@ TableMatrix<T>& TableMatrix<T>::operator/=(const double num)
 }
 
 template<typename T>
-TableMatrix<T>& TableMatrix<T>::operator/(const double num) const
+TableMatrix<T> TableMatrix<T>::operator/(const double num) const
 {
 	return TableMatrix<T>(*this) /= num;
 }
