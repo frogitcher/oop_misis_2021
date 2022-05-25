@@ -20,8 +20,8 @@ public:
     void insert(int64_t index, int value);
     void swap(DynamicArray& other);
     //указатели
-    inline int* begin(){return data;};
-    inline int* end(){return data + size;};
+    inline int* begin() const {return data;};
+    inline int* end() const {return data + size;};
     // операторы
     DynamicArray& operator=(const DynamicArray& rhs);
     int& operator[](int64_t i) const;
@@ -32,13 +32,13 @@ public:
     inline int64_t Capacity() const{return capacity;};
     inline bool Empty() const { return size == 0;}
     inline int* GetData() const { return data;}
-    inline friend void Reallocate(DynamicArray& _da, int64_t new_size) {
+    inline void Reallocate(DynamicArray& _da, int64_t new_size) {
             _da.reallocate(new_size);
         }
 private:
     int64_t size = 0;
     int64_t capacity = 0;
-    int* data;
+    int *data;
     void reallocate(int64_t new_capacity);
 };
 

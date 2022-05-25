@@ -41,7 +41,7 @@ void DynamicArray::push_back(int value){
         if (capacity == 0){
             capacity = 1;
         }
-        reallocate(size);
+        reallocate(capacity);
     }
     data[size++] = value;
 };
@@ -58,10 +58,8 @@ void DynamicArray::erase(int64_t index){
     if (size == 0) {
         throw std::length_error("Array is empty!");
     }
-    for (int64_t i = index; i < size - 1; ++i) {
-        data[i] = data[i + 1];
-    }
-    --size;
+    std::copy(begin() + index + 1, end(),begin() + index) ;
+    size--;
 };
 void DynamicArray::assign(int64_t new_size, int value){
     if (new_size < 0) {
@@ -83,16 +81,17 @@ void DynamicArray::swap(DynamicArray& other){
     std::swap(data, other.data);
 };
 void DynamicArray::insert(int64_t index, int value){
+    if (size == 0) {
+        throw std::length_error("Array is empty!");
+    }
     if (size == capacity){
         if (capacity == 0){
             capacity = 1;
         }
-        reallocate(size);
+        reallocate(capacity);
     }
     ++size;
-    for(int64_t i = index + 1; i < size; i++){
-        data[i] = data[i - 1];
-    }
+    std::copy_backward(begin() + index, end() , end() + 1);
     data[index] = value;
 };
 //операторы
@@ -106,7 +105,7 @@ int& DynamicArray::at(int64_t i) const{
     return *(data + i);    
 }; 
 bool DynamicArray::operator==(const DynamicArray& other) const{
-    return std::equal<int*, int*>(data, data + size, other.data);
+    return (size == other.size && std::equal<int*, int*>(data, data + size, other.data));
 };
 bool DynamicArray::operator!=(const DynamicArray& other) const{
     return !(*this == other);
@@ -117,12 +116,12 @@ DynamicArray& DynamicArray::operator=(const DynamicArray& rhs){
     std::copy(rhs.data, rhs.data + rhs.size, data);
     return *this;
 };
-void DynamicArray::reallocate(int64_t new_size) {
-    int new_capacity = std::max(new_size, size * 2);
-        int *new_data = new int[new_capacity];
+void DynamicArray::reallocate(int64_t new_capacity) {
+    int _new_capacity = std::max(new_capacity, size * 2);
+        int *new_data = new int[_new_capacity];
         std::copy(begin(), end(), new_data);
         delete[] data;
         data = new_data;
-        capacity = new_capacity;
+        capacity = _new_capacity;
 };
 
