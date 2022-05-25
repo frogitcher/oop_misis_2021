@@ -74,7 +74,7 @@ public:
 		std::swap(size, st.size);
 	}
 
-	bool operator==(const Stack<T>& st) {
+	bool operator==(const Stack<T>& st) const{
 		if (size != st.size) {
 			return false;
 		}
@@ -92,7 +92,7 @@ public:
 		return true;
 	}
 
-	bool operator!=(const Stack<T>& st) {
+	bool operator!=(const Stack<T>& st) const{
 		return (!(*this == st));
 	}
 
