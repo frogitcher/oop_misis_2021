@@ -1,0 +1,1 @@
+add_executable(dynamicarray_test dynamicarray_test.cpp dynamicarray.cpp doctest.h dynamicarray.h)
