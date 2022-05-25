@@ -174,7 +174,7 @@ FlatMatrix<T>& FlatMatrix<T>::operator/=(const double num)
 }
 
 template<typename T>
-FlatMatrix<T>& FlatMatrix<T>::operator/(const double num) const
+FlatMatrix<T> FlatMatrix<T>::operator/(const double num) const
 {
 	return FlatMatrix<T>(*this) /= num;
 }
