@@ -60,7 +60,7 @@ public:
 	TableMatrix<T> operator*(const double num) const noexcept;
 
 	TableMatrix<T>& operator/=(const double num);
-	TableMatrix<T>& operator/(const double num) const;
+	TableMatrix<T> operator/(const double num) const;
 
 	bool operator==(const TableMatrix<T>& oth) const noexcept;
 	bool operator==(const FlatMatrix<T>& oth) const noexcept;
@@ -109,7 +109,7 @@ public:
 	FlatMatrix<T> operator*(const double num) const noexcept;
 
 	FlatMatrix<T>& operator/=(const double num);
-	FlatMatrix<T>& operator/(const double num) const;
+	FlatMatrix<T> operator/(const double num) const;
 
 	bool operator==(const TableMatrix<T>& oth) const noexcept;
 	bool operator==(const FlatMatrix<T>& oth) const noexcept;
