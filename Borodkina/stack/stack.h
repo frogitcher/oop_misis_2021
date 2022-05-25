@@ -47,6 +47,7 @@ void Stack<T>::Clear()
 template <typename T>
 Stack<T>::Stack(const Stack<T>& stack)
 {
+    Clear();
     *this=stack;
 }
 template <typename T>
