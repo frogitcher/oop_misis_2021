@@ -2,12 +2,13 @@
 dinmas::dinmas() {
 	data = NULL;
 	size = 0;
+	capacity = 0;
 }
-dinmas::dinmas(size_t size, int value) {
+dinmas::dinmas(size_t size_, int value) {
+	size = size_;
+	capacity = size_;
 	data = new int[size];
-	for (int i = 0; i < size; i++) {
-		data[i] = value;
-	}
+	std::fill(data, data + size, value);
 }
 dinmas::dinmas(const dinmas& other) {
 	size = other.size;
@@ -40,21 +41,26 @@ int& dinmas::at(size_t i) const {
 	return *(data + i);
 }
 void dinmas::Resize(size_t new_size) {
-	if (new_size <= capacity) {
-		return;
+	if (new_size > size) {
+		capacity = new_size * 2 + 1;
+		int* newArr = new int[capacity];
+		for (int i = 0; i < new_size; i++) {
+			if (i < size) {
+				newArr[i] = data[i];
+			}
+			else {
+				newArr[i] = 0;
+			}		
+		}
+		delete[] data;
+		data = newArr;
+		size = new_size;
 	}
-	capacity = new_size * 2 + 1;
-	int* newArr = new int[capacity];
-	for (int i = 0; i < size; i++) {
-		newArr[i] = data[i];
-	}
-	delete[] data;
-	data = newArr;
+	size = new_size;
 }
 void dinmas::push_back(int value) {
 	Resize(size + 1);
-	(*this)[size] = value;
-	size++;
+	(*this)[size - 1] = value;
 }
 void dinmas::Clear() {
 	size = 0;
@@ -66,37 +72,21 @@ void dinmas::Erase(size_t index) {
 	if (index > size) {
 		throw "Out of range";
 	}
-	int* newArr = new int[size - 1];
-	int flag = 0;
-	for (int i = 0; i < size - 1; i++) {
-		if (i == index) {
-			flag = 1;
-			newArr[i] = data[i + 1];
-		}
-		else {
-			if (flag == 0) {
-				newArr[i] = data[i];
-			}
-			else {
-				newArr[i] = data[i + 1];
-			}
-		}
+	for (int i = index; i < size; ++i) {
+		data[i] = data[i + 1];
 	}
-	size--;
-	delete[] data;
-	data = newArr;
+	--size;
 }
 void dinmas::assign(size_t new_size, int value) {
 	Resize(new_size);
 	for (int i = 0; i < new_size; i++) {
 		(*this)[i] = value;
 	}
-	size = new_size;
 }
-int* dinmas::begin() {
+int* dinmas::begin() const {
 	return data;
 }
-int* dinmas::end() {
+int* dinmas::end() const {
 	return data + size;
 }
 void dinmas::swap(dinmas& other) {
@@ -108,14 +98,7 @@ void dinmas::pop_back() {
 	if (size == 0) {
 		throw "Array size 0";
 	}
-	int* newArr = new int[size - 1];
-	int flag = 0;
-	for (int i = 0; i < size - 1; i++) {
-		newArr[i] = data[i];
-	}
-	size--;
-	delete[] data;
-	data = newArr;
+	--size;
 }
 void dinmas::insert(const int index, const int value) {
 	if (size < 0) {
@@ -125,11 +108,10 @@ void dinmas::insert(const int index, const int value) {
 		throw "Out of range";
 	}
 	Resize(size + 1);
-	for (int i = size; i > index; i--) {
+	for (int i = size - 1; i > index; i--) {
 		(*this)[i] = (*this)[i - 1];
 	}
 	(*this)[index] = value;
-	size++;
 }
 size_t dinmas::Size() const {
 	return size;
@@ -162,9 +144,19 @@ bool dinmas::operator!=(const dinmas& r) const {
 }
 void dinmas::operator= (const dinmas& other) {
 	size = other.size;
-	capacity = other.capacity;
-	data = new int[other.capacity];
-	for (int i = 0; i < other.size; i++) {
-		data[i] = other.data[i];
+	if (other.size > capacity) {
+		capacity = other.capacity;
+		int* newArr = new int[other.capacity];
+		for (int i = 0; i < other.size; i++) {
+			newArr[i] = other.data[i];
+		}
+		delete[] data;
+		data = newArr;
+	}
+	else {
+		capacity = other.capacity;
+		for (int i = 0; i < other.size; i++) {
+			data[i] = other.data[i];
+		}
 	}
 }
