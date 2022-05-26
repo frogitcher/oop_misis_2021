@@ -7,19 +7,18 @@ DynamicArray::DynamicArray(int64_t _size, int value = 0)
         : size(_size) {
     data = new int[size];
     std::fill(data, data + size, value);
-
-    change_array(data, size);
+    capacity = _size;
 }
 
 DynamicArray::DynamicArray(const DynamicArray &other) {
-    change_array(other.getData(), other.getSize());
+    change_array(other.data, other.size);
 }
 
 DynamicArray::DynamicArray(const std::initializer_list<int> &list) {
-    int *new_data = new int[list.size()];
-    std::copy(list.begin(), list.end(), new_data);
-
-    change_array(new_data, list.size());
+    data = new int[list.size()];
+    std::copy(list.begin(), list.end(), data);
+    size = list.size();
+    capacity = size * 2;
 }
 
 DynamicArray::~DynamicArray() {
@@ -96,13 +95,13 @@ void DynamicArray::resize(int64_t new_size) {
 }
 
 void DynamicArray::assign(int64_t new_size, int value) {
-    if(new_size < 0) {
+    if (new_size < 0) {
         throw std::length_error("Array length can't be negative");
     }
 
     int *new_data = new int[new_size];
 
-    for(int i = 0; i < size; ++i) {
+    for (int i = 0; i < size; ++i) {
         new_data[i] = data[i];
     }
 
@@ -112,16 +111,22 @@ void DynamicArray::assign(int64_t new_size, int value) {
 }
 
 void DynamicArray::insert(int64_t index, int value) {
-    int *new_data = new int[size + 1];
-    int x = 0;
-    for (int i = 0; i <= getSize(); ++i) {
-        if (i == index) {
-            new_data[x++] = value;
+    if (index > size || index < 0) {
+        throw std::out_of_range("Index was outside of bounds of an array");
+    } else if (index == size) {
+        push_back(value);
+    } else {
+        int *new_data = new int[size + 1];
+        int x = 0;
+        for (int i = 0; i <= getSize(); ++i) {
+            if (i == index) {
+                new_data[x++] = value;
+            }
+            new_data[x++] = getData()[i];
         }
-        new_data[x++] = getData()[i];
+        change_array(new_data, size + 1);
     }
 
-    change_array(new_data, size + 1);
 }
 
 void DynamicArray::swap(DynamicArray &other) {
@@ -131,7 +136,7 @@ void DynamicArray::swap(DynamicArray &other) {
 }
 
 int &DynamicArray::at(int64_t i) const {
-    if (i >= getSize()) {
+    if (i >= getSize() || i < 0) {
         throw std::out_of_range("Index was outside of bounds of an array");
     }
     return *(data + i);
@@ -150,17 +155,24 @@ int *DynamicArray::end() const {
 // операторы
 
 int &DynamicArray::operator[](int64_t i) const {
-    return at(i);
+    return *(data + i);
 }
 
 DynamicArray &DynamicArray::operator=(const DynamicArray &rhs) {
-    if(this == &rhs) {
+    if (this == &rhs) {
         return *this;
     }
 
-    size = rhs.getSize();
-    capacity = rhs.getCapacity();
-    std::copy(rhs.data, rhs.data + rhs.size, data);
+    int* newData = new int[rhs.size];
+    std::copy(rhs.data, rhs.data + rhs.size, newData);
+    delete data;
+    data = newData;
+
+    if(rhs.size > capacity) {
+        capacity = rhs.size * 2;
+    }
+
+    size = rhs.size;
 
     return *this;
 }
@@ -168,11 +180,7 @@ DynamicArray &DynamicArray::operator=(const DynamicArray &rhs) {
 bool DynamicArray::operator==(const DynamicArray &rhs) const {
     if (size != rhs.getSize()) { return false; }
 
-    for(int i = 0; i < size; ++i) {
-        if(data[i] != rhs.getData()[i]) {
-            return false;
-        }
-    }
+    std::equal(data, data + size, rhs.data);
 
     return true;
 }
@@ -188,9 +196,7 @@ void DynamicArray::change_array(int *new_data, int64_t new_size) {
         capacity = 1;
     }
 
-    while (capacity < new_size) {
-        capacity *= 2;
-    }
+    capacity = new_size * 2;
 
     int *tmp_data = new int[capacity];
     std::copy(new_data, new_data + new_size, tmp_data);

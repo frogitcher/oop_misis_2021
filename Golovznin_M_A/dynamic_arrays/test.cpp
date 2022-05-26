@@ -14,7 +14,6 @@ TEST_CASE("Testing dynamic array class") {
 
     DynamicArray c(b);
     CHECK(c.getSize() == b.getSize());
-    CHECK(c.getCapacity() == b.getCapacity());
     for (int64_t i = 0; i < b.getSize(); ++i) {
         CHECK(&(c[i]) == (c.begin() + i));
         CHECK(c[i] == b[i]);
