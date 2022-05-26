@@ -8,7 +8,7 @@ Dynamic::Dynamic(size_t _size, int value) :size(_size),capacity(_size), data(new
 Dynamic::Dynamic(const Dynamic& other) :size(other.size), capacity(other.capacity), data(new int[other.size]) {
 	std::copy(other.data, other.data + other.size, data);
 }
-Dynamic::Dynamic(const std::initializer_list <int>& list) : size(list.size()), capacity(list.size()), data(new int[list.size()]){
+Dynamic::Dynamic(const std::initializer_list <int>& list) : size(list.size()), capacity(list.size()), data(new int[other.capacity]){
 	std::copy(list.begin(), list.end(), data);
 }
 Dynamic::~Dynamic() {
@@ -26,15 +26,12 @@ bool Dynamic::Empty() const {
 
 int& Dynamic::operator[](size_t i)const
 {
-	if (i > size) {
-		throw std::out_of_range("You Fуck");
-	}
 	else {
 		return *(data + i);
 	}
 }
 int& Dynamic::at(size_t i) const{
-	if (i > size) {
+	if (i >= size) {
 		throw std::out_of_range("You went out of the array");
 	}
 	else {
@@ -76,15 +73,17 @@ void Dynamic::insert(size_t index, int value){
 		std::copy(data, data + capacity, new_data);
 		delete[] data;
 		data = new_data;
-		capacity *= 2;
+		capacity *= 2+1;
 	}
-	std::copy(data + index, data + size, data + index + 1);
+	std::copy_backward(data + index, data + size + 1, data + size);
 	++size;
 	data[index] = value;
 }
 void Dynamic::assign(size_t new_size, int value) {
-	if (size < new_size) {
-		data = new int[new_size];
+	if (capacity < new_size) {
+		delete[] data;
+		capacity=new_size*2+1;
+		data = new int[capacity];
 		std::fill(data, data + new_size, value);
 		size = new_size;
 	}
@@ -94,11 +93,14 @@ void Dynamic::assign(size_t new_size, int value) {
 }
 void Dynamic::resize(size_t new_size) {
 	if (new_size > size) {
-		capacity += new_size;
-		int* new_data = new int[new_size];
-		std::copy(data, data + size, new_data);
-		delete[] data;
-		data = new_data;
+		if(new_size>capacity){
+			capacity=new_size*2+1;
+			int* new_data = new int[capacity];
+			std::copy(data, data + size, new_data);
+			delete[] data;
+			data=new_data;
+			delete[] new_data;
+		}
 		std::fill(data + size, data + new_size, 0);
 		size = new_size;
 	}
@@ -119,17 +121,10 @@ int* Dynamic::end() {
 	return (data+size);
 }
 bool Dynamic::operator==(const Dynamic& other) const{
-	bool b = false;
-	if (size == other.size) {
-		b = true;
-		for (int i = 0;i < size;i++) {
-			if (data[i] != other.data[i]) {
-				b = false;
-				break;
-			}
-		}
+	if (size==other.size){
+		return (std::equal (data, data+size, other.data));
 	}
-	return b;
+	return false ;
 }
 bool Dynamic::operator !=(const Dynamic& other) const {
 	return !(*this == other);
