@@ -21,8 +21,8 @@ public:
 	void Erase(size_t index);
 	void Resize(size_t newsize);
 	void assign(size_t new_size, int value);
-	int* begin();
-	int* end();
+	int* begin() const;
+	int* end() const;
 	void swap(dinmas& other);
 	void pop_back();
 	void insert(const int index, const int value);
