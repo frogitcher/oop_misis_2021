@@ -1,5 +1,4 @@
 #include <stdexcept>
-#include "Stack.h"
 
 template <typename T>
 Stack<T>::Stack(const Stack <T>& rhs)
@@ -13,8 +12,6 @@ Stack<T>::Stack(Stack <T>&& rhs)
     head = rhs.head;
     tail = rhs.tail;
     size = rhs.size;
-
-    rhs.Clear();
     rhs.head = nullptr;
     rhs.tail = nullptr;
     rhs.size = 0;
@@ -113,10 +110,16 @@ template <typename T>
 Stack<T>& Stack<T>::operator=(const Stack<T>& rhs)
 {
     Clear();
-    head = rhs.head;
-    for (Node* pointer = rhs.head; pointer != nullptr; pointer = pointer->next)
+    Node* prev_pointer = nullptr;
+    head = new Node{rhs.head -> value, rhs.head -> next};
+    tail = head;
+    prev_pointer = head;
+    ++size;
+    for (Node* pointer = rhs.head -> next; pointer != nullptr; pointer = pointer->next)
     {
+        prev_pointer -> next = pointer;
         tail = new Node{pointer -> value, pointer -> next};
+        prev_pointer = tail;
         ++size;
     }
     return *this;
@@ -133,7 +136,7 @@ bool Stack<T>::operator==(const Stack<T>& rhs) const
     Node* pointer2 = rhs.head;
     for (; pointer1 != nullptr; pointer1 = pointer1->next, pointer2 = pointer2->next)
     {
-        if ((pointer1->value != pointer2->value))
+        if (pointer1->value != pointer2->value)
         {
             return false;
         }
@@ -146,5 +149,8 @@ bool Stack<T>::operator!=(const Stack<T>& rhs) const
 {
     return !(*this == rhs);
 }
+
+
+
 
 
