@@ -7,6 +7,7 @@ public:
     Rational(int _num, int _den);
     Rational(const Rational& other);
     ~Rational() = default;
+    Rational& operator=(const Rational& other);
 
     bool operator<(const Rational& rhs) const;
     bool operator<=(const Rational& rhs) const;
@@ -20,10 +21,10 @@ public:
     Rational operator/(const Rational& rhs) const;
     Rational operator*(const Rational& rhs) const;
 
-    Rational operator+=(const Rational& rhs);
-    Rational operator-=(const Rational& rhs);
-    Rational operator*=(const Rational& rhs);
-    Rational operator/=(const Rational& rhs);
+    Rational& operator+=(const Rational& rhs);
+    Rational& operator-=(const Rational& rhs);
+    Rational& operator*=(const Rational& rhs);
+    Rational& operator/=(const Rational& rhs);
 
     Rational operator-();
     Rational operator+();

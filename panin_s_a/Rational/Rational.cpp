@@ -13,14 +13,18 @@ Rational::Rational(int _num): num(_num), den(1)
 
 Rational::Rational(int _num, int _den): num(_num), den(_den)
 {
-    if (_den == 0)
-        throw std::invalid_argument("denominator must not be equal to zero");
     Normalize();
 }
 
-Rational::Rational(const Rational& other): num(other.GetNumerator()), den(other.GetDenominator())
+Rational::Rational(const Rational& other): num(other.num), den(other.den)
 {
-    Normalize();
+}
+
+Rational& Rational::operator=(const Rational& other)
+{
+    num = other.num;
+    den = other.den;
+    return *this;
 }
 
 int gcd(int a, int b) {
@@ -45,70 +49,69 @@ int lcm(int a, int b) {
 // boolean operations
 
 bool Rational::operator<(const Rational& rhs) const{
-    return (num*rhs.GetDenominator() < den*rhs.GetNumerator());
+    return (num*rhs.den < den*rhs.num);
 }
 
 bool Rational::operator<=(const Rational& rhs) const{
-    return (num*rhs.GetDenominator() <= den*rhs.GetNumerator());
+    return (num*rhs.den <= den*rhs.num);
 }
 
 bool Rational::operator>(const Rational& rhs) const{
-    return (num*rhs.GetDenominator() > den*rhs.GetNumerator());
+    return !(*this <= rhs);
 }
 
 bool Rational::operator>=(const Rational& rhs) const{
-    return (num*rhs.GetDenominator() >= den*rhs.GetNumerator());
+    return !(*this < rhs);
 }
 
 bool Rational::operator==(const Rational& rhs) const{
-    return (num*rhs.GetDenominator() == den*rhs.GetNumerator());
+    return (num*rhs.den == den*rhs.num);
 }
 
 bool Rational::operator!=(const Rational& rhs) const{
-    return (num*rhs.GetDenominator() != den*rhs.GetNumerator());
+    return !(*this == rhs);
 }
 
 // ariphmetic operations
 
 Rational Rational::operator+(const Rational& rhs) const{
-    int common = lcm(GetDenominator(), rhs.GetDenominator());
-    int numerator = GetNumerator()*(common/GetDenominator()) + rhs.GetNumerator()*(common/rhs.GetDenominator());
+    int common = lcm(den, rhs.den);
+    int numerator = num*(common/den) + rhs.num*(common/rhs.den);
     return Rational(numerator, common);
 }
 
 Rational Rational::operator-(const Rational& rhs) const {
-    return Rational(*this + Rational(-rhs.GetNumerator(), rhs.GetDenominator()));
+    return Rational(*this + Rational(-rhs.num, rhs.den));
 }
 
 Rational Rational::operator*(const Rational& rhs) const {
-    int common = lcm(GetDenominator(), rhs.GetDenominator());
-    int numerator = GetNumerator() * rhs.GetNumerator();
-    int denumerator = GetDenominator() * rhs.GetDenominator();
-    return Rational(numerator, denumerator);
+    int numerator = num * rhs.num;
+    int denumerator = den * rhs.den;
+    return (Rational(numerator, denumerator));
 }
 
 Rational Rational::operator/(const Rational& rhs) const {
-    return Rational(*this * Rational(rhs.GetDenominator(), rhs.GetNumerator()));
+    return Rational(*this * Rational(rhs.den, rhs.num));
 }
 
 
 
-Rational Rational::operator+=(const Rational& rhs) {
+Rational& Rational::operator+=(const Rational& rhs) {
     *this = Rational(*this + rhs);
     return *this;
 }
 
-Rational Rational::operator-=(const Rational& rhs){
+Rational& Rational::operator-=(const Rational& rhs){
     *this = Rational(*this - rhs);
     return *this;
 }
 
-Rational Rational::operator*=(const Rational& rhs){
+Rational& Rational::operator*=(const Rational& rhs){
     *this = Rational(*this * rhs);
     return *this;
 }
 
-Rational Rational::operator/=(const Rational& rhs){
+Rational& Rational::operator/=(const Rational& rhs){
     *this = Rational(*this / rhs);
     return *this;
 }
@@ -116,11 +119,11 @@ Rational Rational::operator/=(const Rational& rhs){
 
 
 Rational Rational::operator-() {
-    return Rational(-GetNumerator(), GetDenominator());
+    return Rational(-num, den);
 }
 
 Rational Rational::operator+() {
-    return (*this);
+    return Rational(*this);
 }
 
 Rational& Rational::operator++() {
@@ -147,10 +150,12 @@ Rational Rational::operator--(int){
 
 // functional
 void Rational::Normalize() {
-    int g = gcd(GetNumerator(), GetDenominator());
-    int sign = GetDenominator() / std::abs(GetDenominator());
-    SetNumerator(GetNumerator()*sign/g);
-    SetDenominator(GetDenominator()*sign/g);
+    if (den == 0)
+        throw std::invalid_argument("denominator must not be equal to zero");
+    int g = gcd(num, den);
+    int sign = den / std::abs(den);
+    den = den * sign / g;
+    num = num * sign / g;
 }
 
 int Rational::GetDenominator() const{
@@ -163,6 +168,7 @@ int Rational::GetNumerator() const{
 
 void Rational::SetDenominator(int val) {
     den = val;
+    Normalize();
 }
 
 void Rational::SetNumerator(int val) {
