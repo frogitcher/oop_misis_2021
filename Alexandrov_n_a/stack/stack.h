@@ -64,9 +64,11 @@ Stack<T>::Stack(const Stack<T>& other) {
     Node* other_head_2 = other.head;
     for (int i = 0; i < other.Size(); i++) {            
         other_head_2 = other_head_2->next;
-        head = new Node{ other.head->value, head };
+        head_2->next = new Node{ other.head->value, nullptr };
+        head_2 = head_2->next;
     }
     size = other.size;
+    tail = head_2;
 }
 template<typename T>
 Stack<T>::Stack(Stack<T>&& other) {
@@ -140,13 +142,14 @@ bool Stack<T>::operator!= (const Stack<T>& other) const {
 }
 template<typename T>
 void Stack<T>::operator= (const Stack<T>& other) {
-    size = other.size;
-    head = other.head;
-    tail = other.tail;
+    *this = Stack<T> New_stack(other);
 }
 template<typename T>
 void Stack<T>::merge(Stack<T>& other) {
-    tail = other.tail;
     tail->next = other.head;
+    tail = other.tail;  
     size += other.size;
+    other.size = 0;
+    other.head = nullptr;
+    other.tail = nullptr;
 }
