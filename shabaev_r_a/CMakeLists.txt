@@ -25,5 +25,8 @@ add_subdirectory(hello_world)
 
 
 add_subdirectory(rational)
+add_subdirectory(stack)
+add_subdirectory(hello_world)
+add_subdirectory(dinamic_array)
 
 
