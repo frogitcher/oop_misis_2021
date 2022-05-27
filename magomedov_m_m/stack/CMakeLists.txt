@@ -19,10 +19,6 @@ ExternalProject_Get_Property(doctest source_dir)
 set(DOCTEST_INCLUDE_DIR ${source_dir}/doctest CACHE INTERNAL "Path to include folder for doctest")
 include_directories(${DOCTEST_INCLUDE_DIR})
 
-add_executable( main 
-	stack.cpp 
-	stack.h
-)
 add_executable( test 
 	test.cpp 
 	stack.cpp 
