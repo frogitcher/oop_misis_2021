@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.12.1)
+
+project(project)
+
+add_executable(stack stack.cpp stack.h)
+add_executable (test test.cpp)
