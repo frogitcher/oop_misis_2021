@@ -31,7 +31,7 @@ public:
 
     int64_t getSize() const;
 
-    T getValue() const;
+    T& getValue() const;
 
     bool empty() const;
 
@@ -106,7 +106,9 @@ T Stack<T>::pop() {
     }
 
     T value = head->value;
-    head = head->next;
+    Node* headNext = head->next;
+    delete head;
+    head = headNext;
     --size;
 
     return value;
@@ -118,7 +120,7 @@ int64_t Stack<T>::getSize() const {
 }
 
 template<typename T>
-T Stack<T>::getValue() const {
+T& Stack<T>::getValue() const {
     if (empty()) throw std::invalid_argument("Stack is empty");
 
     return head->value;
@@ -145,6 +147,10 @@ void Stack<T>::merge(Stack<T> &rhs) {
         tail->next = rhs.head;
         tail = rhs.tail;
         size += rhs.size;
+
+        rhs.head = nullptr;
+        rhs.tail = nullptr;
+        rhs.size = 0;
 
     }
 }
