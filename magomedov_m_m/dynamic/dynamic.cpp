@@ -8,7 +8,7 @@ Dynamic::Dynamic(size_t _size, int value) :size(_size),capacity(_size), data(new
 Dynamic::Dynamic(const Dynamic& other) :size(other.size), capacity(other.capacity), data(new int[other.size]) {
 	std::copy(other.data, other.data + other.size, data);
 }
-Dynamic::Dynamic(const std::initializer_list <int>& list) : size(list.size()), capacity(list.size()), data(new int[other.capacity]){
+Dynamic::Dynamic(const std::initializer_list <int>& list) : size(list.size()), capacity(list.size()), data(new int[list.size]){
 	std::copy(list.begin(), list.end(), data);
 }
 Dynamic::~Dynamic() {
@@ -26,9 +26,7 @@ bool Dynamic::Empty() const {
 
 int& Dynamic::operator[](size_t i)const
 {
-	else {
-		return *(data + i);
-	}
+	return *(data + i);
 }
 int& Dynamic::at(size_t i) const{
 	if (i >= size) {
@@ -58,10 +56,8 @@ void Dynamic::pop_back() {
 }
 void Dynamic::clear() {
 	size = 0;
-	int* new_data = new int[0];
-	delete[] data;
-	data = new_data;
-	capacity = 0;
+	std::fill(data, data + size, 0);
+
 }
 void Dynamic::erase(size_t index) {
 	std::copy(data + index+1, data+size, data+index);//сдвиг влево от индекса
@@ -73,7 +69,7 @@ void Dynamic::insert(size_t index, int value){
 		std::copy(data, data + capacity, new_data);
 		delete[] data;
 		data = new_data;
-		capacity *= 2+1;
+		capacity = capacity*2+1;
 	}
 	std::copy_backward(data + index, data + size + 1, data + size);
 	++size;
