@@ -22,7 +22,6 @@ DynamicArray::DynamicArray(const std::initializer_list<int>& list) {
     data = new int[l];
     size = l;
     capacity = l;
-    int i = 0;
     std::copy(list.begin(), list.end(), data);
 }
 
@@ -98,9 +97,7 @@ void DynamicArray::Insert(std::size_t index, int val) {
         throw std::out_of_range("index out of range");
     }
     Push_back(0);
-    for (int p = size-1; p > index; p--) {
-        data[p] = data[p - 1];
-    }
+    std::copy_backward(data + index-1, data + size-1, data + size);
     data[index] = val;
 }
 
@@ -152,7 +149,6 @@ bool DynamicArray::operator ==(const DynamicArray& other) const {
         return false;
     }
     return std::equal(data, data + size, other.data);
-    return true;
 }
 
 bool DynamicArray::operator !=(const DynamicArray& other) const {
@@ -174,4 +170,3 @@ DynamicArray& DynamicArray::operator=(const DynamicArray& other) {
 int* DynamicArray::Get_data() const {
     return data;
 }
-
