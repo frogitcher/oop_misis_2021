@@ -239,7 +239,7 @@ void Stack<T>::CopyFromOth(const Stack<T>& oth)
     if (oth.size == 0) {
         return;
     }
-    Node* curNode = oth.tail;
+    Node* curNode = oth.head;
     while (curNode != nullptr) {
         Push(curNode->value);
         curNode = curNode->next;
