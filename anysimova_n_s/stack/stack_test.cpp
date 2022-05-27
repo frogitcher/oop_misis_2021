@@ -20,7 +20,9 @@ TEST_CASE_TEMPLATE("Stack constructor default", T, int, float, double, long long
 
 TEST_CASE_TEMPLATE("Stack other constructors & operator= & relational operators", T, int, float, double, long long) {
 	Stack<T> first{ (T)6, (T)5, (T)4, (T)3, (T)2, (T)1 };
+	Stack<T> tosmsize{ (T)6, (T)5, (T)4, (T)3, (T)2, (T)1, (T)19, (T)24, (T)43};
 	Stack<T> second(first);
+	tosmsize = first;
 	CHECK_FALSE(first.empty());
 	CHECK(first == second);
 	Stack<T> third{ (T)8, (T)1 };
@@ -37,23 +39,26 @@ TEST_CASE_TEMPLATE("Stack other constructors & operator= & relational operators"
 	CHECK(third.Size() == 6);
 	CHECK(forth.Size() == 6);
 	CHECK(fifth.Size() == 6);
+	CHECK(tosmsize.Size() == 6);
 	for (T i = 1; i < 7; i++) {
 		CHECK(first.get() == i);
 		CHECK(second.get() == i);
 		CHECK(third.get() == i);
 		CHECK(forth.get() == i);
 		CHECK(fifth.get() == i);
+		CHECK(tosmsize.get() == i);
 		first.pop();
 		second.pop();
 		third.pop();
 		forth.pop();
 		fifth.pop();
+		tosmsize.pop();
 	}
 }
 
 TEST_CASE_TEMPLATE("Stack swap & merge", T, int, float, double, long long) {
-	Stack<T> first { (T)5, (T)4, (T)3, (T)2, (T)1 };
-	Stack<T> second { (T)10, (T)9, (T)8, (T)7, (T)6 };
+	Stack<T> first{ (T)5, (T)4, (T)3, (T)2, (T)1 };
+	Stack<T> second{ (T)10, (T)9, (T)8, (T)7, (T)6 };
 	Stack<T> third{ (T)8, (T)1 };
 	Stack<T> forth(first);
 	first.merge(second);

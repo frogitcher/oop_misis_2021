@@ -22,6 +22,8 @@ ExternalProject_Get_Property(doctest source_dir)
 set(DOCTEST_INCLUDE_DIR ${source_dir}/doctest CACHE INTERNAL "Path to include folder for doctest")
 include_directories(${DOCTEST_INCLUDE_DIR})
 
+
 add_subdirectory(rational)
 add_subdirectory(dynamic_array)
 add_subdirectory(stack)
+add_subdirectory(matrix)
