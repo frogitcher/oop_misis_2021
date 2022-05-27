@@ -154,7 +154,6 @@ void dinmas::operator= (const dinmas& other) {
 		data = newArr;
 	}
 	else {
-		capacity = other.capacity;
 		for (int i = 0; i < other.size; i++) {
 			data[i] = other.data[i];
 		}
