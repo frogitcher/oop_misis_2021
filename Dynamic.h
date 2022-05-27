@@ -31,8 +31,8 @@ public:
 	void resize(size_t new_size);
 	void assign(size_t new_size, int value);
 
-	int* begin();
-	int* end();
+	int* begin() const;
+	int* end() const;
 
 	void swap(DynamicArray& other);
 
