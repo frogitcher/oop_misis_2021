@@ -93,6 +93,19 @@ TEST_CASE_TEMPLATE("operators with TableMatrix", T, int, double, float, long lon
 	CHECK(t6[1][0] == (T)10); CHECK(t6[1][1] == (T)16); CHECK(t6[1][2] == (T)44);
 	CHECK(t6[2][0] == (T)380); CHECK(t6[2][1] == (T)608); CHECK(t6[2][2] == (T)1672);
 	CHECK_FALSE(t6 == t7);
+
+	TableMatrix<T> t8{ { (T)1, (T)5, (T)7 } ,{(T)2, (T)7, (T)8}, {(T)76, (T)356, (T)97} };
+	TableMatrix<T> t9(t8);
+	t8 = t8 + (T)5;
+	CHECK(t8[0][0] == (T)6); CHECK(t8[0][1] == (T)5); CHECK(t8[0][2] == (T)7);
+	CHECK(t8[1][0] == (T)2); CHECK(t8[1][1] == (T)12); CHECK(t8[1][2] == (T)8);
+	CHECK(t8[2][0] == (T)76); CHECK(t8[2][1] == (T)356); CHECK(t8[2][2] == (T)102);
+	t8 = t8 - (T)5;
+	CHECK(t8 == t9);
+	t8 = t8 * (T)2;
+	CHECK(t8[0][0] == (T)2); CHECK(t8[0][1] == (T)10); CHECK(t8[0][2] == (T)14);
+	CHECK(t8[1][0] == (T)4); CHECK(t8[1][1] == (T)14); CHECK(t8[1][2] == (T)16);
+	CHECK(t8[2][0] == (T)152); CHECK(t8[2][1] == (T)712); CHECK(t8[2][2] == (T)194);
 }
 
 TEST_CASE_TEMPLATE("operators with FlatMatrix", T, int, double, float, long long) {
@@ -120,4 +133,17 @@ TEST_CASE_TEMPLATE("operators with FlatMatrix", T, int, double, float, long long
 	CHECK(t6[1][0] == (T)10); CHECK(t6[1][1] == (T)16); CHECK(t6[1][2] == (T)44);
 	CHECK(t6[2][0] == (T)380); CHECK(t6[2][1] == (T)608); CHECK(t6[2][2] == (T)1672);
 	CHECK_FALSE(t6 == t7);
+
+	FlatMatrix<T> t8{ { (T)1, (T)5, (T)7 } ,{(T)2, (T)7, (T)8}, {(T)76, (T)356, (T)97} };
+	FlatMatrix<T> t9(t8);
+	t8 = t8 + (T)5;
+	CHECK(t8[0][0] == (T)6); CHECK(t8[0][1] == (T)5); CHECK(t8[0][2] == (T)7);
+	CHECK(t8[1][0] == (T)2); CHECK(t8[1][1] == (T)12); CHECK(t8[1][2] == (T)8);
+	CHECK(t8[2][0] == (T)76); CHECK(t8[2][1] == (T)356); CHECK(t8[2][2] == (T)102);
+	t8 = t8 - (T)5;
+	CHECK(t8 == t9);
+	t8 = t8 * (T)2;
+	CHECK(t8[0][0] == (T)2); CHECK(t8[0][1] == (T)10); CHECK(t8[0][2] == (T)14);
+	CHECK(t8[1][0] == (T)4); CHECK(t8[1][1] == (T)14); CHECK(t8[1][2] == (T)16);
+	CHECK(t8[2][0] == (T)152); CHECK(t8[2][1] == (T)712); CHECK(t8[2][2] == (T)194);
 }
