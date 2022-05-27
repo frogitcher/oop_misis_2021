@@ -256,5 +256,3 @@ void TableMatrix<T>::diag(int64_t r, const T filler) {
 		data[i][i] = filler;
 	}
 }
-
-

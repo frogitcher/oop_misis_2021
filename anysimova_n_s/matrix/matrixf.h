@@ -220,4 +220,3 @@ void FlatMatrix<T>::diag(int64_t r, const T filler) {
 		matrix[i + temp++] = filler;
 	}
 }
-
