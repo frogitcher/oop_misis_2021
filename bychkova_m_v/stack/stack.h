@@ -98,7 +98,9 @@ Stack<T>::Stack(Stack<T>&& other) {
 	tail = other.tail;
 	size = other.Size();
 
-	other.Clear();
+	other.head = nullptr;
+	other.tail = nullptr;
+	other.size = 0;
 }
 
 template <typename T>
@@ -112,14 +114,16 @@ bool Stack<T>::operator==(const Stack<T>& other) const{
 		return false;
 	}
 	else {
-		Stack<T> stack_copy_1=other;
-		Stack<T> stack_copy_2=*this;
+		Node* first = head;
+		Node* second = other.head;
 		for (int i=0; i<size; i++) {
-			if (stack_copy_1.Get() != stack_copy_2.Get()) {
-				return false;
-			}
-			stack_copy_1.Pop();
-			stack_copy_2.Pop();
+            if (first->value != second->value) {
+                return false;
+            }
+            else {
+                first = first->next;
+                second = second->next;
+            }
 		}
 		return true;
 	}
@@ -169,5 +173,8 @@ void Stack<T>::Merge(Stack<T>& other) {
 	tail->next = other.head;
 	tail = other.tail;
 	size = size + other.Size();
-	other.Clear();
+
+	other.head = nullptr;
+	other.tail = nullptr;
+	other.size = 0;
 }
