@@ -1,6 +1,5 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "stack.h"
-#include "stack.cpp"
 #include "doctest.h"
 #include <string>
 TEST_CASE("Declarations") {
@@ -25,7 +24,7 @@ TEST_CASE("Declarations") {
     auto c = &b;
     CHECK(c->Get() == 0);
     b.Del();
-    CHECK(c->Get() != 0); //ïðîâåðêà î÷èñòêè ïàìÿòè
+    CHECK(c->Get() != 0); //Ã¯Ã°Ã®Ã¢Ã¥Ã°ÃªÃ  Ã®Ã·Ã¨Ã±Ã²ÃªÃ¨ Ã¯Ã Ã¬Ã¿Ã²Ã¨
     CHECK(b.Empty() == 0);
     a.Del();
 }
