@@ -1,6 +1,7 @@
 #pragma once
 #include <initializer_list>
 #include <cstdint>
+#include <stdexcept>
 
 template <typename T>
 class Stack {
