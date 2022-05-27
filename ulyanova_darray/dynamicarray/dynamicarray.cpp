@@ -41,7 +41,7 @@ DynamicArray::~DynamicArray() {
 
 void DynamicArray::Push_back(int value) { 
 
-	if (capacity == 0) {  //åñëè PB â ïóñòîé ìàññèâ
+	if (capacity == 0) {  //Ã¥Ã±Ã«Ã¨ PB Ã¢ Ã¯Ã³Ã±Ã²Ã®Ã© Ã¬Ã Ã±Ã±Ã¨Ã¢
 		int* new_data = new int[++capacity];
 		data = new_data;
 	}
@@ -143,7 +143,8 @@ bool DynamicArray::operator!=(const DynamicArray& other) const{
 
 DynamicArray& DynamicArray::operator=(const DynamicArray& other) { 
 	if (other.size > capacity) {
-		int* new_data = new int[other.capacity];
+		capacity = other.capacity;
+		int* new_data = new int[capacity];
 		std::copy(other.data, other.data + other.size, new_data);
 		delete[] data;
 		data = new_data;
@@ -152,7 +153,6 @@ DynamicArray& DynamicArray::operator=(const DynamicArray& other) {
 		std::copy(other.data, other.data + other.size, data);
 	}
 	size = other.size;
-	capacity = other.capacity;
 	return *this;
 }
 
@@ -190,6 +190,9 @@ void DynamicArray::Assign(int64_t new_size, int value) {
 		std::fill(new_data, new_data + new_size, value);
 		delete[] data;
 		data = new_data;
+	}
+	if (new_size <= size) {
+		std::fill(data, data + new_size, value);
 	}
 	size = new_size;
 }
