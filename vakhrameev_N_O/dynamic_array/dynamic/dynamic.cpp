@@ -13,7 +13,7 @@ Dynamic_array::Dynamic_array(size_t n, int value)
 Dynamic_array::Dynamic_array(const Dynamic_array& other)
 {
     size = other.size;
-    capacity = other.size;
+    capacity = other.capacity;
     int* new_data=new int[capacity];
     std::copy(other.data, other.data+size, new_data);
     data=new_data;
@@ -22,6 +22,7 @@ Dynamic_array::Dynamic_array(const Dynamic_array& other)
 Dynamic_array::~Dynamic_array() {
     delete[] data;
 }
+
 Dynamic_array::Dynamic_array(const std::initializer_list<int>& other)
 {
     size = other.size();
@@ -87,7 +88,7 @@ void Dynamic_array::reallocate(size_t new_capacity)
     {
         capacity = new_capacity;
         int* new_data = new int[new_capacity];
-        std::copy(data, data + capacity, new_data);
+        std::copy(data, data + size, new_data);
         delete[] data;
         data = new_data;
     }
@@ -96,7 +97,7 @@ void Dynamic_array::pop_back()
 {
     if (size != 0)
     {
-        data[--size] = 0;
+        --size;
     }
     else
     {
@@ -106,14 +107,11 @@ void Dynamic_array::pop_back()
 
 void Dynamic_array::assign(size_t n, int value)
 {
-    size = n;
-    capacity = n * 2;
-    data = new int[n * 2];
+    resize(n);
     std::fill(data, data + n, value);
 }
 void Dynamic_array::clear()
 {
-    delete[] data;
     size = 0;
 }
 
@@ -156,20 +154,13 @@ bool Dynamic_array::operator==(const Dynamic_array& other) const
     {
         return false;
     }
-    for (int i = 0;i < size;i++)
-    {
-        if (data[i] != other.data[i])
-        {
-            return false;
-        }
-    }
-    return true;
+    return std::equal(data,data+size,other.data,other.data+other.size);
 }
 
 Dynamic_array& Dynamic_array::operator=(const Dynamic_array& other)
 {
     resize(other.size);
-    std::copy(other.data, other.data + other.capacity, data);
+    std::copy(other.data, other.data + other.size, data);
     return *this;
 }
 
