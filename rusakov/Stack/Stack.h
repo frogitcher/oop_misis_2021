@@ -78,7 +78,6 @@ void Stack<T>::pop() {
     delete head; 
     head = next;
     if(size == 1) {
-        delete tail;
         tail = nullptr;
     }
     size--;
@@ -157,6 +156,9 @@ bool Stack<T>::operator!=(const Stack<T>& other) const {
 
 template<typename T>
 Stack<T>& Stack<T>::operator=(const Stack<T>& other) {
+    if(other.size == 0) {
+        clear();
+        }
     if(other.size != 0){
         clear();
         head = new Node(other.head->value, nullptr);
@@ -168,7 +170,6 @@ Stack<T>& Stack<T>::operator=(const Stack<T>& other) {
             previous = previous->next;
             current = current->next;
         }
-        clear();
         tail = previous;
         size = other.size;
     }
