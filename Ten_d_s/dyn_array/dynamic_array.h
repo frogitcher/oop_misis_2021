@@ -26,6 +26,7 @@ public:
 	int* begin() const;
 	int* end() const;
 	void swap(DynamicArray& other);
+	DynamicArray& operator=(const DynamicArray& other);
 private:
 	int capacity = 0;
 	int size = 0;
