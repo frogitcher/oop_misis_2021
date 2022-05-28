@@ -32,8 +32,8 @@ void DynamicArray::resize(int64_t new_size, int value = 0){
     }
     if (new_size >= capacity){
         reallocate(new_size);
-    } 
-    std::fill(begin() + ((size <= new_size) ? size : 0), begin() + new_size, value);
+    }
+    std::fill(data + size, data+new_size, value);
     size = new_size;
 };
 void DynamicArray::push_back(int value){
