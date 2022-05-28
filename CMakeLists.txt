@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.0)
 
+
+
 include(ExternalProject)
 find_package(Git REQUIRED)
 
@@ -20,4 +22,6 @@ ExternalProject_Get_Property(doctest source_dir)
 set(DOCTEST_INCLUDE_DIR ${source_dir}/doctest CACHE INTERNAL "Path to include folder for doctest")
 include_directories(${DOCTEST_INCLUDE_DIR})
 
-add_subdirectory(hello_world)
+add_subdirectory(stack)
+add_subdirectory(dynamic)
+add_subdirectory(rational)
