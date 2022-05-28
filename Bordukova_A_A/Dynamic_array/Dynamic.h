@@ -40,11 +40,11 @@ public:
 	void swap(Dynamic_Array& other);
 
 	//Pointers
-	inline int* begin()
+	inline const int* begin()
 	{
 		return data;
 	}
-	inline int* end()
+	inline const int* end()
 	{
 		return  data + size;
 	}
@@ -54,7 +54,7 @@ public:
 	bool operator!=(const Dynamic_Array& other) const;
 
 	//Assignment
-	Dynamic_Array& operator=(const Dynamic_Array other);
+	Dynamic_Array& operator=(const Dynamic_Array& other);
 
 	//Indexing and referencing
 	inline int& operator[](size_t i) const

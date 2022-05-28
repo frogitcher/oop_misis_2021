@@ -50,7 +50,6 @@ void Dynamic_Array::pop_back()
 void Dynamic_Array::clear()
 {
 	size = 0;
-	capacity = 0;
 }
 void Dynamic_Array::erase(size_t index)
 {
@@ -64,8 +63,12 @@ void Dynamic_Array::erase(size_t index)
 }
 void Dynamic_Array::insert(size_t index, int value)
 {
-	if (index >= size) {
+	if (index > size) {
 		throw std::out_of_range("Index is out of the range!");
+	}
+	if (index == size)
+	{
+		push_back(value);
 	}
 	else {
 		resize(size + 1);
@@ -118,7 +121,7 @@ bool Dynamic_Array::operator!=(const Dynamic_Array& other) const
 }
 
 //Assignment
-Dynamic_Array& Dynamic_Array::operator=(const Dynamic_Array other)
+Dynamic_Array& Dynamic_Array::operator=(const Dynamic_Array& other)
 {
 	resize(other.size);
 	size = other.size;
