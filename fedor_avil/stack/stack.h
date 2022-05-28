@@ -144,6 +144,11 @@ void Stack<T>::Pop()
 		delete this->head;
 		this->head = temp;
 	}
+	else {
+		delete this->head;
+		this->head = nullptr;
+		this->tail = nullptr;
+	}
 	size--;
 }
 
