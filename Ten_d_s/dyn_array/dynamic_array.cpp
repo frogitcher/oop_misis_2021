@@ -192,3 +192,9 @@ void DynamicArray::swap(DynamicArray& other) {
 	capacity = other.capacity;
 	other.capacity = b;
 }
+
+DynamicArray& DynamicArray::operator=(const DynamicArray& other) {
+	resize(other.size);
+	std::copy(other.data, other.data + other.Size(), data);
+	return *this;
+}
