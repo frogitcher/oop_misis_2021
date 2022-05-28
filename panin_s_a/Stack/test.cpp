@@ -3,6 +3,7 @@
 #include "Stack.h"
 #include <string>
 #include <iostream>
+using std::cout;
 // using namespace std;
 
 TEST_CASE("a") {
@@ -114,7 +115,9 @@ TEST_CASE("D") {
     SUBCASE("Testing ="){
         s10 = s11;
         CHECK((s10 == s11));
-        CHECK((s10 == std::move(Stack<int>{9,1,1})));
         CHECK((s11 == std::move(Stack<int>{9,1,1})));
+        s11.Clear();
+        CHECK((s10 == std::move(Stack<int>{9,1,1})));
+
     }
 }
