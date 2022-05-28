@@ -31,23 +31,11 @@ public:
 	Stack& operator=(Stack&& other);
 
 private:
-	void recursive_copy(const Stack<T>& other);
 	bool recursive_compare(const Stack<T>& scd) const;
 	size_t size = 0;
 	Node* head = nullptr;
 	Node* tail = nullptr;
 };
-
-template <typename T>
-void Stack<T>::recursive_copy(const Stack<T>& other)
-{
-	Node* node1 = other.head;
-	node1->next = nullptr;
-	for (size_t i = 0; i < other.Size(); i++) {
-		this->Push(node1->value);
-		node1 = node1->next;
-	}
-}
 template <typename T>
 bool Stack<T>::recursive_compare(const Stack<T>& scd) const
 {
