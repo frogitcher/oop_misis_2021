@@ -42,6 +42,7 @@ template <typename T>
 void Stack<T>::recursive_copy(const Stack<T>& other)
 {
 	Node* node1 = other.head;
+	node1->next = nullptr;
 	for (size_t i = 0; i < other.Size(); i++) {
 		this->Push(node1->value);
 		node1 = node1->next;
@@ -67,10 +68,7 @@ bool Stack<T>::recursive_compare(const Stack<T>& scd) const
 }
 template <typename T>
 Stack<T>::Stack(const Stack<T>& other) {
-	head = nullptr;
-	tail = nullptr;
-	size = 0;
-	recursive_copy(other);
+	*this = st;
 }
 
 template<typename T>
@@ -195,7 +193,18 @@ template<typename T>
 Stack<T>& Stack<T>::operator=(const Stack<T>& other)
 {
 	clear();
-	recursive_copy(other);
+	if (other.size != 0) {
+		head = new Node{ other.head->value, nullptr };
+		Node* node1 = other.head->next;
+		Node* node0 = head;
+		while (node1 != nullptr) {
+			node0->next = new Node{ node1->value, nullptr};
+			node0 = node0->next;
+			node1 = node1->next;
+		}
+		tail = prev;
+	}
+	size = other.size;
 	return *this;
 }
 template <typename T>
