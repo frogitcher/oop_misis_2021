@@ -142,6 +142,9 @@ bool Stack<T>::operator!= (const Stack<T>& other) const {
 }
 template<typename T>
 void Stack<T>::operator= (const Stack<T>& other) {
+    while (size != 0) {
+        this->pop();
+    }
     *this = Stack<T> New_stack(other);
 }
 template<typename T>
