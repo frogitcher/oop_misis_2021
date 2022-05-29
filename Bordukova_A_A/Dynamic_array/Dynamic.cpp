@@ -53,7 +53,7 @@ void Dynamic_Array::clear()
 }
 void Dynamic_Array::erase(size_t index)
 {
-	if (index < 0 || index >= size) {
+	if (index >= size) {
 		throw std::out_of_range("Index is out of the range!");
 	}
 	for (size_t i = index; i < size - 1; ++i) {

@@ -40,11 +40,11 @@ public:
 	void swap(Dynamic_Array& other);
 
 	//Pointers
-	inline const int* begin()
+	inline int* begin() const
 	{
 		return data;
 	}
-	inline const int* end()
+	inline int* end() const
 	{
 		return  data + size;
 	}
