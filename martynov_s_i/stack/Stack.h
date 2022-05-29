@@ -162,8 +162,6 @@ Stack<T> Stack<T>::operator=(const Stack<T>& st) {
 	Clear();
 	size = st.size;
 	if (st.head == nullptr) {
-		head = nullptr;
-		tail = nullptr;
 		return* this;
 	}
 	Node* new_noda = new Node({st.head->value, nullptr});
