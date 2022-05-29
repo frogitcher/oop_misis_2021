@@ -173,4 +173,5 @@ void Rational::SetDenominator(int val) {
 
 void Rational::SetNumerator(int val) {
     num = val;
+    Normalize();
 }
