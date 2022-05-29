@@ -94,17 +94,14 @@ void DynamicArray::erase(size_t index) {
 		throw std::invalid_argument("Array out of bounds");
 	}
 	else {
-		std::copy(data + index, data + size - 1, data + index + 1);
+		std::copy(data + index + 1, data + size, data + index);
 		size--;
 	}
 }
 void DynamicArray::insert(size_t index, int value) {
-	if (index == size - 1) {
-		this->push_back(value);
-	}else{
-		std::copy_backward(data + size, data + index + 1, data + size - 1);
-		data[index] = value;
-	}
+	this->push_back(value);
+	std::copy_backward(data + index, data + size, data + size + 1);
+	data[index] = value;
 }
 
 void DynamicArray::resize(size_t new_size) {
@@ -118,7 +115,7 @@ void DynamicArray::resize(size_t new_size) {
 		else {
 			if (new_size > size) {
 				for (int i = size; i < new_size; i++) {
-					new_data[i] = 0;
+					data[i] = 0;
 				}
 			}
 		}
@@ -148,8 +145,8 @@ void DynamicArray::operator=(const DynamicArray& other) {
 		int* new_data = new int[other.size];
 		delete[] data;
 		data = new_data;
+		capacity = other.size;
 	}
 	size = other.size;
-	capacity = other.size;
 	std::copy(data, data + size, other.data);
 }
