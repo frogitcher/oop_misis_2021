@@ -133,12 +133,15 @@ void Stack<T>:: Swap(Stack<T>& stc) {
 
 template <typename T>
 void Stack<T>::Merge(Stack<T>& stc) {
-	tail->next = stc.head;
-	tail = stc.tail;
-	size += stc.size;
-	stc.head = nullptr;
-	stc.tail = nullptr;
-	stc.size = 0;
+	if (stc.head != nullptr) 
+	{
+		tail->next = stc.head;
+		tail = stc.tail;
+		size += stc.size;
+		stc.head = nullptr;
+		stc.tail = nullptr;
+		stc.size = 0;
+	}
 }
 
 template <typename T>
@@ -169,6 +172,7 @@ Stack<T>& Stack<T>::operator=(const Stack<T>& stc) {
 
 template <typename T>
 Stack<T> & Stack<T>:: operator=(Stack<T>&& stc) {
+	Clear();
 	head = stc.head;
 	tail = stc.tail;
 	size = stc.size;
