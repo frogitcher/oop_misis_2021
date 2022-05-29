@@ -190,7 +190,7 @@ Stack<T>& Stack<T>::operator=(const Stack<T>& other)
 			node0 = node0->next;
 			node1 = node1->next;
 		}
-		tail = prev;
+		tail = node0;
 	}
 	size = other.size;
 	return *this;
