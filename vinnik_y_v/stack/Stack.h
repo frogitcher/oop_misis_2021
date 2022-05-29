@@ -237,13 +237,25 @@ template<typename T>
 void Stack<T>::CopyFromOth(const Stack<T>& oth)
 {
     if (oth.size == 0) {
+        size = 0;
         return;
     }
-    Node* curNode = oth.head;
-    while (curNode != nullptr) {
-        Push(curNode->value);
+    else if(oth.size == 1){
+        Node* node = oth.head;
+        head = node;
+        tail = node;
+        size = 1;
+        return;
+    }
+    Node* curNodeOth = oth.head;
+    Node* curNode = head;
+    while (curNodeOth != nullptr) {
+        curNode = new Node{nullptr, oth.head->value};
+        curNodeOth = curNodeOth->next;
         curNode = curNode->next;
     }
+    tail = curNode;
+    size = oth.size;
 }
 
 template<typename T>
