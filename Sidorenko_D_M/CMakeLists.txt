@@ -22,3 +22,5 @@ include_directories(${DOCTEST_INCLUDE_DIR})
 
 
 add_subdirectory(Rationals)
+add_subdirectory(Dynamic)
+add_subdirectory(stack)
