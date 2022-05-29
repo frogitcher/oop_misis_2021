@@ -11,8 +11,8 @@ private:
 
 public:
     Rational();//for null
-    Rational(const double value);//for the Z
-    Rational(const double num, const double den);//for the fraction
+    Rational(const int value);//for the Z
+    Rational(const int num, const int den);//for the fraction
     Rational(const Rational& other);
     ~Rational();
 
@@ -25,12 +25,15 @@ public:
     Rational operator * (const Rational& rhs) const;
     Rational operator / (const Rational& rhs) const;
 
-    Rational operator ++ () const;
-    Rational operator -- () const;
-    Rational operator += (const Rational& rhs);
-    Rational operator -= (const Rational& rhs);
-    Rational operator *= (const Rational& rhs);
-    Rational operator /= (const Rational& rhs);
+    Rational& operator ++ ();
+    Rational& operator -- ();
+    Rational operator ++ (int a);
+    Rational operator -- (int a);
+
+    Rational& operator += (const Rational& rhs);
+    Rational& operator -= (const Rational& rhs);
+    Rational& operator *= (const Rational& rhs);
+    Rational& operator /= (const Rational& rhs);
 
     bool operator < (const Rational& rhs) const;
     bool operator > (const Rational& rhs) const;

@@ -3,15 +3,13 @@
 
 Rational::Rational():
     numerator(0), denominator(1) {
-    Normalize();
 }
 
-Rational::Rational(const double value):
+Rational::Rational(const int value):
     numerator(value), denominator(1) {
-    Normalize();
 }
 
-Rational::Rational(const double num, const double den):
+Rational::Rational(const int num, const int den):
     numerator(num), denominator(den) {
     if (den == 0) {
         throw std::invalid_argument("denominator must not be equal to 0");
@@ -43,11 +41,8 @@ void Rational::Normalize() {
                  : this->numerator, this->denominator);
     this->numerator /= g;
     this->denominator /= g;
-    if(this->numerator < 0 && this->denominator < 0) {
-        this->numerator = -this->numerator;
-        this->denominator = -this->denominator;
-    }
-    if(this->numerator > 0 && this->denominator < 0) {
+
+    if(this->denominator < 0) {
         this->numerator = -this->numerator;
         this->denominator = -this->denominator;
     }
@@ -55,7 +50,7 @@ void Rational::Normalize() {
 
 int gcd(int a, int b) {
     while (a) {
-        auto t = b % a;
+        int t = b % a;
         b = a;
         a = t;
     }
@@ -90,33 +85,49 @@ Rational Rational::operator / (const Rational& rhs) const {
                      (this->denominator * rhs.numerator) };
 }
 
-Rational Rational::operator ++ () const {
-    return Rational{ (this->numerator + (this->denominator)), (this->denominator) };
-}
 
-Rational Rational::operator -- () const {
-    return Rational{ (this->numerator - (this->denominator)), (this->denominator) };
-}
 
-Rational Rational::operator += (const Rational& rhs) {
+Rational& Rational::operator += (const Rational& rhs) {
     *this = *this + rhs;
     return *this;
 }
 
-Rational Rational::operator -= (const Rational& rhs) {
+Rational& Rational::operator -= (const Rational& rhs) {
     *this = *this - rhs;
     return *this;
 }
 
-Rational Rational::operator *= (const Rational& rhs) {
+Rational& Rational::operator *= (const Rational& rhs) {
     *this = *this * rhs;
     return *this;
 }
 
-Rational Rational::operator /= (const Rational& rhs) {
+Rational& Rational::operator /= (const Rational& rhs) {
     *this = *this / rhs;
     return *this;
 }
+
+Rational& Rational::operator ++ () {
+    return *this += Rational(1);
+}
+
+Rational& Rational::operator -- () {
+    return *this -= Rational(1);
+}
+
+Rational Rational::operator ++ (int a) {
+    Rational b(*this);
+    ++*this;
+    return b;
+}
+
+Rational Rational::operator -- (int a) {
+    Rational b(*this);
+    --*this;
+    return b;
+}
+
+
 
 bool Rational::operator < (const Rational& rhs) const {
     return ((this->numerator * rhs.denominator) < (this->denominator * rhs.numerator));
