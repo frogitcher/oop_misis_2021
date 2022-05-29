@@ -53,16 +53,19 @@ void DynamicArray::view() {
 }
 
 void DynamicArray::Push_back(const int& value) {
-    if (size == capacity) { //написать relocate
+    if (this->size == capacity) { //написать relocate
         int* newdata;
         newdata = new int[(this->size) * 2];
 
         //memcpy(this->data, newdata, this->size);
-        for (int i = 0; i < size; ++i) { //copy
+        if(size != 0) {
+            for (int i = 0; i < size; ++i) { //copy
             newdata[i] = data[i];
+            }
         }
 
-        delete[](data);
+
+        delete[]data;
         data = newdata;
         this->capacity *= 2;
     }
@@ -72,9 +75,6 @@ void DynamicArray::Push_back(const int& value) {
 }
 
 void DynamicArray::Clear() {
-    for (int i = 0; i < size; ++i) {
-        data[i] = 0;
-    }
     size = 0;
 }
 
@@ -96,9 +96,6 @@ bool DynamicArray::Empty() const {
 }
 
 int& DynamicArray::operator[](size_t i) const {
-    if(i >= this->size) {
-        throw std::invalid_argument("Incorrect index");
-    }
     return *(data + i);
 }
 
@@ -106,7 +103,7 @@ int& DynamicArray::at(size_t i) const {
     if (i >= Size()) {
         throw ("std::out_of_range");
     }
-    return *data;
+    return *(data + i);
 }
 
 void DynamicArray::Pop_back() {
@@ -129,7 +126,7 @@ void DynamicArray::Erase(size_t index) {
     if (size == 0) {
         throw std::invalid_argument("you cannot delete an element from an empty array");
     }
-    if (index >= size || index < 0) {
+    if (index >= size) {
         throw std::invalid_argument("Incorrect index");
     }
     for (int i = index; i < size - 1; ++i) {
@@ -146,7 +143,7 @@ void DynamicArray::Resize(size_t newsize) {
     else{
 
         int* newdata;
-        newdata = new int[(this->size) * 2];
+        newdata = new int[(newsize) * 2];
         //memcpy(this->data, newdata, this->size);
         for (int i = 0; i < size; ++i) { //copy
             newdata[i] = data[i];
@@ -155,6 +152,9 @@ void DynamicArray::Resize(size_t newsize) {
         data = newdata;
         this->capacity += newsize + 1;
         this->capacity *= 2;
+        if(newsize > size) {
+        memset(data + size, 0, sizeof(newsize));
+        }
         size = newsize;
     }
 }
@@ -176,8 +176,11 @@ int& DynamicArray::At(int i) const {
 void DynamicArray::Insert(int index, int value) {
 
     Resize(size + 1);
+    if(size == index) {
+        Push_back(value);
+    }
 
-    if (index < 0 || index >= size || size + 1 >= capacity) {
+    if (index < 0 || index > size) {
         throw std::length_error("Index is out of range");
     }
 
@@ -191,7 +194,6 @@ void DynamicArray::Insert(int index, int value) {
 
 void DynamicArray::Assign(int new_size, int value) {
     Resize(new_size);
-    size = new_size;
     std::fill(data, data + size, value);
 }
 
@@ -209,8 +211,5 @@ bool DynamicArray::operator== (const DynamicArray& other) const{
 
 void DynamicArray::operator=(const DynamicArray& other) {
     Resize(other.size);
-    std::cout << capacity << " \n ";
-
-    capacity = other.capacity;
     std::copy(other.data, other.data + other.size, data);
 }

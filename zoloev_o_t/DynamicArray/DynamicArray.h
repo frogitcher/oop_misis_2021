@@ -35,8 +35,6 @@ public:
 
     int* begin() const;//
     int* end() const;//
-    void Sort(const int& b, const int& e);//
-
 
     //tests
     void view();

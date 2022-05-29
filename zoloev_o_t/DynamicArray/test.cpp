@@ -15,7 +15,6 @@ TEST_CASE("testing Push_back, Pop_back, Clear, [], At, Size") {
     CHECK(h.At(2) == 1553);
     h.Pop_back();
     h.Pop_back();
-    CHECK_THROWS_WITH(h[1], "Incorrect index");
     CHECK(h.Size() == 1);
     DynamicArray  b{228, 2, 3, 4};
     CHECK(b == DynamicArray({228, 2, 3, 4}));
@@ -26,7 +25,6 @@ TEST_CASE("testing Push_back, Pop_back, Clear, [], At, Size") {
     b.Pop_back();
     b.Pop_back();
     CHECK_THROWS_WITH(b.Pop_back(), "you cannot delete an element from an empty array");
-
 }
 
 TEST_CASE("testing Size, Clear, Resize, ==") {
@@ -47,16 +45,16 @@ TEST_CASE("testing Size, Clear, Resize, ==") {
     d.Resize(2);
     CHECK(d == DynamicArray({3, 3}));
 }
-
-
-
-
-TEST_CASE("testing Erase, Insert, Assign"){
+////
+////
+////
+//
+TEST_CASE("testing Erase, Insert, Assign") {
     DynamicArray a(4, 1), b, c({1, 2, 3}), checking({0, 1, 2});
 
     a.Assign(3, 2);
     c.Insert(0, 4);
-   c.Erase(c.Size() - 1);
+    c.Erase(c.Size() - 1);
 //
     CHECK(a.Size() == c.Size());
     CHECK(a[2] == 2);
@@ -69,13 +67,13 @@ TEST_CASE("testing Erase, Insert, Assign"){
     b.Insert(1, 1);
     b.Insert(2, 3);
     b.Erase(2);
-    for (int i=0; i<3; ++i){
+    for (int i = 0; i < 3; ++i){
         CHECK(checking[i] == b[i]);
     }
-
+//
 }
-
-TEST_CASE("testing begin, end, Swap"){
+//
+TEST_CASE("testing begin, end, swap") {
     DynamicArray a(4, 1), c({1, 2, 3}), d({3, 1, 4, 6});
 
     a.Swap(c);
