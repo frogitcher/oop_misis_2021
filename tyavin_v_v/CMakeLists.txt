@@ -25,4 +25,6 @@ add_subdirectory(hello_world)
 
 add_subdirectory(rational)
 
-add_subdirectory(dopusk)
+#add_subdirectory(dopusk)
+
+add_subdirectory(arrayd)
