@@ -1,5 +1,4 @@
 #pragma once
-//#include <ostream>
 
 class Rational {
 public:
@@ -29,10 +28,6 @@ public:
 	bool operator==(const Rational& rhs) const;
 	bool operator!=(const Rational& rhs) const;
 
-	//инвариант:
-	// den != 0
-	// несокращаемая дробь
-
 	int GetNumerator() const;
 	int GetDenominator() const;
 	
@@ -40,5 +35,3 @@ private:
 	int num, den;
 	void Normalize();
 };
-
-//std::ostream& operator<<(std::ostream& os, const Rational& r);
