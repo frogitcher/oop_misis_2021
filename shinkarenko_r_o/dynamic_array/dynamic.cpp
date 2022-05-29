@@ -1,21 +1,27 @@
 #include "dynamic.h"
 #include <stdexcept>
+#include <algorithm>
 
-void DynamicArray::realloc(size_t new_size) {
-	size_t new_capacity = capacity;
-	if (new_size > capacity) {
-		new_capacity *= 2;
-	}
+void DynamicArray::realloc(size_t new_capacity) {
 	int* new_data = new int[new_capacity];
-	std::copy(begin(), end(), new_data);
+	std::copy(data, data + size, new_data);
 	delete[] data;
 	data = new_data;
+	capacity = new_capacity;
+}
+
+int* DynamicArray::begin() {
+	return data;
+}
+
+int* DynamicArray::end() {
+	return data + size;
 }
 
 DynamicArray::DynamicArray()
 	: size(0)
 	, capacity(1)
-	, data(nullptr){
+	, data(nullptr) {
 	data = new int[1];
 }
 
@@ -29,10 +35,10 @@ DynamicArray::DynamicArray(size_t _size, int value)
 
 DynamicArray::DynamicArray(const DynamicArray& other)
 	: size(other.size)
-	, capacity(other.capacity)
+	, capacity(other.size)
 	, data(nullptr) {
 	data = new int[capacity];
-	std::fill(other.data, other.data + other.capacity, data);
+	std::copy(other.data, other.data + other.size, data);
 }
 
 DynamicArray::DynamicArray(const std::initializer_list<int>& list)
@@ -77,10 +83,12 @@ int& DynamicArray::at(size_t i) const {
 	}
 }
 
-void DynamicArray::operator=(const DynamicArray& other) {
-	size = other.Size();
-	capacity = other.Capacity();
-	std::copy(other.data, other.data + other.capacity, data);
+DynamicArray& DynamicArray::operator=(const DynamicArray& other) {
+	size = other.size;
+	capacity = other.capacity;
+	std::copy(other.data, other.data + other.size, data);
+	return *this;
+
 }
 
 bool DynamicArray::operator==(const DynamicArray& other) const {
@@ -96,22 +104,30 @@ bool DynamicArray::operator!=(const DynamicArray& other) const {
 	return !(*this == other);
 }
 
-void DynamicArray::resize(size_t new_size, int value) {
+void DynamicArray::resize(int new_size, int value) {
+	size_t old_size = size;
 	if (new_size < 0) {
-		throw std::invalid_argument("Array size must be positive number");
+		throw std::invalid_argument("Array size must be positive");
 	}
-	else if (new_size == 0) {
-		size = 0;
+	if (new_size > capacity) {
+		int _capacity = 1;
+		while (_capacity < new_size) {
+			_capacity *= 2;
+		}
+		realloc(_capacity);
 	}
-	else {
-		realloc(new_size);
-		std::fill(data + size, data + new_size, value);
-	}
+	for (int i = old_size; i < new_size; ++i) data[i] = value;
+	size = new_size;
 }
 
 void DynamicArray::push_back(int value) {
-	resize(size + 1, 0);
-	data[size - 1] = value;
+	if (size >= capacity) {
+		if (capacity == 0) {
+			capacity = 1;
+		}
+		realloc(capacity);
+	}
+	data[size++] = value;
 }
 
 void DynamicArray::pop_back() {
@@ -132,7 +148,7 @@ void DynamicArray::erase(size_t idx) {
 	for (int i = idx; i < size - 1; ++i) {
 		data[i] = data[i + 1];
 	}
-	size--;
+	--size;
 }
 
 void DynamicArray::insert(size_t idx, int value) {
@@ -151,14 +167,3 @@ void DynamicArray::swap(DynamicArray& other) {
 	std::swap(capacity, other.capacity);
 	std::swap(data, other.data);
 }
-
-int* DynamicArray::begin() {
-	return data;
-}
-
-int* DynamicArray::end() {
-	return data + size;
-}
-
-
-
