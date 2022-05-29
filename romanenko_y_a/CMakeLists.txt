@@ -21,3 +21,5 @@ set(DOCTEST_INCLUDE_DIR ${source_dir}/doctest CACHE INTERNAL "Path to include fo
 include_directories(${DOCTEST_INCLUDE_DIR})
  
 add_subdirectory(hello_world)
+add_subdirectory(rational)
+add_subdirectory(dynamic_array)
