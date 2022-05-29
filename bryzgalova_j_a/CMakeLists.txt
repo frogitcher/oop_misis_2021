@@ -24,3 +24,5 @@ include_directories(${DOCTEST_INCLUDE_DIR})
 add_subdirectory(hello_world)
 
 add_subdirectory(Rational) 
+
+add_subdirectory(dynamic_array) 
