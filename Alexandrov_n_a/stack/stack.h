@@ -145,7 +145,16 @@ void Stack<T>::operator= (const Stack<T>& other) {
     while (size != 0) {
         this->pop();
     }
-    *this = Stack<T> New_stack(other);
+    push(other.head->value);
+    Node* head_2 = head;
+    Node* other_head_2 = other.head;
+    for (int i = 0; i < other.Size(); i++) {
+        other_head_2 = other_head_2->next;
+        head_2->next = new Node{ other.head->value, nullptr };
+        head_2 = head_2->next;
+    }
+    size = other.size;
+    tail = head_2;
 }
 template<typename T>
 void Stack<T>::merge(Stack<T>& other) {
