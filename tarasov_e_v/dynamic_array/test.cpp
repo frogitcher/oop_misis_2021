@@ -3,156 +3,147 @@
 //
 
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+
+#include <cstdint>
 #include "doctest.h"
 #include "dynamicarray.h"
 
-TEST_CASE("Testing dynamic array class") {
+
+TEST_CASE("Testing dynamic array initialisation") {
     DynamicArray a;
     CHECK(a.Size() == 0);
     CHECK(a.begin() == a.GetData());
 
-    DynamicArray b(5, 4);
-    CHECK(b.Size() == 5);
-    CHECK(b.Capacity() >= b.Size());
+    DynamicArray b(5, 5);
+    CHECK(b.Size());
+    CHECK(b.begin() == b.GetData());
+    for (auto v: b) {
+        CHECK(v == 5);
+    }
+
 
     DynamicArray c(b);
-    CHECK(c.Size() == b.Size());
-    CHECK(c.Capacity() == b.Capacity());
-    for (int64_t i = 0; i < b.Size(); ++i) {
-    CHECK(&(c[i]) == (c.begin() + i));
-    CHECK(c[i] == b[i]);
+    CHECK(c.Size());
+    CHECK(c.begin() == c.GetData());
+    for (int64_t i = 0; i < c.Size(); ++i) {
+        CHECK(c[i] == b[i]);
     }
 
-    DynamicArray d({1, 2, 3, 4, 5, 6});
-    CHECK_FALSE(c == d);
-    CHECK(c != d);
-    CHECK_FALSE(c != b);
+    CHECK(c.end() == c.GetData() + c.Size());
+    CHECK(c.end() != c.GetData() + 0);
 
-    // a is empty
+    DynamicArray d = {5, 5, 5, 5, 5};
+    CHECK(d.Size() == 5);
+    CHECK(d.begin() == d.GetData());
+    // когда лучше писать for в одну строчку?
+    for (int64_t i = 0; i < b.Size(); ++i) {
+        CHECK(d[i] == b[i]);
+    }
+}
+
+TEST_CASE("Testing push_back() and pop_back()") {
+    DynamicArray a;
+
+    a.push_back(1);
+    CHECK(a.Size() == 1);
+    CHECK(a[0] == 1);
+
+    a.pop_back();
+    CHECK(a.Size() == 0);
+    // А в чем разница между CHECK_THROWS_WITH и CHECK_THROWS_MESSAGE?
+    CHECK_THROWS_MESSAGE(a.pop_back(), "Array is empty");
+    CHECK_THROWS_WITH(a.pop_back(), "Array is empty");
+}
+
+TEST_CASE("Testing erase()") {
+    DynamicArray a = {1, 2, 3, 4, 5};
+    DynamicArray after = {2, 3, 4, 5};
+
+    CHECK(a.Size() == 5);
+    a.erase(0);
+    CHECK_THROWS_MESSAGE(a.erase(-1), "Index is out of range");
+    CHECK_THROWS_MESSAGE(a.erase(10), "Index is out of range");
+    CHECK(a.Size() == 4);
+    for (int64_t i = 0; i < a.Size(); ++i) CHECK(a[i] == after[i]);
+
+    DynamicArray b;
+    CHECK_THROWS_MESSAGE(b.erase(1), "Array is empty");
+
+}
+
+TEST_CASE("Testing resize()") {
+    // а в теории мы должны проверять тип value?
+
+    DynamicArray b(5, 5);
+    DynamicArray c(4, 4);
+    CHECK(b.Size() == 5);
+    CHECK(c.Size() == 4);
+    b.resize(4, 4);
+    for (int64_t i = 0; i < c.Size(); ++i) CHECK(b[i] == c[i]);
+
+
+    CHECK_THROWS_MESSAGE(b.resize(-3, 5), "Size must be positive");
+
+}
+
+TEST_CASE("Testing assign()") {
+    DynamicArray b(5, 5);
+    DynamicArray c(6, 3);
+    CHECK(b.Size() == 5);
+    CHECK(c.Size() == 6);
+
+    b.assign(4, 3);
+    for (int64_t i = 0; i < b.Size() - 1; ++i) CHECK(b[i] == c[i]);
+
+    CHECK_THROWS_WITH(b.assign(-3, 5), "Size must be positive");
+}
+
+TEST_CASE("Testing insert()") {
+    DynamicArray a = {1, 2, 3, 4};
+    DynamicArray b = {1, 2, 5, 3, 4};
+    CHECK(a.Size() == 4);
+    CHECK(b.Size() == 5);
+
+    CHECK_THROWS_WITH(a.insert(-2, 5), "Index is out of range");
+
+    a.insert(2, 5);
+    CHECK(a.Size() == 5);
+    for (int64_t i = 0; i < a.Size(); ++i) CHECK(a[i] == b[i]);
+}
+
+TEST_CASE("Testing swap()") {
+    DynamicArray a = {1, 2, 3, 4};
+    DynamicArray b = {5, 6, 7, 8, 9};
+    DynamicArray before = {5, 6, 7, 8, 9};
+
+    a.swap(b);
+    CHECK(a.Size() == before.Size());
+    CHECK(a.Capacity() == before.Capacity());
+    for (int64_t i = 0; i < a.Size(); i++) CHECK(a[i] == before[i]);
+}
+
+TEST_CASE("Testing Empty()") {
+    DynamicArray a;
     CHECK(a.Empty());
 
-    // b is not empty
-    CHECK_FALSE(b.Empty());
+    a.push_back(1);
+    CHECK_FALSE(a.Empty());
+}
 
+TEST_CASE("Testing at()") {
+    DynamicArray a;
     CHECK_THROWS_WITH(a.at(1), "Index is out of range");
 
-    int64_t old_size = b.Size();
-    b.push_back(-9);
-    CHECK(b.Size() == old_size + 1);
-    CHECK(b[b.Size() - 1] == -9);
+    a.push_back(1);
+    CHECK(a.at(0) == 1);
+}
 
-    DynamicArray d_copy(d);
-    Reallocate(d, 50);
+TEST_CASE("Testing operator =") {
+    DynamicArray a = {1, 2, 3};
+    DynamicArray b;
 
-    CHECK(d_copy.Size() == d.Size());
-    CHECK(d.Capacity() == d_copy.Capacity());
-    for (int64_t i = 0; i < d.Size(); ++i) CHECK(d[i] == d_copy[i]);
-
-
-    old_size = d.Size();
-    d.pop_back();
-    CHECK(d.Size() == old_size - 1);
-    for (int64_t i = 0; i < d.Size(); ++i) CHECK(d[i] == d_copy[i]);
-
-    CHECK_THROWS_WITH(a.pop_back(), "Array is empty"); // pop_back() on empty array
-
-    d.clear();
-    CHECK(d.Empty());
-
-    // b = {4, 4, 4, 4, 4, -9};
-
-    DynamicArray b_copy(b);
-    b.erase(0);
-    CHECK(b.Size() == b_copy.Size() - 1);
-    for (int64_t i = 0; i < b.Size(); ++i) CHECK(b[i] == b_copy[i + 1]);
-
-    b.erase(3);
-    CHECK(b.Size() == b_copy.Size() - 2);
-
-    for (int64_t i = 0; i < b.Size(); ++i) {
-        if (i >= 3) {
-            CHECK(b[i] == b_copy[i + 2]);
-            continue;
-        }
-        CHECK(b[i] == b_copy[i + 1]);
-    }
-
-    b.erase(b.Size() - 1);
-
-    CHECK(b.Size() == b_copy.Size() - 3);
-
-    for (int64_t i = 0; i < b.Size(); ++i) {
-        if (i >= 3) {
-            CHECK(b[i] == b_copy[i + 2]);
-            continue;
-        }
-        CHECK(b[i] == b_copy[i + 1]);
-    }
-
-
-    old_size = b.Size();
-    b.resize(23, 125);
-    CHECK(b.Size() == 23);
-    for (int64_t i = 0; i < old_size; ++i) CHECK(b[i] == 0);
-
-    for (int64_t i = old_size + 1; i < b.Size(); ++i) CHECK(b[i] == 125);
-
-
-    CHECK_THROWS_WITH(b.resize(-16, 8), "Size must be positive");
-
-    b.resize(0);
-    CHECK(b.Empty());
-
-    b.assign(14, 52);
-    CHECK(b.Size() == 14);
-    for (int64_t i = 0; i < b.Size(); ++i) CHECK(b[i] == 52);
-
-
-    CHECK_THROWS_WITH(b.assign(-16, 8), "Size must be positive");
-
-    b.assign(0);
-    CHECK(b.Empty());
-    CHECK(b.end() == b.GetData() + 0);
-
-    int64_t old_size_c = c.Size();
-    int64_t old_size_d = d.Size();
-    int64_t old_capacity_c = c.Capacity();
-    int64_t old_capacity_d = d.Capacity();
-    int* old_data_c = c.GetData();
-    int* old_data_d = d.GetData();
-    d.swap(c);
-    CHECK(d.Size() == old_size_c);
-    CHECK(c.Size() == old_size_d);
-    CHECK(d.Capacity() == old_capacity_c);
-    CHECK(c.Capacity() == old_capacity_d);
-    CHECK(d.GetData() == old_data_c);
-    CHECK(c.GetData() == old_data_d);
-
-    d_copy = d;
-    d.insert(0, 75);
-    CHECK(d[0] == 75);
-    for (int64_t i = 1; i < d.Size(); ++i) CHECK(d[i] == d_copy[i - 1]);
-
-    d_copy = d;
-    d.insert(4, 32);
-    CHECK(d[4] == 32);
-    for (int64_t i = 0; i < d.Size(); ++i) {
-        if (i == 4) {
-            continue;
-        }
-        if (i > 4) {
-            CHECK(d[i] == d_copy[i - 1]);
-            continue;
-        }
-        CHECK(d[i] == d_copy[i]);
-    }
-    d_copy = d;
-    d.insert(7, 0);
-    CHECK(d[7] == 0);
-    for (int64_t i = 0; i < d.Size(); ++i) {
-        if (i == 7) {
-            continue;
-        }
-        CHECK(d[i] == d_copy[i]);
-    }
+    b = a;
+    CHECK(b.Size() == a.Size());
+    CHECK(b.Capacity() == a.Capacity());
+    for (int64_t i = 0; i < b.Size(); i++) CHECK(b[i] == a[i]);
 }

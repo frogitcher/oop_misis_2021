@@ -12,7 +12,7 @@
 
 class DynamicArray {
 public:
-    [[maybe_unused]] DynamicArray(int64_t size=0, int value = 0);
+    DynamicArray(int64_t size=0, int value = 0);
     DynamicArray(const DynamicArray& other);
     DynamicArray(const  std::initializer_list<int>& list);
     ~DynamicArray();
@@ -37,11 +37,11 @@ public:
     void insert(int64_t index, int value);
     void swap(DynamicArray& other);
 
-    inline int* begin() {
+    inline int* begin() const{
         return data;
     }
 
-    inline int* end() {
+    inline  int* end() const{
         return data + size;
     }
 
@@ -53,13 +53,13 @@ public:
     DynamicArray& operator=(const DynamicArray& rhs);
 
     bool operator==(const DynamicArray& rhs) const {
-        return std::equal<int*, int*>(data, data + size, rhs.data);
+        return size == rhs.size && std::equal<int*, int*>(data, data + size, rhs.data);
     }
     inline bool operator!=(const DynamicArray& rhs) const {
         return !(*this == rhs);
     }
 
-    inline friend void Reallocate(DynamicArray& da, int64_t new_size) {
+    inline void Reallocate(DynamicArray& da, int64_t new_size) {
         da.reallocate(new_size);
     }
 
