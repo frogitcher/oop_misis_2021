@@ -5,14 +5,12 @@ void DynamicArray::push_back(int value) {
 	if (size == capacity) {
 		if (capacity == 0) {
 			int* nw_data = new int[1];
-			std::copy(data, data + capacity, nw_data);
 			delete[]data;
 			data = nw_data;
-			capacity *= 2;
+			capacity = 1;
 		}
 		else {
-			int* nw_data = new int[capacity * 2];
-			std::copy(data, data + capacity, nw_data);
+			std::copy(data, data + size, nw_data);
 			delete[]data;
 			data = nw_data;
 			capacity *= 2;
@@ -34,7 +32,7 @@ DynamicArray::DynamicArray(int _size, int value)
 DynamicArray::DynamicArray(const DynamicArray& other)
 	: size(other.size)
 	, capacity(other.capacity) {
-	data = new int[size];
+	data = new int[capacity];
 	for (int i = 0; i < size; i++) {
 		data[i] = other.data[i];
 	}
@@ -91,12 +89,12 @@ void DynamicArray::ResizeArray(int nwcapacity) {
 }
 
 int& DynamicArray::operator[](int i) const {
-	return at(i);;
+	return *(data + i);
 }
 
 
 int& DynamicArray::at(int i) const{
-	if (i >= size) {
+	if ((i >= size) && (i < 0)) {
 		throw std::out_of_range("Index out of range");
 	}
 	else
@@ -116,14 +114,11 @@ void DynamicArray::pop_back() {
 }
 
 void DynamicArray::clear() {
-	delete[]data;
-	data = new int[0];
 	size = 0;
-	capacity = 0;
 }
 
 void DynamicArray::erase(int i) {
-	if (i >= size) {
+	if ((i >= size) && (i<0) ){
 		throw std::out_of_range("Index out of range");
 	}
 	else
@@ -158,7 +153,7 @@ void DynamicArray::assign(int nwsize, int value) {
 }
 
 void DynamicArray::insert(int i, int value) {
-	if (i >= size) {
+	if ((i >= size) && (i<0)) {
 		throw std::out_of_range("Index out of range");
 	}
 	if (i == size) {
@@ -178,7 +173,7 @@ int* DynamicArray::begin() const {
 }
 
 int* DynamicArray::end() const {
-	return data + size - 1;
+	return data + size;
 }
 
 void DynamicArray::swap(DynamicArray& other) {
