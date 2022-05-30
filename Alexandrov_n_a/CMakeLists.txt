@@ -22,3 +22,4 @@ include_directories(${DOCTEST_INCLUDE_DIR})
 
 add_subdirectory(Hello_World)
 add_subdirectory(rational)
+add_subdirectory(dinmas)

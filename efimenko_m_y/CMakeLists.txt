@@ -5,3 +5,5 @@ project(OOP)
 include_directories(doctest)
 
 add_subdirectory(Rational)
+add_subdirectory(Dynamic)
+
