@@ -24,11 +24,11 @@ dynamicarray::~dynamicarray() {
 }
 
 void dynamicarray::reallocate(size_t new_capacity) {
-		int* new_data = new int[new_capacity];
-		std::copy(data, data + size, new_data);
-		delete[] data;
-		data = new_data;
-		capacity = new_capacity;
+	int* new_data = new int[new_capacity];
+	std::copy(data, data + size, new_data);
+	delete[] data;
+	data = new_data;
+	capacity = new_capacity;
 }
 
 size_t dynamicarray::Size() const
@@ -83,8 +83,7 @@ void dynamicarray::erase(size_t index)
 	if (index < 0 || index >= size)
 		throw std::invalid_argument("index out of range");
 	else
-		for (; index < size - 1; index++)
-			data[index] = data[index + 1];
+		std::copy(data + index + 1, data + size, data + index);
 	size--;
 }
 
@@ -105,8 +104,7 @@ void dynamicarray::resize(size_t new_size)
 	if (new_size >= capacity) {
 		reallocate(std::max(new_size, 2 * capacity));
 	}
-	for (size_t index = size; index < new_size; index++)
-		data[index] = 0;
+	std::fill(data + size, data + new_size, 0);
 	size = new_size;
 }
 
@@ -122,29 +120,23 @@ void dynamicarray::insert(size_t index, int value)
 	if (index > size || index < 0)
 		throw std::invalid_argument("index out of range");
 	push_back(0);
-	for (size_t i = index + 1; i < size; i++)
-		data[i-1] = data[i];
+	std::copy_backward(data + index, data + size - 1, data + size);
 	data[index] = value;
 }
 
-int* dynamicarray::begin()
+int* dynamicarray::begin() const
 {
 	return data;
 }
 
-int* dynamicarray::end()
+int* dynamicarray::end() const
 {
 	return data+size;
 }
 
 bool dynamicarray::operator==(const dynamicarray& other) const
 {
-	if (size != other.size)
-		return 0;
-	for (int i = 0; i < size; i++)
-		if (data[i] != other.data[i])
-			return 0;
-	return 1;
+	return std::equal(data, data + size, other.data, other.data + other.size);
 }
 
 bool dynamicarray::operator!=(const dynamicarray& other) const
@@ -155,7 +147,6 @@ bool dynamicarray::operator!=(const dynamicarray& other) const
 dynamicarray& dynamicarray::operator=(const dynamicarray& other)
 {
 	resize(other.size);
-	for (int i = 0; i < size; i++)
-		data[i] = other.data[i];
+	std::copy(other.data, other.data + other.size, data);
 	return *this;
 }
