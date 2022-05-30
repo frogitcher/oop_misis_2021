@@ -42,9 +42,6 @@ private:
 template<typename T>
 myStack<T>::myStack(const myStack<T>& st) {
     copy(st);
-    st.head = nullptr;
-    st.tail = nullptr;
-    st.size = 0;
 }
 
 template <typename T>
@@ -73,9 +70,14 @@ myStack<T>::~myStack() {
 template <typename T>
 void myStack<T>::copy(const myStack<T>& st) {
     Node* n = st.head;
+    myStack t;
     for (size_t i = st.getSize() - 1; i >= 0; i--) {
-        this->push(n->value);
+        t.push(n->value);
         n = n->next;
+    }
+    for (size_t i = st.getSize() - 1; i >= 0; i--) {
+        this->push(t.get());
+        t.pop();
     }
 }
 
@@ -99,7 +101,7 @@ void myStack<T>::pop() {
     head = new_head;
     size--;
     if (size == 0) {
-        tail == nullptr
+        tail == nullptr;
     }
 }
 
@@ -139,13 +141,15 @@ void myStack<T>::swap(myStack<T>& st) {
 
 template <typename T>
 void myStack<T>::merge(myStack<T>& st) {
-    st.tail->next = head;
-    head = st.head;
-    size += st.size;
+    if (!st.empty()) {
+        st.tail->next = head;
+        head = st.head;
+        size += st.size;
 
-    st.size = 0;
-    st.head = nullptr;
-    st.tail = nullptr;
+        st.size = 0;
+        st.head = nullptr;
+        st.tail = nullptr;
+    }
 }
 
 
