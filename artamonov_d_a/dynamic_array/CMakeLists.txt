@@ -1,0 +1,4 @@
+add_library(dynamic_array dynamic_array.h dynamic_array.cpp)
+
+add_executable(dynamic_array_test test.cpp)
+target_link_libraries(dynamic_array_test dynamic_array)
