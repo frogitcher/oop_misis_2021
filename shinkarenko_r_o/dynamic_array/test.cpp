@@ -69,7 +69,6 @@ TEST_CASE("Test dynamic array") {
 	std::sort(b_1.begin(), b_1.end());
 	CHECK(b_1 == DynamicArray({ 1, 2, 3, 4 }));
 
-	CHECK_THROWS_WITH(b_1[10], "Index is out of range");
 	CHECK_THROWS_WITH(b_1.at(10), "Index is out of range");
 	CHECK_THROWS_WITH(b_1.resize(-123, 0), "Array size must be positive");
 

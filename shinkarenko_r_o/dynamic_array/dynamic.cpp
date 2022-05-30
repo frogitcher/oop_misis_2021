@@ -10,11 +10,11 @@ void DynamicArray::realloc(size_t new_capacity) {
 	capacity = new_capacity;
 }
 
-int* DynamicArray::begin() {
+int* DynamicArray::begin() const {
 	return data;
 }
 
-int* DynamicArray::end() {
+int* DynamicArray::end() const {
 	return data + size;
 }
 
@@ -35,7 +35,7 @@ DynamicArray::DynamicArray(size_t _size, int value)
 
 DynamicArray::DynamicArray(const DynamicArray& other)
 	: size(other.size)
-	, capacity(other.size)
+	, capacity(other.capacity)
 	, data(nullptr) {
 	data = new int[capacity];
 	std::copy(other.data, other.data + other.size, data);
@@ -65,13 +65,8 @@ bool DynamicArray::Empty() const {
 	return (size == 0);
 }
 
-int& DynamicArray::operator[](size_t i) {
-	if (i >= size) {
-		throw std::invalid_argument("Index is out of range");
-	}
-	else {
+int& DynamicArray::operator[](size_t i) const{
 		return data[i];
-	}
 }
 
 int& DynamicArray::at(size_t i) const {
@@ -84,8 +79,11 @@ int& DynamicArray::at(size_t i) const {
 }
 
 DynamicArray& DynamicArray::operator=(const DynamicArray& other) {
+
 	size = other.size;
-	capacity = other.capacity;
+	if (other.size > capacity) {
+		realloc(other.capacity);
+	}
 	std::copy(other.data, other.data + other.size, data);
 	return *this;
 
@@ -93,10 +91,7 @@ DynamicArray& DynamicArray::operator=(const DynamicArray& other) {
 
 bool DynamicArray::operator==(const DynamicArray& other) const {
 	if (size == other.size) {
-		for (int i = 0; i < size; ++i) {
-			if (data[i] != other.data[i]) return false;
-		}
-		return true;
+		return std::equal(data, data + size, other.data);
 	}
 	return false;
 }
@@ -121,12 +116,10 @@ void DynamicArray::resize(int new_size, int value) {
 }
 
 void DynamicArray::push_back(int value) {
-	if (size >= capacity) {
-		if (capacity == 0) {
-			capacity = 1;
-		}
-		realloc(capacity);
+	if (capacity == 0) {
+		capacity = 1;
 	}
+	realloc(capacity + 1);
 	data[size++] = value;
 }
 
@@ -153,11 +146,14 @@ void DynamicArray::erase(size_t idx) {
 
 void DynamicArray::insert(size_t idx, int value) {
 	resize(size + 1, 0);
-	if (idx >= size) {
+	if (idx > size) {
 		throw std::range_error("Index is out of range");
 	}
-	for (int i = idx + 1; i < size; ++i) {
-		data[i] = data[i - 1];
+	if (idx == size) {
+		push_back(value);
+	}
+	else {
+		std::copy_backward(data + idx, data + size + 1, data + size);
 	}
 	data[idx] = value;
 }

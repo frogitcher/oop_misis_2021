@@ -15,7 +15,7 @@ public:
 	size_t Capacity() const;
 	bool Empty() const;
 	
-	int& operator[](size_t i);
+	int& operator[](size_t i) const;
 	int& at(size_t i) const;
 
 	void push_back(int value);
@@ -24,8 +24,8 @@ public:
 	void erase(size_t index);
 	void insert(size_t idx, int value);
 	void resize(int new_size, int value);
-	int* begin();
-	int* end();
+	int* begin() const;
+	int* end() const;
 
 	void swap(DynamicArray& other);
 	bool operator==(const DynamicArray& other) const;
