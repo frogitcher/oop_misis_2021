@@ -18,10 +18,10 @@ class stack {
       next = next;
     }
   };
-  stack<T>() = default;
-  stack<T>(const stack<T> &other);
-  stack<T>(stack<T> &&other);
-  stack<T>(const std::initializer_list<T> &list);
+  stack();
+  stack(const stack<T> &other);
+  stack(stack<T> &&other);
+  stack(const std::initializer_list<T> &list);
   ~stack();
 
   void push(const T &value);
@@ -49,6 +49,13 @@ class stack {
 };
 
 template <typename T>
+stack<T>::stack() {
+  tail = nullptr;
+  head = nullptr;
+  size = 0;
+}
+
+template <typename T>
 stack<T>::stack(const stack<T> &other) {
   *this = other;
 }
@@ -73,6 +80,13 @@ void stack<T>::clear() {
   while (!this->empty()) {
     this->pop();
   }
+}
+
+template <typename T>
+void stack<T>::push(const T &value) {
+  node *n = new node(value, head);
+  head = n;
+  size += 1;
 }
 
 template <typename T>
@@ -104,6 +118,7 @@ template <typename T>
 void stack<T>::merge(stack<T> &other) {
   tail->next = other.head;
   tail = other.tail;
+  size += other.size;
   other.head = nullptr;
   other.tail = nullptr;
   other.size = 0;

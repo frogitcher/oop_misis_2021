@@ -10,7 +10,6 @@ TEST_CASE_TEMPLATE("Testing constructors", T, int, double, float, long long,
                    unsigned long long) {
   stack<T> a;
   CHECK(a.Size() == 0);
-  CHECK(a.get_head() == nullptr);
 
   stack<T> b(a);
   CHECK(b.Size() == a.Size());
