@@ -97,6 +97,8 @@ void Stack<T>::Pop()
 template <typename T>
 T& Stack<T>::Get() const
 {
+    if (size == 0)
+        throw std::logic_error("stack is empty");
     return head -> value;
 }
 
@@ -123,6 +125,18 @@ void Stack<T>::Swap(Stack<T>& rhs)
 template <typename T>
 void Stack<T>::Merge(Stack<T>& rhs) // putting rhs on self stack
 {
+    if (size == 0)
+    {
+        head = rhs.head;
+        tail = rhs.tail;
+        size = rhs.size;
+        rhs.head = nullptr;
+        rhs.tail = nullptr;
+        rhs.size = 0;
+        return;
+    }
+    if (rhs.size == 0)
+        return;
     rhs.tail->next = head;
     head = rhs.head;
     size = size + rhs.size;
@@ -144,15 +158,18 @@ template <typename T>
 Stack<T>& Stack<T>::operator=(const Stack<T>& rhs)
 {
     Clear();
+    if (rhs.size == 0)
+        return *this;
     Node* prev_pointer = nullptr;
-    head = new Node{rhs.head -> value, rhs.head -> next};
+    head = new Node{rhs.head -> value, nullptr};
     tail = head;
     prev_pointer = head;
     ++size;
     for (Node* pointer = rhs.head -> next; pointer != nullptr; pointer = pointer->next)
     {
-        prev_pointer -> next = pointer;
-        tail = new Node{pointer -> value, pointer -> next};
+
+        tail = new Node{pointer -> value, nullptr};
+        prev_pointer -> next = tail;
         prev_pointer = tail;
         ++size;
     }

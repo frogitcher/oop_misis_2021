@@ -67,7 +67,7 @@ TEST_CASE("b") {
 }
 
 TEST_CASE("c") {
-    Stack<int> s1{1,2,3}, s2{4,5,6};
+    Stack<int> s1{1,2,3}, s2{4,5,6}, s3{1,2,3}, s4{4,5,6}, s5{};
     SUBCASE("Testing merge"){
         s1.Merge(s2);
         for (int i = 6; i >= 1; i--)
@@ -76,6 +76,17 @@ TEST_CASE("c") {
             s1.Pop();
         }
         CHECK(s2.Size() == 0);
+        CHECK(s1.Size() == 0);
+        s1.Merge(s3);
+        CHECK(s1.Size() == 3);
+        s1.Merge(s4);
+        CHECK(s1.Size() == 6);
+        s1.Merge(s5);
+        for (int i = 6; i >= 1; i--)
+        {
+            CHECK(s1.Get() == i);
+            s1.Pop();
+        }
     }
 }
 
