@@ -3,7 +3,6 @@ cmake_minimum_required(VERSION 3.0)
 include(ExternalProject)
 find_package(Git REQUIRED)
 
-project(some)
 ExternalProject_Add(
     doctest
     PREFIX ${CMAKE_BINARY_DIR}/doctest
@@ -21,5 +20,4 @@ ExternalProject_Get_Property(doctest source_dir)
 set(DOCTEST_INCLUDE_DIR ${source_dir}/doctest CACHE INTERNAL "Path to include folder for doctest")
 include_directories(${DOCTEST_INCLUDE_DIR})
 
-add_subdirectory(Rational)
-
+add_subdirectory(stack)
