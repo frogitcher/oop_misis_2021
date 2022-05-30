@@ -61,7 +61,6 @@ TEST_CASE("Testing push_back() and pop_back()") {
     CHECK(b.Size() == 2);
     CHECK(b[0] == 1);
     CHECK(b[1] == 2);
-    CHECK_THROWS_WITH(b[2], "Index is out of range");
     b.pop_back();
     CHECK(b.Size() == 1);
     b.pop_back();
@@ -122,6 +121,12 @@ TEST_CASE("Testing insert()") {
     a.insert(2, 5);
     CHECK(a.Size() == 5);
     for (int64_t i = 0; i < a.Size(); ++i) CHECK(a[i] == b[i]);
+
+    DynamicArray c = {1, 2, 3};
+    DynamicArray d = {1, 2, 3, 4};
+    c.insert(3, 4);
+    CHECK(c.Size() == 4);
+    CHECK(c == d);
 }
 
 TEST_CASE("Testing swap()") {

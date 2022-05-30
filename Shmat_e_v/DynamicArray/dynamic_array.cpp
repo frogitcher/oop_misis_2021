@@ -12,7 +12,7 @@ DynamicArray::DynamicArray(int64_t _size, int _value) : size(_size), capacity(_s
 }
 
 DynamicArray::DynamicArray(const DynamicArray &rhs) : size(rhs.size), capacity(rhs.capacity) {
-  data = new int[size];
+  data = new int[capacity];
   std::copy(rhs.data, rhs.data + size, data);
 }
 
@@ -34,10 +34,19 @@ int *DynamicArray::end() const {
 }
 
 DynamicArray &DynamicArray::operator=(const DynamicArray &rhs) {
-  size = rhs.size;
-  capacity = rhs.capacity;
+  if (rhs.size > capacity) {
+    int *new_data = new int[rhs.size];
+    std::copy(rhs.data, rhs.data + rhs.size, new_data);
+    delete[] data;
 
-  std::copy(rhs.data, rhs.data + rhs.size, data);
+    data = new_data;
+    capacity = rhs.size;
+    size = rhs.size;
+  } else {
+    std::copy(rhs.data, rhs.data + rhs.size, data);
+    size = rhs.size;
+  }
+
   return *this;
 }
 
@@ -54,9 +63,6 @@ bool DynamicArray::Empty() const {
 }
 
 int &DynamicArray::operator[](const int64_t index) {
-  if (index < 0 || index >= size) {
-    throw std::out_of_range("Index is out of range");
-  }
   return *(data + index);
 }
 
@@ -78,7 +84,7 @@ void DynamicArray::reallocate(int64_t new_size) {
   std::copy(begin(), end(), new_data);
   delete[] data;
   data = new_data;
-  
+
   capacity = new_capacity;
 }
 
@@ -106,12 +112,17 @@ void DynamicArray::erase(int64_t index) {
 }
 
 void DynamicArray::insert(int64_t index, int insert_value) {
-  if (index < 0 || index >= size) {
+  if (index < 0 || index > size) {
     throw std::length_error("Index is out of range");
   }
   if (size == capacity) {
     if (capacity == 0) capacity++;
     reallocate(size + 1);
+  }
+
+  if (index == size) {
+    push_back(insert_value);
+    return;
   }
 
   std::copy_backward(data + index, data + size, data + size + 1);
@@ -129,7 +140,7 @@ void DynamicArray::resize(int64_t new_size, int value) {
   }
   reallocate(new_size);
   if (new_size > size) {
-    std::fill(begin() + ((size <= new_size) ? size : 0), begin() + new_size, value);
+    std::fill(begin() + size, begin() + new_size, value);
   }
   size = new_size;
 }
