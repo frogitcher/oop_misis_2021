@@ -99,20 +99,20 @@ rational rational::operator+() const{
 	return *this;
 }
 
-bool rational::operator<(const rational& rhs) const {
-	return num * rhs.den < den * rhs.num;
-}
-
 bool rational::operator<=(const rational& rhs) const {
 	return num * rhs.den <= den* rhs.num;
 }
 
 bool rational::operator>(const rational& rhs) const {
-	return num * rhs.den > den* rhs.num;
+	return !(*this<=rhs);
 }
 
 bool rational::operator>=(const rational& rhs) const {
 	return num * rhs.den >= den* rhs.num;
+}
+
+bool rational::operator<(const rational& rhs) const {
+	return !(*this >= rhs);
 }
 
 bool rational::operator==(const rational& rhs) const {
