@@ -27,8 +27,8 @@ public:
 	void swap(dynamicarray& other);
 	void insert(size_t index, int value);
 
-	int* begin();
-	int* end();
+	int* begin() const;
+	int* end() const;
 
 	bool operator==(const dynamicarray& other) const;
 	bool operator!=(const dynamicarray& other) const;
