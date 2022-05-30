@@ -86,6 +86,10 @@ void Stack<T>::pop() {
     throw std::length_error("Stack is empty");
   }
 
+  if (size == 1) {
+    tail = nullptr;
+  }
+
   Node *temp = head->next;
   delete head;
   head = temp;
@@ -107,12 +111,14 @@ void Stack<T>::swap(Stack<T> &other) {
 
 template<typename T>
 void Stack<T>::merge(Stack<T> &other) {
-  tail->next = other.head;
-  tail = other.tail;
-  size = size + other.Size();
-  other.tail = nullptr;
-  other.head = nullptr;
-  other.size = 0;
+  if (other.size != 0) {
+    tail->next = other.head;
+    tail = other.tail;
+    size = size + other.Size();
+    other.tail = nullptr;
+    other.head = nullptr;
+    other.size = 0;
+  }
 }
 
 template<typename T>
@@ -161,6 +167,8 @@ bool Stack<T>::operator!=(const Stack<T> &other) const {
 
 template<typename T>
 Stack<T> &Stack<T>::operator=(Stack<T> &&other) {
+  clear();
+
   head = other.head;
   tail = other.tail;
   size = other.size;
