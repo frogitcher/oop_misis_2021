@@ -100,5 +100,5 @@ TEST_CASE("func tests") {
 	CHECK((a.size() == 5) == 1);
 
 	a.resize(14);
-	CHECK((a.capacity() == 14) == 1);
+	CHECK((a.size() == 14) == 1);
 }

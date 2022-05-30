@@ -27,9 +27,8 @@ dynamic::dynamic(const std::initializer_list<_int64>& list) {
 dynamic::dynamic(const dynamic& other) {
 	Size = other.Size;
 	Capacity = other.Capacity;
-	data = new _int64[Size];
-	for (int i = 0; i < Size; i++)
-		data[i] = other.data[i];
+	data = new _int64[Capacity];
+	std::copy(other.begin(), other.end(), this->begin());
 }
 
 dynamic::~dynamic() {
@@ -45,13 +44,12 @@ size_t dynamic::capacity() const {
 }
 
 bool dynamic::empty() const {
-	return (Size == 0 ? 1 : 0);
+	return (Size == 0);
 }
 
 void dynamic::push_back(_int64 value) {
-	if (Capacity == Size)
-		this->resize(Capacity * 2 + 1);
-	data[Size++] = value;
+	this->resize(Size + 1);
+	data[Size - 1] = value;
 }
 
 void dynamic::pop_back() {
@@ -65,9 +63,8 @@ void dynamic::clear() {
 void dynamic::erase(unsigned _int64 pos) {
 	if (0 > pos || pos >= Size)
 		throw std::invalid_argument("Position outside of array");
+	std::copy(this->begin() + pos + 1, this->end(), this->begin() + pos);
 	Size--;
-	for (int i = pos; i < Size; i++)
-		data[i] = data[i + 1];
 }
 
 void dynamic::erase(_int64* pos) {
@@ -78,31 +75,30 @@ void dynamic::erase(_int64* pos) {
 void dynamic::resize(unsigned _int64 size) {
 	if(size < 0)
 		throw std::invalid_argument("Wrong sign of new size");
-	_int64* tmp = new _int64[size];
-	for (int i = 0; i < Size; i++)
-		tmp[i] = data[i];
-	delete[] data;
-	data = tmp;
-	Capacity = size;
+	while (Capacity < size) {
+		_int64* tmp = new _int64[Capacity * 2 + 1];
+		std::copy(this->begin(), this->end(), tmp);
+		delete[] data;
+		data = tmp;
+		Capacity = Capacity * 2 + 1;
+	}
+	std::fill(this->begin() + Size, this->begin() + size, 0);
+	Size = size;
 }
 
 void dynamic::assign(unsigned _int64 size, _int64 value) {
 	if (size < 0)
 		throw std::invalid_argument("Wrong sign of new size");
 	this->resize(size);
-	Size = size;
 	std::fill(data, data + Size, value);
 }
 
 void dynamic::insert(unsigned _int64 pos, _int64 value) {
 	if (0 > pos || pos > Size)
 		throw std::invalid_argument("Position outside of array");
-	if (Capacity == Size)
-		this->resize(Capacity * 2 + 1);
-	for (int i = Size; i != pos; i--)
-		data[i] = data[i - 1];
-	Size++;
-	data[pos] = value;	
+	this->resize(Size + 1);
+	std::copy(this->begin() + pos, this->end() - 1, this->begin() + pos + 1);
+	data[pos] = value;
 }
 
 void dynamic::insert(_int64* pos, _int64 value) {
@@ -116,23 +112,19 @@ void dynamic::swap(dynamic& other) {
 	std::swap(data, other.data);
 }
 
-_int64* dynamic::begin() {
+_int64* dynamic::begin() const {
 	return data;
 }
 
-_int64* dynamic::end() {
+_int64* dynamic::end() const {
 	return data + Size;
 }
 
 _int64& dynamic::at(unsigned _int64 pos) const {
-	if (0 > pos || pos >= Size)
-		throw std::invalid_argument("Position outside of array");
 	return *(data + pos);
 }
 
 _int64& dynamic::operator[](unsigned _int64 pos) const {
-	if (0 > pos || pos >= Size)
-		throw std::invalid_argument("Position outside of array");
 	return *(data + pos);
 }
 
@@ -143,31 +135,18 @@ dynamic& dynamic::operator=(const dynamic& rhs) {
 		delete[] data;
 		_int64* tmp = new _int64[Size];
 		data = tmp;
-		delete[] tmp;
 	}
-	for (int i = 0; i < Size; i++)
-		data[i] = rhs.data[i];
+	std::copy(rhs.begin(), rhs.end(), data);
 	return *this;
 }
 
 bool dynamic::operator==(const dynamic& rhs) const {
-	if (Size == rhs.Size) {
-		for (int i = 0; i < Size; i++)
-			if (data[i] != rhs.data[i])
-				return 0;
-			return 1;
-	}
+	if (Size == rhs.Size)
+		return std::equal(this->begin(), this->end(), rhs.begin(), rhs.end());
 	else
 		return 0;
 }
 
 bool dynamic::operator!=(const dynamic& rhs) const {
-	if (Size == rhs.Size) {
-		for (int i = 0; i < Size; i++)
-			if (data[i] != rhs.data[i])
-				return 1;
-		return 0;
-	}
-	else
-		return 1;
+	return !(*this == rhs);
 }

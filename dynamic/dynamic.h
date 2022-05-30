@@ -28,8 +28,8 @@ public:
     void insert(_int64* pos, _int64 value);
     void swap(dynamic& other);
 
-    _int64* begin();
-    _int64* end();
+    _int64* begin() const;
+    _int64* end() const;
 
     _int64& at(unsigned _int64 pos) const;
     _int64& operator[](unsigned _int64 pos) const;
