@@ -20,8 +20,6 @@ public:
     Stack(const Stack& st);
     Stack(const std::initializer_list<T>& list);
     Stack(Stack<T>&& st);
-
-    void Set_head(T value, Node* next);
     ~Stack();
 
     void Push(const T& value);
@@ -37,7 +35,6 @@ public:
 	void Swap(Stack& some_stack);
 	void Merge(Stack& some_stack);
 	void Clear();
-    void SetHead(T value, Node* next);
 
     bool operator==(const Stack<T>& some_stack) const;
     bool operator!= (const Stack<T>& some_stack) const;
@@ -116,8 +113,10 @@ void Stack<T>::Pop() {
     Node* new_head = head->next;
     delete head;
     head = new_head;
-
     Stack_size--;
+    if(Stack_size == 0) {
+        tail = nullptr;
+    }
 }
 
 template<typename T>
@@ -134,7 +133,7 @@ void Stack<T>::Swap(Stack<T>& some_stack){
     std::swap(tail, some_stack.tail);
     std::swap(Stack_size, some_stack.Stack_size);
 }
-/////////////////////////////////////////////////////////////
+
 template <typename T>
 bool Stack<T>::operator==(const Stack<T>& some_stack) const {
     if (Stack_size != some_stack.Stack_size){
@@ -158,11 +157,14 @@ bool Stack<T>::operator!= (const Stack<T>& some_stack) const {
 
 template <typename T>
 void Stack<T>::Merge(Stack<T>& some_stack) {
-
-    tail->next = some_stack.head;
-    tail = some_stack.tail;
-    Stack_size += some_stack.Stack_size;
-    some_stack.Clear();
+    if(!some_stack.Empty()) {
+        tail->next = some_stack.head;
+        tail = some_stack.tail;
+        Stack_size += some_stack.Stack_size;
+        some_stack.head = nullptr;
+        some_stack.tail = nullptr;
+        some_stack.Stack_size = 0;
+    }
 }
 
 template <typename T>

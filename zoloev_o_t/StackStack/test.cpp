@@ -74,7 +74,9 @@ TEST_CASE("Testing Merge, Clear") {
     Stack<int> a({1, 2, 3, 4, 5});
     Stack<int> d {1, 2, 3};
 	a.Merge(d);
-	CHECK(a.Size() == 8);
+	a.GetHead();
+	Stack<int> ad({1, 2, 3, 1, 2, 3, 4, 5});
+	CHECK(a == ad);
 	CHECK(d.Size() == 0);
 	a.Clear();
 	CHECK(a.Size() == 0);
