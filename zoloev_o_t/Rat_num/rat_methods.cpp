@@ -23,6 +23,8 @@ Rational::Rational(const Rational& other) = default;
 
 Rational::~Rational() = default;
 
+Rational& Rational::operator=(const Rational& rhs) = default;
+
 void Rational::View() {
 
     if (this->numerator == 0) {

@@ -35,6 +35,10 @@ TEST_CASE("testing base arithmetic operations") {
     CHECK((Rational(5, 1) *= Rational(9, 5)) == Rational(9, 1));
     CHECK((Rational(7, 2) -= Rational(2, 2)) == Rational(5, 2));
     CHECK((Rational(100, 4) /= Rational(5, 1)) == Rational(5, 1));
+    Rational a(1, 2);
+    Rational b(2, 3);
+    a = b;
+    CHECK(a == b);
 }
 
 TEST_CASE("testing relationals operators") {
