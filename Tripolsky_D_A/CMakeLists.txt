@@ -5,4 +5,5 @@ project(project)
 set(DOCTEST_INCLUDE_DIR doctest/doctest)
 include_directories(${DOCTEST_INCLUDE_DIR})
 
+add_subdirectory(dynamic_array)
 
