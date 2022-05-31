@@ -24,3 +24,5 @@ include_directories(doctest)
 add_subdirectory(Rational)
 
 add_subdirectory(dynamic_array)
+
+add_subdirectory(matrix)
