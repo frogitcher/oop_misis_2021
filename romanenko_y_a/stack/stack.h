@@ -134,7 +134,6 @@ Stack<T>& Stack<T>::operator=(Stack<T>&& st){
 }
 template<typename T>
 Stack<T>& Stack<T>::operator=(const Stack<T>& st) {
-    Clear();
     Copy(st);
     return *this;
 }
