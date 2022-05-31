@@ -4,12 +4,13 @@
 
 #include <stdexcept>
 #include "dynamicarray.h"
-#include <iostream>
+
 
 DynamicArray::DynamicArray(int64_t _size, int _value)
         : size(_size), capacity(_size) {
     data = new int[size];
-    for (int64_t i = 0; i < size; i++) { data[i] = _value; }
+    std::fill(begin(), begin() + size, _value);
+    // for (int64_t i = 0; i < size; i++) { data[i] = _value; }
 }
 
 DynamicArray::DynamicArray(const DynamicArray &other)
@@ -62,6 +63,7 @@ void DynamicArray::resize(int64_t new_size, int value) {
         size = 0;
         return;
     }
+    if(new_size < size) reallocate(new_size);
     reallocate(new_size);
     std::fill(begin() + ((size <= new_size) ? size : 0), begin() + new_size, value);
     size = new_size;
@@ -107,9 +109,10 @@ int &DynamicArray::at(int64_t i) const {
 }
 
 DynamicArray &DynamicArray::operator=(const DynamicArray &rhs) {
+    if (rhs.size > capacity) capacity = rhs.capacity;
     size = rhs.size;
-    capacity = rhs.capacity;
     delete[] data;
+    data = new int[size];
     std::copy(rhs.data, rhs.data + rhs.size, data);
     return *this;
 }

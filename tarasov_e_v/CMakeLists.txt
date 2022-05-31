@@ -1,3 +1,4 @@
 add_subdirectory(dynamic_array)
 add_subdirectory(rational)
 add_subdirectory(stack)
+add_subdirectory(test_stack)
