@@ -1,189 +1,180 @@
 #pragma once
-#include <stdexcept>
 #include <initializer_list>
-#include <cstddef>
-#include <utility>
-
-template<typename T>
+#include <stdexcept>
+template <typename T>
 class Stack {
-	struct Node {
+public:
+	struct Node{
 		T value;
 		Node* next;
 	};
-public:
+
 	Stack() = default;
-	~Stack();
-	Stack(const Stack<T>& stc);
-	Stack(Stack<T>&& stc);
 	Stack(const std::initializer_list<T>& list);
-	
+	Stack(const Stack<T>& other);
+	Stack(Stack<T>&& other);
+	~Stack();
+
+	size_t Size() const;
+	bool Empty() const;
+
+	void Push(const T& value);
 	void Pop();
-	void Push (const T& value);
 	T& Get() const;
-	inline size_t Size() const {
-		return size;
-	}
-	inline bool Empty() const {
-		return size == 0;
-	}
-	inline friend Node* Get_Head(const Stack<T>& stc) {
-		return stc.head;
-	}
-	inline friend Node* Get_Tail(const Stack<T>& stc) {
-		return stc.tail;
-	}
-	void Swap(Stack<T>& stc);
-	void Merge(Stack<T>& stc);
+
+	bool operator==(const Stack<T>& other) const;
+	bool operator!=(const Stack<T>& other) const;
+
+	Stack<T>& operator=(const Stack<T>& other);
+
 	void Clear();
-	Stack<T>& operator=(const Stack<T>& stc);
-	Stack<T>& operator=(Stack<T>&& stc);
-	bool operator==(const Stack<T>& stc) const;
-	inline bool operator!=(const Stack<T>& stc) const {
-		return !(*this == stc);
-	};
-	
+	void Swap(Stack<T>& other);
+	void Merge(Stack<T>& other);
 private:
+	size_t size = 0;
 	Node* head = nullptr;
 	Node* tail = nullptr;
-	size_t size = 0;
-	void Set_Head(T value, Node* next);
 };
 
-template<typename T>
-Stack<T>::~Stack() {
-	Clear();
+template <typename T>
+size_t Stack<T>::Size() const{
+	return size;
 }
 
-template<typename T>
-T& Stack<T>::Get() const {
-	if (head == nullptr) {
-		throw std::length_error("Stack is empty!");
+template <typename T>
+bool Stack<T>::Empty() const{
+	return size==0;
+}
+
+template <typename T>
+void Stack<T>::Push(const T& value){
+	head = new Node{value, head};
+	if (Empty()) {
+		tail = head;
+	}
+	++size;
+}
+
+template <typename T>
+void Stack<T>::Pop() {
+	if (Empty()) {
+		throw std::invalid_argument("Stack is empty!");
+	}
+	else {
+		if (size == 1) {
+			tail = nullptr;
+		}
+		Node* new_head = head->next;
+		delete head;
+		head = new_head;
+		--size;
+	}
+}
+
+template <typename T>
+T& Stack<T>::Get() const{
+	if (Empty()) {
+		throw std::invalid_argument("Stack is empty!");
 	}
 	return head->value;
 }
 
-template<typename T>
-void Stack<T>::Swap(Stack<T>& stc) {
-	std::swap(head, stc.head);
-	std::swap(tail, stc.tail);
-	std::swap(size, stc.size);
-}
-
-template<typename T>
-Stack<T>::Stack(const Stack<T>& stc) {
-	*this = stc;
-}
-
-template<typename T>
-void Stack<T>::Push(const T& value) {
-	Set_Head(value, head);
-	if (tail == nullptr) {
-		tail = head;
-	}
-}
-template<typename T>
-Stack<T>::Stack(const std::initializer_list<T>& list) {
-	for (auto el : list) {
-		Push((T)el);
+template <typename T>
+Stack<T>::Stack(const std::initializer_list<T>& List) {
+	size = 0;
+	for (auto i: List) {
+		Push(i);
 	}
 }
 
-template<typename T>
-void Stack<T>::Pop() {
-	if (Empty()) {
-		throw std::length_error("Stack is empty!");
+template <typename T>
+Stack<T>::Stack(const Stack<T>& other) {
+	*this = other;
+}
+
+template <typename T>
+Stack<T>::Stack(Stack<T>&& other) {
+	head = other.head;
+	tail = other.tail;
+	size = other.Size();
+
+	other.head = nullptr;
+	other.tail = nullptr;
+	other.size = 0;
+}
+
+template <typename T>
+Stack<T>::~Stack() {
+	Clear();
+}
+
+template <typename T>
+bool Stack<T>::operator==(const Stack<T>& other) const{
+	if (size != other.Size()) {
+		return false;
 	}
-	Node* cur = head;
-	head = cur->next;
-	delete cur;
-	if (head == nullptr) {
-		tail == nullptr;
+	else {
+		Node* first = head;
+		Node* second = other.head;
+		for (int i=0; i<size; i++) {
+            if (first->value != second->value) {
+                return false;
+            }
+            else {
+                first = first->next;
+                second = second->next;
+            }
+		}
+		return true;
 	}
-	--size;
 }
 
-
-template<typename T>
-Stack<T>::Stack(Stack<T>&&stc) {
-	head = stc.head;
-	tail = stc.tail;
-	size = stc.size;
-	stc.head = nullptr;
-	stc.tail = nullptr;
-	stc.size = 0;
+template <typename T>
+bool Stack<T>::operator!=(const Stack<T>& other) const{
+	return not(*this == other);
 }
 
-template<typename T>
-void Stack<T>::Merge(Stack<T>& stc) {
-	tail->next = stc.head;
-	tail = stc.tail;
-	size += stc.size;
-	stc.head = nullptr;
-	stc.tail = nullptr;
-	stc.size = 0;
+template <typename T>
+Stack<T>& Stack<T>::operator=(const Stack<T>& other) {
+
+	Clear();
+	if (other.Size() > 0) {
+        head = new Node{other.head->value, nullptr};
+        Node* first = head;
+        Node* second = other.head->next;
+        while (second != nullptr) {
+            first->next = new Node{second->value, nullptr};
+            first = first->next;
+            second = second->next;
+        }
+        tail = first;
+	}
+	size = other.Size();
+	return *this;
+
 }
 
-template<typename T>
+template <typename T>
 void Stack<T>::Clear() {
-	while (size > 0) {
+	while (not Empty()) {
 		Pop();
 	}
 }
 
-template<typename T>
-Stack<T>& Stack<T>::operator=(const Stack<T>& stc) {
-	Clear();
-	if (stc.size != 0) {
-		head = new Node{ stc.head->value, nullptr };
-		Node* cur = stc.head->next;
-		Node* prev = head;
-		while (cur != nullptr) {
-			prev->next = new Node{ cur->value, nullptr };
-			prev = prev->next;
-			cur = cur->next;
-		}
-		tail = prev;
-	}
-	size = stc.size;
-	return *this;
-}
-
-template<typename T>
-Stack<T>& Stack<T>::operator=(Stack<T>&& stc) {
-	head = stc.head;
-	tail = stc.tail;
-	size = stc.size;
-	stc.head = nullptr;
-	stc.tail = nullptr;
-	stc.size = 0;
-	return *this;
-}
-
-template<typename T>
-bool Stack<T>::operator==(const Stack<T>& stc) const {
-	if (size != stc.size) {
-		return false;
-	}
-	Node* a = head;
-	Node* b = stc.head;
-	while (a != nullptr) {
-		if (a->value != b->value) {
-			return false;
-		}
-		a = a->next;
-		b = b->next;
-	}
-	return true;
-}
-
-template<typename T>
-void Stack<T>::Set_Head(T value, Stack::Node* next) {
-	head = new Node{ value, next };
-	++size;
-}
-	
 template <typename T>
-inline typename Stack<T>::Node* Get_Head(const Stack<T>& stc);
+void Stack<T>::Swap(Stack<T>& other) {
+	std::swap(size, other.size);
+	std::swap(head, other.head);
+	std::swap(tail, other.tail);
+}
 
 template <typename T>
-inline typename Stack<T>::Node* Get_Tail(const Stack<T>& stc);
+void Stack<T>::Merge(Stack<T>& other) {
+	tail->next = other.head;
+	tail = other.tail;
+	size = size + other.Size();
+
+	other.head = nullptr;
+	other.tail = nullptr;
+	other.size = 0;
+}
