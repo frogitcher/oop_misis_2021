@@ -75,7 +75,7 @@ template<typename T>
 void Stack<T>::push(const T &value) {
   NewNode(value, head);
 
-  if (size == 0) {
+  if (tail == nullptr) {
     tail = head;
   }
 }
