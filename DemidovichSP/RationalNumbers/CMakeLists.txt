@@ -1,7 +1,4 @@
-project(HelloWorld)
-cmake_minimum_required(VERSION 3.21)
-set(CMAKE_CXX_STANDARD 14)
-add_compile_options(-std=c++17)
+project(RationalNumbers)
 
 cmake_minimum_required(VERSION 3.0)
 add_compile_options(-std=c++17)
@@ -27,8 +24,9 @@ set(DOCTEST_INCLUDE_DIR ${source_dir}/doctest CACHE INTERNAL "Path to include fo
 include_directories(${DOCTEST_INCLUDE_DIR})
 
 
-add_executable(HelloWorld
-        doctest.h
+add_executable(
+        RationalNumbers
+        RationalNumber.h
+        RationalNumber.cpp
         test.cpp
-        helloWorld.cpp
-        helloWorld.h)
+        )
