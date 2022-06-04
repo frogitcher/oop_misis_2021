@@ -1,0 +1,5 @@
+/data/university/oop/control/220604/code/build/CMakeFiles/edit_cache.dir
+/data/university/oop/control/220604/code/build/CMakeFiles/rebuild_cache.dir
+/data/university/oop/control/220604/code/build/map/CMakeFiles/kr383.main.dir
+/data/university/oop/control/220604/code/build/map/CMakeFiles/edit_cache.dir
+/data/university/oop/control/220604/code/build/map/CMakeFiles/rebuild_cache.dir
