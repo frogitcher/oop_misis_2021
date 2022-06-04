@@ -45,7 +45,7 @@ T Pr<T>::Area() const {
 template<typename T>
 Pr<T> &Pr<T>::Intersection(const Pr<T> &other) const {
   if(other.x <= x - x_len || other.x + other.x_len <= x || other.y <= y - y_len || other.y + other.y_len <= y) {
-    throw std::length_error("Pr does not intersect");
+    throw std::length_error("Prs does not intersect");
   }
   T new_x = std::max(x, other.x);
   T new_y = std::min(y, other.y);
@@ -58,14 +58,63 @@ Pr<T> &Pr<T>::Intersection(const Pr<T> &other) const {
 }
 
 template<typename T>
-T &Pr<T>::IntersectionArea(const Pr<T> &other) const {
+T Pr<T>::IntersectionArea(const Pr<T> &other) const {
   Pr newPr = Intersection(other);
   return newPr.Area();
 }
 
 template<typename T>
-T &Pr<T>::IntersectionPerimetr(const Pr<T> &other) const {
+T Pr<T>::IntersectionPerimetr(const Pr<T> &other) const {
   Pr newPr = Intersection(other);
   return newPr.Perimetr();
 }
 
+template<typename T>
+Point Pr<T>::Center() const {
+  Point p(x/2, y/2);
+  return Point;
+}
+
+template<typename T>
+Pr<T> &Pr<T>::ReflectX(T _x) {
+  if (_x < x) {
+    T d = x - _x;
+    T new_x = x - 2 * d - x_len;
+    Pr newPr(new_x, y, x_len, y_len);
+    return Pr;
+  } else if(_x == x) {
+    return *this;
+  } else (_x >= x + x_len) {
+    T d = _x - x - x_len;
+    T new_x = x + x_len + 2 * d;
+    Pr newPr(new_x, y, x_len, y_len);
+    return Pr;
+  } else {
+    T d = _x - x;
+    T new_x = x + 2 * d;
+    Pr newPr(new_x, y, x_len, y_len);
+    return Pr;
+  }
+}
+
+template<typename T>
+Pr<T> &Pr<T>::ReflectY(T _y) {
+  if (_y < y) {
+    T d = y - _y;
+    T new_y = y - 2 * d - y_len;
+    Pr newPr(x, new_y, x_len, y_len);
+    return Pr;
+  } else if(_y == y) {
+    return *this;
+  } else (_y >= y + y_len) {
+    T d = _y - y - y_len;
+    T new_y = y + y_len + 2 * d;
+    Pr newPr(x, new_y, x_len, y_len);
+    return Pr;
+  } else {
+    T d = _y - y;
+    T new_y = y + 2 * d;
+    Pr newPr(x, new_y, x_len, y_len);
+    return Pr;
+  }
+}
