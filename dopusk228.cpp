@@ -82,7 +82,7 @@ void Hyst::Gyst()
     }
     for (int i=0;i<size;i++)
     {
-        std::cout<<"value["<<i<<"]="<<data[i];
+        std::cout<<"value["<<i<<"]="<<data[i]<<endl;
     }
 }
 bool Hyst::operator==(const Hyst& other) const
@@ -96,6 +96,13 @@ bool Hyst::operator!=(const Hyst& other) const
 int Hyst::Size() const
 {
     return size;
+}
+int main()
+{
+    Hyst a(5,2);
+    Hyst b(5,3);
+    cout<<a.Mediana();
+
 }
 
 
