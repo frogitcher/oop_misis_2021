@@ -1,5 +1,0 @@
-"C:\Program Files\JetBrains\CLion 2021.3.3\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug "-DCMAKE_MAKE_PROGRAM=C:/Program Files/JetBrains/CLion 2021.3.3/bin/ninja/win/ninja.exe" -G Ninja C:\CLionProjects\oop_misis_2022\DemidovichSP\RationalNumbers
--- Found Git: C:/Program Files/Git/cmd/git.exe (found version "2.28.0.windows.1") 
--- Configuring done
--- Generating done
--- Build files have been written to: C:/CLionProjects/oop_misis_2022/DemidovichSP/RationalNumbers/cmake-build-debug
