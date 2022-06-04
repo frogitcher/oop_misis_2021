@@ -1,1 +1,0 @@
-add_executable(stack_test stack_test.cpp doctest.h stack.h)

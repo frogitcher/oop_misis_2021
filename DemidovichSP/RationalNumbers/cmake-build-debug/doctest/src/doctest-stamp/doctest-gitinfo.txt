@@ -1,3 +1,0 @@
-repository='https://github.com/doctest/doctest.git'
-module=''
-tag='origin'

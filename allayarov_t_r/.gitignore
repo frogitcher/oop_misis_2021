@@ -1,9 +1,0 @@
-# VSCode tools
-.vscode/
-
-# CMake tools
-CMakeCache.txt
-CMakeFiles/
-Makefile
-cmake_install.cmake
-build/
