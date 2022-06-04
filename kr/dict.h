@@ -87,15 +87,17 @@ double dict<T>::avg() const {
 
 template <typename T>
 void dict<T>::sum(T key, double value) {
-  for (auto p : this->dict) {
+  for (auto p : this->data) {
     if (p.first == key) {
       p.second += value;
       return;
     }
   }
 }
-void decrease(T key, double value) {
-  for (auto p : this->dict) {
+
+template <typename T>
+void dict<T>::decrease(T key, double value) {
+  for (auto p : this->data) {
     if (p.first == key) {
       p.second -= value;
       return;
