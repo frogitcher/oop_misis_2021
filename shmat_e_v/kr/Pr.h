@@ -25,6 +25,8 @@ class Pr {
   Point Center() const;
   Pr<T> &ReflectX(T _x); // отражение относительно прямой x=_x
   Pr<T> &ReflectY(T _y); // отражение относительно прямой x=_y
+  void Move(T _x, T _y); // перенос на вектор (_x, _y)
+
 
  private:
   T x;

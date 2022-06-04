@@ -118,3 +118,9 @@ Pr<T> &Pr<T>::ReflectY(T _y) {
     return Pr;
   }
 }
+
+template<typename T>
+void Pr<T>::Move(T _x, T _y) {
+  x += _x;
+  _y += y;
+}
