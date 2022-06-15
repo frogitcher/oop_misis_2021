@@ -1,0 +1,4 @@
+C:/CLionProjects/oop_misis_2022/DemidovichSP/RationalNumbers/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+C:/CLionProjects/oop_misis_2022/DemidovichSP/RationalNumbers/cmake-build-debug/CMakeFiles/doctest.dir
+C:/CLionProjects/oop_misis_2022/DemidovichSP/RationalNumbers/cmake-build-debug/CMakeFiles/RationalNumbers.dir
+C:/CLionProjects/oop_misis_2022/DemidovichSP/RationalNumbers/cmake-build-debug/CMakeFiles/edit_cache.dir
