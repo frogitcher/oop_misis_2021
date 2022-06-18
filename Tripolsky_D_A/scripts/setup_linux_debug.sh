@@ -1,0 +1,1 @@
+cmake -S . -B build/linux/debug -G Ninja -DCMAKE_BUILD_TYPE=Debug

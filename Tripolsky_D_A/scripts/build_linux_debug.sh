@@ -1,0 +1,1 @@
+$(dirname $(realpath $0))/build.sh build/linux/debug
